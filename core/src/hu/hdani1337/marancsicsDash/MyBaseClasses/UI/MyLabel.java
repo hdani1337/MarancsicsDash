@@ -1,7 +1,7 @@
 package hu.hdani1337.marancsicsDash.MyBaseClasses.UI;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.mygdx.game.MyBaseClasses.Game.InitableInterface;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.Game.InitableInterface;
 
 
 /**
