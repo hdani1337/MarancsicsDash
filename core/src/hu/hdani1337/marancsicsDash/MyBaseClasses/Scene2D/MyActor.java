@@ -1,6 +1,5 @@
 package hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -15,8 +14,6 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Game.InitableInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by tuskeb on 2016. 09. 30..

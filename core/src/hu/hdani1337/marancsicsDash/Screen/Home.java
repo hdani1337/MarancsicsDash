@@ -3,49 +3,20 @@ package hu.hdani1337.marancsicsDash.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteActor;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
+import hu.hdani1337.marancsicsDash.Actor.Marancsics;
+import hu.hdani1337.marancsicsDash.Actor.Zsolti;
+import hu.hdani1337.marancsicsDash.Stage.TestStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class Home extends MyScreen {
 
-    OneSpriteAnimatedActor zsolti;
-    OneSpriteAnimatedActor marancsics;
-
-    MyStage test = new MyStage(new ExtendViewport(1280,720),spriteBatch,game) {
-        @Override
-        public void init() {
-            zsolti = new OneSpriteAnimatedActor(Assets.manager.get(Assets.ZSOLTI)){
-                @Override
-                public void act(float delta) {
-                    super.act(delta);
-                    setX(getX() + delta * 50);
-                    setFps(30);
-                }
-            };
-
-            marancsics = new OneSpriteAnimatedActor(Assets.manager.get(Assets.MARANCSICS)){
-                @Override
-                public void act(float delta) {
-                    super.act(delta);
-                    setX(getX() + delta * 360);
-                    setFps(60);
-                }
-            };
-
-            zsolti.setPosition(10,10);
-            marancsics.setPosition(300,300);
-
-            addActor(zsolti);
-            addActor(marancsics);
-        }
-    };
+    TestStage test;
 
     public Home(marancsicsGame game) {
         super(game);
+        test = new TestStage(new ExtendViewport(1280,720),spriteBatch,game);
+        Gdx.input.setInputProcessor(test);
     }
 
     @Override
@@ -55,11 +26,8 @@ public class Home extends MyScreen {
 
     public void render(float delta){
         super.render(delta);
+        test.act(delta);
         test.draw();
     }
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(test);
-    }
 }

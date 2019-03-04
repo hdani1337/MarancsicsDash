@@ -1,6 +1,5 @@
 package hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D;
 
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
 /**

@@ -12,6 +12,7 @@ public class Assets {
 
     public static final AssetDescriptor<TextureAtlas> ZSOLTI = new AssetDescriptor<TextureAtlas>("zsolti.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> MARANCSICS = new AssetDescriptor<TextureAtlas>("marancsics.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<Texture> TEST_BG = new AssetDescriptor<Texture>("testbg.png",Texture.class);
 
     public static void prepare() {
         manager = new AssetManager();
@@ -21,6 +22,7 @@ public class Assets {
     public static void load() {
         manager.load(ZSOLTI);
         manager.load(MARANCSICS);
+        manager.load(TEST_BG);
     }
 
     public static void unload() {
