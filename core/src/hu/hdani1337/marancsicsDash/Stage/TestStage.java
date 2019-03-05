@@ -1,10 +1,13 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
+import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
@@ -15,23 +18,23 @@ public class TestStage extends MyStage {
 
     Zsolti zsolti;
     Marancsics marancsics;
-    OneSpriteStaticActor bg;
+    Tank tank;
+    Background bg;
 
     public TestStage(Viewport viewport, Batch batch, marancsicsGame game) {
         super(viewport, batch, game);
         zsolti = new Zsolti();
         marancsics = new Marancsics();
-
-        bg = new OneSpriteStaticActor(Assets.manager.get(Assets.TEST_BG));
-        bg.setWidth(viewport.getWorldWidth());
-        bg.setHeight(viewport.getWorldHeight());
-        bg.setPosition(0,0);
+        tank = new Tank();
+        bg = new Background(Assets.manager.get(Assets.TEST_BG));
 
         marancsics.setPosition(0,500);
         zsolti.setPosition(0,0);
+        tank.setPosition(1000,200);
         addActor(bg);
         addActor(zsolti);
         addActor(marancsics);
+        addActor(tank);
     }
 
     @Override
