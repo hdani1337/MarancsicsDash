@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
-import hu.hdani1337.marancsicsDash.Actor.Marancsics;
-import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.Stage.HomeStage;
-import hu.hdani1337.marancsicsDash.Stage.TestStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class HomeScreen extends MyScreen {

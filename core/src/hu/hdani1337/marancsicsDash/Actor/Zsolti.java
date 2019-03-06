@@ -5,7 +5,6 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 
 public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean jump = false;
-
     public Zsolti() {
         super(Assets.manager.get(Assets.ZSOLTI));
         setFps(12);
@@ -15,6 +14,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
     @Override
     public void act(float delta) {
         super.act(delta);
+        addBaseCollisionRectangleShape();
         if(jump)
         {
             if(getY() < 240) {

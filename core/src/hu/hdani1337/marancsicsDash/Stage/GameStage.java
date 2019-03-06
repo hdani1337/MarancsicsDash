@@ -11,8 +11,11 @@ import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
+import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
-import sun.nio.cs.ext.MacArabic;
+
+import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
 
 public class GameStage extends MyStage {
     Background bg1;
@@ -20,22 +23,35 @@ public class GameStage extends MyStage {
     Zsolti zsolti;
     Marancsics marancsics;
     Tank tank;
+    MyLabel scoreLabel;
 
-    public GameStage(Viewport viewport, Batch batch, marancsicsGame game) {
+    public GameStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
+
+        scoreLabel = new MyLabel(""+Tank.pontszam,game.getLabelStyle());
+
         bg1 = new Background(Assets.manager.get(Assets.GAME_BG)){
             @Override
             public void act(float delta) {
                 super.act(delta);
                 bg1.setX(bg1.getX()-5);
+                scoreLabel.setText(""+Tank.pontszam);
                 if(bg1.getX() < -bg1.getWidth()){
                     bg1.setX(bg2.getX()+bg2.getWidth()-5);
                 }
 
-                if(tank.getX() - 30 <= marancsics.getX() + marancsics.getWidth()){
+                if(tank.getX() + 60 <= marancsics.getX() + marancsics.getWidth()){
                     marancsics.tankComing = true;
-                    System.out.println("overlaps");
                 }
+
+                if(tank.getX() + 30 >= zsolti.getX()){
+                    if(tank.getX() + 30 <= zsolti.getX() + zsolti.getWidth()){
+                        if(zsolti.getY() <= tank.getY() + 140){
+                            game.setScreen(new CrashScreen(game));
+                        }
+                    }
+                }
+
             }
         };
 
@@ -77,6 +93,9 @@ public class GameStage extends MyStage {
         marancsics = new Marancsics();
         marancsics.setPosition(60,30);
 
+        scoreLabel.setFontScale(1.5f);
+        scoreLabel.setPosition(viewport.getWorldWidth()/2 - scoreLabel.getWidth()/2,viewport.getWorldHeight() - scoreLabel.getHeight()*1.5f);
+
         bg1.setX(0);
         bg2.setX(bg1.getWidth());
 
@@ -85,6 +104,7 @@ public class GameStage extends MyStage {
         addActor(zsolti);
         addActor(marancsics);
         addActor(tank);
+        addActor(scoreLabel);
     }
 
     @Override

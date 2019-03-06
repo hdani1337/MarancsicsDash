@@ -31,9 +31,10 @@ public class Assets {
     public static final AssetDescriptor<TextureAtlas> ZSOLTI = new AssetDescriptor<TextureAtlas>("zsolti.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> MARANCSICS = new AssetDescriptor<TextureAtlas>("marancsics.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> TANK = new AssetDescriptor<TextureAtlas>("tank.atlas", TextureAtlas.class);
-    public static final AssetDescriptor<Texture> TEST_BG = new AssetDescriptor<Texture>("testbg.png",Texture.class);
     public static final AssetDescriptor<Texture> MENU_BG = new AssetDescriptor<Texture>("menuBg.jpg",Texture.class);
     public static final AssetDescriptor<Texture> GAME_BG = new AssetDescriptor<Texture>("bg.png",Texture.class);
+    public static final AssetDescriptor<Texture> LOGO = new AssetDescriptor<Texture>("logo.png",Texture.class);
+    public static final AssetDescriptor<Texture> TEXT_BG = new AssetDescriptor<Texture>("textBG.png",Texture.class);
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
 
     public static void prepare() {
@@ -49,10 +50,11 @@ public class Assets {
         manager.load(ZSOLTI);
         manager.load(MARANCSICS);
         manager.load(TANK);
-        manager.load(TEST_BG);
         manager.load(FONT);
         manager.load(MENU_BG);
         manager.load(GAME_BG);
+        manager.load(LOGO);
+        manager.load(TEXT_BG);
     }
 
     public static void unload() {
