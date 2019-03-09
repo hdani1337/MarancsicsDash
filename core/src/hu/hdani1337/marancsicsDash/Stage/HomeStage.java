@@ -1,13 +1,15 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Assets;
+import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
@@ -22,6 +24,8 @@ public class HomeStage extends MyStage {
     MyButton info;
     MyButton exit;
     Background bg;
+    Sound uraim;
+    Sound hee;
     OneSpriteStaticActor logo;
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
@@ -30,6 +34,8 @@ public class HomeStage extends MyStage {
         info = new MyButton("A játékról",game.getButtonStyle());
         exit = new MyButton("Kilépés",game.getButtonStyle());
         bg = new Background(Assets.manager.get(Assets.MENU_BG));
+        uraim = Assets.manager.get(Assets.URAIM);
+        hee = Assets.manager.get(Assets.HEE);
 
         logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
             @Override
@@ -56,7 +62,13 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new GameScreen(game));
+                uraim.play();
+                Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        game.setScreen(new GameScreen(game,0,0,false));
+                    }
+                }, 1);
             }
         });
 
@@ -72,7 +84,13 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                Gdx.app.exit();
+                hee.play();
+                Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        Gdx.app.exit();
+                    }
+                }, 0.65f);
             }
         });
 

@@ -6,7 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Assets;
+import hu.hdani1337.marancsicsDash.Actor.Tank;
+import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
@@ -27,6 +28,8 @@ public class CrashStage extends MyStage {
         reset = new MyButton("Új játék",game.getButtonStyle());
         home = new MyButton("Főmenü",game.getButtonStyle());
 
+        Tank.pontszam = 0;
+
         text.setPosition(viewport.getWorldWidth()/2-text.getWidth(),viewport.getWorldHeight()/2+text.getHeight());
         text.setFontScale(2);
 
@@ -37,7 +40,7 @@ public class CrashStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game,0,0,false));
             }
         });
 

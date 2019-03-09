@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Assets;
+import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Game.MyGame;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 

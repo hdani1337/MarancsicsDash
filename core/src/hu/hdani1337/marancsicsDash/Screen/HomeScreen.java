@@ -2,6 +2,7 @@ package hu.hdani1337.marancsicsDash.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.HomeStage;
@@ -9,12 +10,12 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class HomeScreen extends MyScreen {
 
-    HomeStage home;
+    HomeStage homeStage;
 
     public HomeScreen(marancsicsGame game) {
         super(game);
-        home = new HomeStage(new ExtendViewport(1280,720),spriteBatch,game);
-        Gdx.input.setInputProcessor(home);
+        homeStage = new HomeStage(new FitViewport(1280,720),spriteBatch,game);
+        Gdx.input.setInputProcessor(homeStage);
     }
 
     @Override
@@ -24,8 +25,10 @@ public class HomeScreen extends MyScreen {
 
     public void render(float delta){
         super.render(delta);
-        home.act(delta);
-        home.draw();
+        homeStage.act(delta);
+        if(delta >= 0){
+            homeStage.draw();
+        }
     }
 
 }

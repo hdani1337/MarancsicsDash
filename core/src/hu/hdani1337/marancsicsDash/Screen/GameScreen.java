@@ -2,6 +2,7 @@ package hu.hdani1337.marancsicsDash.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.GameStage;
@@ -11,9 +12,9 @@ public class GameScreen extends MyScreen {
 
     GameStage gameStage;
 
-    public GameScreen(marancsicsGame game) {
+    public GameScreen(marancsicsGame game, float tankX, float tankY, boolean backFromPause) {
         super(game);
-        gameStage = new GameStage(new ExtendViewport(1280,720),spriteBatch,game);
+        gameStage = new GameStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,backFromPause);
         Gdx.input.setInputProcessor(gameStage);
     }
 
@@ -27,5 +28,8 @@ public class GameScreen extends MyScreen {
         super.render(delta);
         gameStage.act(delta);
         gameStage.draw();
+        if(delta >= 0){
+            gameStage.draw();
+        }
     }
 }

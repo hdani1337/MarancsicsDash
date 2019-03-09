@@ -2,6 +2,8 @@ package hu.hdani1337.marancsicsDash.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.CrashStage;
@@ -12,7 +14,7 @@ public class CrashScreen extends MyScreen {
 
     public CrashScreen(marancsicsGame game) {
         super(game);
-        crashStage = new CrashStage(new ExtendViewport(1280,720),spriteBatch,game);
+        crashStage = new CrashStage(new FitViewport(1280,720), spriteBatch, game);
         Gdx.input.setInputProcessor(crashStage);
     }
 
@@ -25,6 +27,8 @@ public class CrashScreen extends MyScreen {
     public void render(float delta) {
         super.render(delta);
         crashStage.act(delta);
-        crashStage.draw();
+        if(delta >= 0){
+            crashStage.draw();
+        }
     }
 }
