@@ -1,6 +1,7 @@
 package hu.hdani1337.marancsicsDash.Screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
@@ -13,7 +14,7 @@ public class GameScreen extends MyScreen {
 
     public GameScreen(marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(game);
-        gameStage = new GameStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        gameStage = new GameStage(new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
         Gdx.input.setInputProcessor(gameStage);
     }
 

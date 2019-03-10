@@ -14,6 +14,8 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.Screen.InfoScreen;
 import hu.hdani1337.marancsicsDash.Screen.OptionsScreen;
@@ -32,6 +34,12 @@ public class HomeStage extends MyStage {
     Sound hee;
     OneSpriteStaticActor logo;
     Music music;
+    TextBackground textBackground1;
+    TextBackground textBackground2;
+    TextBackground textBackground3;
+    TextBackground textBackground4;
+    TextBackground textBackground5;
+    MyLabel ver;
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -39,10 +47,16 @@ public class HomeStage extends MyStage {
         info = new MyButton("A játékról",game.getButtonStyle());
         options = new MyButton("Beállítások",game.getButtonStyle());
         exit = new MyButton("Kilépés",game.getButtonStyle());
+        ver = new MyLabel("Verzió: 0.2 Alpha",game.getLabelStyle());
         bg = new Background(Assets.manager.get(Assets.MENU_BG));
         uraim = Assets.manager.get(Assets.URAIM);
         hee = Assets.manager.get(Assets.HEE);
         music = Assets.manager.get(Assets.MENUMUSIC);
+        textBackground1 = new TextBackground();
+        textBackground2 = new TextBackground();
+        textBackground3 = new TextBackground();
+        textBackground4 = new TextBackground();
+        textBackground5 = new TextBackground();
 
         logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
             @Override
@@ -77,6 +91,20 @@ public class HomeStage extends MyStage {
         options.setX((viewport.getWorldWidth()/2 - options.getWidth()/2));
         exit.setY(options.getY() - exit.getHeight()*2);
         exit.setX((viewport.getWorldWidth()/2 - exit.getWidth()/2));
+        ver.setX(20);
+        ver.setY(exit.getY() - 100);
+
+        textBackground1.setPosition(start.getX()-15,start.getY()-7);
+        textBackground2.setPosition(info.getX()-15,info.getY()-7);
+        textBackground3.setPosition(options.getX()-15,options.getY()-7);
+        textBackground4.setPosition(exit.getX()-15,exit.getY()-7);
+        textBackground5.setPosition(ver.getX()-15,ver.getY()-7);
+
+        textBackground1.setSize(start.getWidth() + 30, start.getHeight() + 14);
+        textBackground2.setSize(info.getWidth() + 30, info.getHeight() + 14);
+        textBackground3.setSize(options.getWidth() + 30, options.getHeight() + 14);
+        textBackground4.setSize(exit.getWidth() + 30, exit.getHeight() + 14);
+        textBackground5.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
 
         start.addListener(new ClickListener(){
             @Override
@@ -137,10 +165,16 @@ public class HomeStage extends MyStage {
         logo.setPosition(viewport.getWorldWidth()/2 - logo.getWidth()/2, viewport.getWorldHeight() - logo.getHeight()*1.5f);
 
         addActor(bg);
+        addActor(textBackground1);
+        addActor(textBackground2);
+        addActor(textBackground3);
+        addActor(textBackground4);
+        addActor(textBackground5);
         addActor(start);
         addActor(info);
         addActor(options);
         addActor(exit);
+        addActor(ver);
         addActor(logo);
     }
 

@@ -20,6 +20,7 @@ public class InfoStage extends MyStage {
     MyLabel text;
     MyLabel credits;
     MyButton back;
+    OneSpriteStaticActor textBG2;
 
     public InfoStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -33,11 +34,20 @@ public class InfoStage extends MyStage {
             }
         };
 
+        textBG2 = new OneSpriteStaticActor(Assets.manager.get(Assets.TEXT_BG)){
+            @Override
+            public void act(float delta) {
+                super.act(delta);
+                setDebug(false);
+            }
+        };;
+
         text = new MyLabel("A játék valós eseményeken alapul.\nEgy szép napon a főhősünk, Zsolti bemutatott szeretett\nosztályfőnökünknek, Marancsicsnak.\nMarancsics nagyon megharagudott rá, s mindenáron elakarja kapni Zsoltit,\nhogy osztályfőnökit adhasson neki. A Te feladatod az,\nhogy Zsolti minél tovább tudjon menekülni. Vigyázz, mert Marancsics\nneked tudja rúgni az akadályokat!",game.getLabelStyle());
         back = new MyButton("Vissza a menübe",game.getButtonStyle());
         credits = new MyLabel("Készítette: Horváth Dániel\nFelkészítő tanár: Tüske Balázs",game.getLabelStyle());
 
         text.setAlignment(0);
+        text.setFontScale(0.8f);
 
         back.addListener(new ClickListener(){
             @Override
@@ -52,10 +62,14 @@ public class InfoStage extends MyStage {
         text.setPosition(viewport.getWorldWidth()/2 - text.getWidth()/2,(viewport.getWorldHeight()/2 - text.getHeight()/2)+30);
         back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),125);
         credits.setPosition(15,100);
+        textBG2.setWidth(290);
+        textBG2.setHeight(60);
+        textBG2.setPosition(back.getX()-15,back.getY()-10);
 
         addActor(bg);
         addActor(textBG);
         addActor(text);
+        addActor(textBG2);
         addActor(back);
         addActor(credits);
     }

@@ -21,16 +21,17 @@ public class OptionsStage extends MyStage {
     public static byte difficulty;
 
     Background background;
-    MyButton difPlus;
-    MyButton difMinus;
-    MyButton back;
+    MyButton difPlus;//plusz gomb
+    MyButton difMinus;//minusz gomb
+    MyButton back;//vissza gomb
     MyLabel difType; //Könnyű/Normál/Nehéz
     MyLabel dif; //Nehézség:
     MyLabel muting;//Némítás:
     MyButton mutedButton;//Nincs némítva/Némítva
     OneSpriteStaticActor textbg;//nehézség háttere
     OneSpriteStaticActor textbg2;//némítás háttere
-    Music music;
+    OneSpriteStaticActor textbg3;//visszalépés háttere
+    Music music;//zene, hogy lelehessen állítani
 
     public OptionsStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -47,7 +48,7 @@ public class OptionsStage extends MyStage {
             public void act(float delta) {
                 super.act(delta);
                 if(difficulty == 1){
-                    difType.setText("Könnyű");
+                    difType.setText("Könnyü");
                 }
                 else if(difficulty == 2){
                     difType.setText("Normál");
@@ -79,6 +80,14 @@ public class OptionsStage extends MyStage {
                 }
             }
         };
+
+        textbg3 = new OneSpriteStaticActor(Assets.manager.get(Assets.TEXT_BG)){
+            @Override
+            public void setDebug(boolean enabled) {
+                super.setDebug(false);
+            }
+        };
+
         textbg2.setDebug(false);
 
         difMinus.addListener(new ClickListener(){
@@ -129,16 +138,22 @@ public class OptionsStage extends MyStage {
         });
 
         dif.setPosition(30,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
-        textbg.setPosition(dif.getX() - 18,dif.getY() - 8);
-        textbg.setSize(330,dif.getHeight()*1.5f);
-        difMinus.setPosition(dif.getX() + dif.getWidth() + 20,dif.getY());
-        difType.setPosition(difMinus.getX() + difMinus.getWidth() + 10,dif.getY()+16);
-        difPlus.setPosition(difMinus.getX() + 120,dif.getY());
+        textbg.setPosition(dif.getX() - 20,dif.getY() - 8);
+        textbg.setSize(400,dif.getHeight()*1.5f);
+        difMinus.setSize(difPlus.getWidth()*1.5f,difMinus.getHeight());
+        difMinus.setPosition(dif.getX() + dif.getWidth() + 5,dif.getY());
+        difType.setPosition(difMinus.getX() + difMinus.getWidth() + 10,dif.getY()+18);
+        difPlus.setSize(difPlus.getWidth()*1.5f,difPlus.getHeight());
+        difPlus.setPosition(difMinus.getX() + 155,dif.getY());
         back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),125);
         textbg2.setPosition(textbg.getX(),textbg.getY() - 100);
+        textbg2.setWidth(textbg.getWidth());
         textbg2.setHeight(textbg.getHeight());
+        textbg3.setWidth(290);
+        textbg3.setHeight(textbg.getHeight());
+        textbg3.setPosition(back.getX()-15,back.getY()-10);
         muting.setPosition(textbg2.getX() + 18,textbg2.getY() + textbg2.getHeight()/6);
-        mutedButton.setPosition(muting.getX() + 210,muting.getY());
+        mutedButton.setPosition(muting.getX() + 250,muting.getY());
 
 
         addActor(background);
@@ -147,6 +162,7 @@ public class OptionsStage extends MyStage {
         addActor(difType);
         addActor(difPlus);
         addActor(difMinus);
+        addActor(textbg3);
         addActor(back);
         addActor(textbg2);
         addActor(muting);

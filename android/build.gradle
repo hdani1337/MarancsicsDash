@@ -12,7 +12,6 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
     }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
@@ -22,7 +21,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "0.1 Alpha"
     }
     buildTypes {
         release {

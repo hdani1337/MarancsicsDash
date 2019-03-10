@@ -190,7 +190,7 @@ public class GameStage extends MyStage {
         scoreLabel.setPosition(viewport.getWorldWidth()/2 - scoreLabel.getWidth()/2,viewport.getWorldHeight() - scoreLabel.getHeight()*1.5f);
 
         pauseButton = new PauseButton();
-        pauseButton.setPosition(viewport.getWorldWidth() - pauseButton.getWidth() * 1.1f,545);
+        pauseButton.setPosition(viewport.getWorldWidth() - pauseButton.getWidth() * 1.1f,viewport.getWorldHeight() - 175);
 
         bg1.setX(0);
         bg2.setX(bg1.getWidth());
