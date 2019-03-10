@@ -5,7 +5,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 
 public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean jump = false;
-    private boolean fall = false;
+    public static boolean fall = false;
     public Zsolti() {
         super(Assets.manager.get(Assets.ZSOLTI));
         setFps(12);

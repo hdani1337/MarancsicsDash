@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Timer;
@@ -18,6 +19,8 @@ import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+
 public class GameStage extends MyStage {
     Background bg1;
     Background bg2;
@@ -30,6 +33,7 @@ public class GameStage extends MyStage {
     Sound hee;
     Sound kick;
     Sound crash;
+    Music music;
 
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
@@ -40,7 +44,19 @@ public class GameStage extends MyStage {
         kick = Assets.manager.get(Assets.KICK);
         crash = Assets.manager.get(Assets.CRASH);
 
+        music = Assets.manager.get(Assets.GAMEMUSIC);
+
         scoreLabel = new MyLabel(""+Tank.pontszam,game.getLabelStyle());
+
+        if(muted){
+            music.stop();
+
+        }
+        else {
+            music.setLooping(true);
+            music.setVolume(0.5f);
+            music.play();
+        }
 
         bg1 = new Background(Assets.manager.get(Assets.GAME_BG)){
             @Override
@@ -75,20 +91,25 @@ public class GameStage extends MyStage {
                 }
 
                 if(tank.getX() + 60 <= marancsics.getX() + marancsics.getWidth()){
-                    kick.play();
-                    Timer.schedule(new Timer.Task(){
-                        @Override
-                        public void run() {
-                           hee.play();
-                        }
-                    }, 0.3f);
+                    if(!muted) {
+                        kick.play();
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                hee.play();
+                            }
+                        }, 0.3f);
+                    }
                     marancsics.tankComing = true;
                 }
 
                 if(tank.getX() + 30 >= zsolti.getX()){
                     if(tank.getX() + 30 <= zsolti.getX() + zsolti.getWidth()){
                         if(zsolti.getY() <= tank.getY() + 140){
-                            crash.play();
+                            if(!muted){
+                                crash.play();
+                                music.stop();
+                            }
                             Tank.pontszam = 0;
                             game.setScreen(new CrashScreen(game));
                             Marancsics.tankComing = false;
@@ -97,6 +118,9 @@ public class GameStage extends MyStage {
                 }
 
                 if(PauseButton.paused){
+                    if(!muted){
+                        music.pause();
+                    }
                     game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
                 }
 
@@ -134,7 +158,8 @@ public class GameStage extends MyStage {
         if(backFromPause){
             zsolti.setRotation(zsoltiR);
             zsolti.setPosition(250,zsoltiY);
-            if(zsoltiY > 30 && zsoltiR > 0)Zsolti.jump = true; //ekkor ugrik felfelé
+            if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            if(zsoltiY > 30 &&zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
         }
         else{
             zsolti.setPosition(250,30);
@@ -149,6 +174,9 @@ public class GameStage extends MyStage {
         if(backFromPause){
             tank.setY(tankY);
             tank.setX(tankX);
+            if(!muted){
+                music.play();
+            }
         }
         else{
             tank.setY(-40);

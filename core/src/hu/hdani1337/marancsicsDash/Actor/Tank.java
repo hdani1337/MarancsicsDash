@@ -6,6 +6,8 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
+import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+
 public class Tank extends OneSpriteAnimatedActor {
     public int tankSpeed = 320;
     public static int pontszam = 0;
@@ -31,7 +33,9 @@ public class Tank extends OneSpriteAnimatedActor {
             setRotation(getRotation() - delta * 150);
             setY(getY() + delta * 120);
             if(getX() > 1280){
-                crash.play();
+                if(!muted) {
+                    crash.play();
+                }
                 pontszam += 1;
 
                 int random = (int) (Math.random() * 5 + 1);

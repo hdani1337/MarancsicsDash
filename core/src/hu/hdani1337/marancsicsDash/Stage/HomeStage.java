@@ -1,6 +1,7 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,6 +21,7 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class HomeStage extends MyStage {
     private int speed = 2;
+    public static boolean muted = false;
 
     MyButton start;
     MyButton info;
@@ -29,6 +31,7 @@ public class HomeStage extends MyStage {
     Sound uraim;
     Sound hee;
     OneSpriteStaticActor logo;
+    Music music;
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -39,6 +42,7 @@ public class HomeStage extends MyStage {
         bg = new Background(Assets.manager.get(Assets.MENU_BG));
         uraim = Assets.manager.get(Assets.URAIM);
         hee = Assets.manager.get(Assets.HEE);
+        music = Assets.manager.get(Assets.MENUMUSIC);
 
         logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
             @Override
@@ -54,6 +58,17 @@ public class HomeStage extends MyStage {
             }
         };
 
+        if(muted){
+            music.stop();
+            uraim.setVolume(0,0.0f);
+            hee.setVolume(0,0.0f);
+        }
+        else {
+            music.setLooping(true);
+            music.setVolume(0.5f);
+            music.play();
+        }
+
         start.setX(viewport.getWorldWidth()/2 - start.getWidth()/2);
         start.setY(viewport.getWorldHeight()/2 - start.getHeight()/2);
         info.setY(start.getY() - info.getHeight()*2);
@@ -67,13 +82,19 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                uraim.play();
-                Timer.schedule(new Timer.Task(){
-                    @Override
-                    public void run() {
-                        game.setScreen(new GameScreen(game,0,0,0,0,false));
-                    }
-                }, 1);
+                if(!muted) {
+                    uraim.play();
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            music.stop();
+                            game.setScreen(new GameScreen(game, 0, 0, 0, 0, false));
+                        }
+                    }, 1);
+                }
+                else{
+                    game.setScreen(new GameScreen(game,0,0,0,0,false));
+                }
             }
         });
 
@@ -97,13 +118,19 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                hee.play();
-                Timer.schedule(new Timer.Task(){
-                    @Override
-                    public void run() {
-                        Gdx.app.exit();
-                    }
-                }, 0.65f);
+                if(!muted) {
+                    hee.play();
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            music.stop();
+                            Gdx.app.exit();
+                        }
+                    }, 0.65f);
+                }
+                else{
+                    Gdx.app.exit();
+                }
             }
         });
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -48,6 +49,9 @@ public class Assets {
     public static final AssetDescriptor<Sound> HEE = new AssetDescriptor<Sound>("sound/héé.wav",Sound.class);
     public static final AssetDescriptor<Sound> KICK = new AssetDescriptor<Sound>("sound/kick.wav",Sound.class);
     public static final AssetDescriptor<Sound> CRASH = new AssetDescriptor<Sound>("sound/crash.wav",Sound.class);
+    //ZENE
+    public static final AssetDescriptor<Music> MENUMUSIC = new AssetDescriptor<Music>("music/menuMusic.mp3",Music.class);
+    public static final AssetDescriptor<Music> GAMEMUSIC = new AssetDescriptor<Music>("music/gameMusic.mp3",Music.class);
 
     public static void prepare() {
         manager = new AssetManager();
@@ -74,6 +78,8 @@ public class Assets {
         manager.load(CRASH);
         manager.load(PAUSE);
         manager.load(PLAY);
+        manager.load(MENUMUSIC);
+        manager.load(GAMEMUSIC);
     }
 
     public static void unload() {
