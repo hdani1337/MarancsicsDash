@@ -15,6 +15,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.Screen.InfoScreen;
+import hu.hdani1337.marancsicsDash.Screen.OptionsScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class HomeStage extends MyStage {
@@ -22,6 +23,7 @@ public class HomeStage extends MyStage {
 
     MyButton start;
     MyButton info;
+    MyButton options;
     MyButton exit;
     Background bg;
     Sound uraim;
@@ -32,6 +34,7 @@ public class HomeStage extends MyStage {
         super(viewport, batch, game);
         start = new MyButton("A játék indítása",game.getButtonStyle());
         info = new MyButton("A játékról",game.getButtonStyle());
+        options = new MyButton("Beállítások",game.getButtonStyle());
         exit = new MyButton("Kilépés",game.getButtonStyle());
         bg = new Background(Assets.manager.get(Assets.MENU_BG));
         uraim = Assets.manager.get(Assets.URAIM);
@@ -55,7 +58,9 @@ public class HomeStage extends MyStage {
         start.setY(viewport.getWorldHeight()/2 - start.getHeight()/2);
         info.setY(start.getY() - info.getHeight()*2);
         info.setX((viewport.getWorldWidth()/2 - info.getWidth()/2));
-        exit.setY(info.getY() - exit.getHeight()*2);
+        options.setY(info.getY() - options.getHeight()*2);
+        options.setX((viewport.getWorldWidth()/2 - options.getWidth()/2));
+        exit.setY(options.getY() - exit.getHeight()*2);
         exit.setX((viewport.getWorldWidth()/2 - exit.getWidth()/2));
 
         start.addListener(new ClickListener(){
@@ -66,7 +71,7 @@ public class HomeStage extends MyStage {
                 Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {
-                        game.setScreen(new GameScreen(game,0,0,false));
+                        game.setScreen(new GameScreen(game,0,0,0,0,false));
                     }
                 }, 1);
             }
@@ -77,6 +82,14 @@ public class HomeStage extends MyStage {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new InfoScreen(game));
+            }
+        });
+
+        options.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(new OptionsScreen(game));
             }
         });
 
@@ -99,6 +112,7 @@ public class HomeStage extends MyStage {
         addActor(bg);
         addActor(start);
         addActor(info);
+        addActor(options);
         addActor(exit);
         addActor(logo);
     }

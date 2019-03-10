@@ -1,4 +1,4 @@
-package hu.hdani1337.marancsicsDash.Actor;
+package hu.hdani1337.marancsicsDash.MyBaseClasses.UI;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;

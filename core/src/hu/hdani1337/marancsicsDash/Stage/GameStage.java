@@ -6,20 +6,17 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
-import hu.hdani1337.marancsicsDash.Actor.JumpIcon;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
 import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
-
-import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
 
 public class GameStage extends MyStage {
     Background bg1;
@@ -34,8 +31,10 @@ public class GameStage extends MyStage {
     Sound kick;
     Sound crash;
 
-    public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, boolean backFromPause) {
+    public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
+
+        Zsolti.jump = false; //Ne ugorjon magától az elején
 
         hee = Assets.manager.get(Assets.HEE);
         kick = Assets.manager.get(Assets.KICK);
@@ -47,10 +46,32 @@ public class GameStage extends MyStage {
             @Override
             public void act(float delta) {
                 super.act(delta);
-                bg1.setX(bg1.getX()-5);
+                System.out.println(OptionsStage.difficulty);
                 scoreLabel.setText(""+Tank.pontszam);
-                if(bg1.getX() < -bg1.getWidth()){
-                    bg1.setX(bg2.getX()+bg2.getWidth()-5);
+
+                if(OptionsStage.difficulty == 0){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
+                    OptionsStage.difficulty = 2;
+                }
+
+                if(OptionsStage.difficulty == 1){
+                    bg1.setX(bg1.getX()-5);
+                    if(bg1.getX() < -bg1.getWidth()){
+                        bg1.setX(bg2.getX()+bg2.getWidth()-5);
+                    }
+                }
+
+                if(OptionsStage.difficulty == 2){
+                    bg1.setX(bg1.getX()-10);
+                    if(bg1.getX() < -bg1.getWidth()){
+                        bg1.setX(bg2.getX()+bg2.getWidth()-10);
+                    }
+                }
+
+                if(OptionsStage.difficulty == 3){
+                    bg1.setX(bg1.getX()-15);
+                    if(bg1.getX() < -bg1.getWidth()){
+                        bg1.setX(bg2.getX()+bg2.getWidth()-15);
+                    }
                 }
 
                 if(tank.getX() + 60 <= marancsics.getX() + marancsics.getWidth()){
@@ -76,7 +97,7 @@ public class GameStage extends MyStage {
                 }
 
                 if(PauseButton.paused){
-                    game.setScreen(new PauseScreen(game, tank.getX(), tank.getY()));
+                    game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
                 }
 
             }
@@ -86,15 +107,38 @@ public class GameStage extends MyStage {
             @Override
             public void act(float delta) {
                 super.act(delta);
-                bg2.setX(bg2.getX()-5);
-                if(bg2.getX() < -bg2.getWidth()){
-                    bg2.setX(bg1.getX()+bg1.getWidth()-5);
+                if(OptionsStage.difficulty == 1){
+                    bg2.setX(bg2.getX()-5);
+                    if(bg2.getX() < -bg2.getWidth()){
+                        bg2.setX(bg1.getX()+bg1.getWidth()-5);
+                    }
+                }
+
+                if(OptionsStage.difficulty == 2){
+                    bg2.setX(bg2.getX()-10);
+                    if(bg2.getX() < -bg2.getWidth()){
+                        bg2.setX(bg1.getX()+bg1.getWidth()-10);
+                    }
+                }
+
+                if(OptionsStage.difficulty == 3){
+                    bg2.setX(bg2.getX()-15);
+                    if(bg2.getX() < -bg2.getWidth()){
+                        bg2.setX(bg1.getX()+bg1.getWidth()-15);
+                    }
                 }
             }
         };
 
         zsolti = new Zsolti();
-        zsolti.setPosition(250,30);
+        if(backFromPause){
+            zsolti.setRotation(zsoltiR);
+            zsolti.setPosition(250,zsoltiY);
+            if(zsoltiY > 30 && zsoltiR > 0)Zsolti.jump = true; //ekkor ugrik felfelé
+        }
+        else{
+            zsolti.setPosition(250,30);
+        }
 
         jumpIcon = new JumpIcon();
         jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);

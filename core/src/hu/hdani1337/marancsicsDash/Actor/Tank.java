@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
+import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
 public class Tank extends OneSpriteAnimatedActor {
     public int tankSpeed = 320;
@@ -12,6 +13,11 @@ public class Tank extends OneSpriteAnimatedActor {
 
     public Tank() {
         super(Assets.manager.get(Assets.TANK));
+        switch (OptionsStage.difficulty){
+            case 0: tankSpeed = 250;
+            case 1: tankSpeed = 320;
+            case 2: tankSpeed = 400;
+        }
         setFps(24);
         setDebug(false);
     }
@@ -47,7 +53,12 @@ public class Tank extends OneSpriteAnimatedActor {
 
                 Marancsics.tankComing = false;
 
-                tankSpeed += 25;
+
+                switch (OptionsStage.difficulty){
+                    case 0: tankSpeed += 15;
+                    case 1: tankSpeed += 25;
+                    case 2: tankSpeed += 35;
+                }
             }
         }
         else {

@@ -10,9 +10,9 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 public class PauseScreen extends MyScreen {
     PauseStage pauseStage;
 
-    public PauseScreen(marancsicsGame game, float tankX, float tankY) {
+    public PauseScreen(marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY) {
         super(game);
-        pauseStage = new PauseStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY);
+        pauseStage = new PauseStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
         Gdx.input.setInputProcessor(pauseStage);
     }
 
