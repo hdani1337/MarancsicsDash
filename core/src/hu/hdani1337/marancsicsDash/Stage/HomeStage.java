@@ -16,14 +16,16 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
-import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.Screen.InfoScreen;
+import hu.hdani1337.marancsicsDash.Screen.IntroScreen;
 import hu.hdani1337.marancsicsDash.Screen.OptionsScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
+
 public class HomeStage extends MyStage {
     private int speed = 2;
-    public static boolean muted = false;
+    public static boolean muted = preferences.getBoolean("muted");
 
     MyButton start;
     MyButton info;
@@ -47,7 +49,7 @@ public class HomeStage extends MyStage {
         info = new MyButton("A játékról",game.getButtonStyle());
         options = new MyButton("Beállítások",game.getButtonStyle());
         exit = new MyButton("Kilépés",game.getButtonStyle());
-        ver = new MyLabel("Verzió: 0.2 Alpha",game.getLabelStyle());
+        ver = new MyLabel("Verzió: 0.3 Alpha",game.getLabelStyle());
         bg = new Background(Assets.manager.get(Assets.MENU_BG));
         uraim = Assets.manager.get(Assets.URAIM);
         hee = Assets.manager.get(Assets.HEE);
@@ -116,12 +118,12 @@ public class HomeStage extends MyStage {
                         @Override
                         public void run() {
                             music.stop();
-                            game.setScreen(new GameScreen(game, 0, 0, 0, 0, false));
+                            game.setScreen(new IntroScreen(game));
                         }
                     }, 1);
                 }
                 else{
-                    game.setScreen(new GameScreen(game,0,0,0,0,false));
+                    game.setScreen(new IntroScreen(game));
                 }
             }
         });

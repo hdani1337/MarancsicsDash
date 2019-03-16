@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash.Actor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
@@ -16,9 +17,9 @@ public class Tank extends OneSpriteAnimatedActor {
     public Tank() {
         super(Assets.manager.get(Assets.TANK));
         switch (OptionsStage.difficulty){
-            case 0: tankSpeed = 250;
-            case 1: tankSpeed = 320;
-            case 2: tankSpeed = 400;
+            case 0: tankSpeed = 200;
+            case 1: tankSpeed = 350;
+            case 2: tankSpeed = 500;
         }
         setFps(24);
         setDebug(false);
@@ -32,7 +33,7 @@ public class Tank extends OneSpriteAnimatedActor {
             setX(getX() + delta * 720);
             setRotation(getRotation() - delta * 150);
             setY(getY() + delta * 120);
-            if(getX() > 1280){
+            if(getX() > Gdx.graphics.getWidth()){
                 if(!muted) {
                     crash.play();
                 }
@@ -52,16 +53,16 @@ public class Tank extends OneSpriteAnimatedActor {
                     case 5:
                         setX(3000);
                     default:
-                        setX(1500);
+                        setX(1800);
                 }
 
                 Marancsics.tankComing = false;
 
 
                 switch (OptionsStage.difficulty){
-                    case 0: tankSpeed += 15;
-                    case 1: tankSpeed += 25;
-                    case 2: tankSpeed += 35;
+                    case 0: tankSpeed += 20;
+                    case 1: tankSpeed += 35;
+                    case 2: tankSpeed += 50;
                 }
             }
         }

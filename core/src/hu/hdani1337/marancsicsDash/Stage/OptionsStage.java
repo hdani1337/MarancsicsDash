@@ -1,5 +1,7 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,7 +20,8 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 
 public class OptionsStage extends MyStage {
-    public static byte difficulty;
+    public static int difficulty;
+    public static final Preferences preferences = Gdx.app.getPreferences("marancsicsDashSave");;
 
     Background background;
     MyButton difPlus;//plusz gomb
@@ -35,7 +38,15 @@ public class OptionsStage extends MyStage {
 
     public OptionsStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        difficulty = 2;//normál
+        difficulty = preferences.getInteger("difficulty");
+        muted = preferences.getBoolean("muted");
+
+        System.out.println(difficulty);
+
+        if(difficulty != 1 && difficulty != 2 && difficulty !=3){//ha nincs elmentve nehézség, akkor legyen normál
+            difficulty = 2;
+        }
+
         background = new Background(Assets.manager.get(Assets.MENU_BG));
         difPlus = new MyButton("+",game.getButtonStyle());
         difMinus = new MyButton("-",game.getButtonStyle());
@@ -120,6 +131,9 @@ public class OptionsStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                preferences.putInteger("difficulty",difficulty);
+                preferences.putBoolean("muted",muted);
+                preferences.flush();
                 game.setScreen(new HomeScreen(game));
             }
         });

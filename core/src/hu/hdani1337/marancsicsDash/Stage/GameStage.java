@@ -62,7 +62,6 @@ public class GameStage extends MyStage {
             @Override
             public void act(float delta) {
                 super.act(delta);
-                System.out.println(OptionsStage.difficulty);
                 scoreLabel.setText(""+Tank.pontszam);
 
                 if(OptionsStage.difficulty == 0){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
@@ -110,7 +109,6 @@ public class GameStage extends MyStage {
                                 crash.play();
                                 music.stop();
                             }
-                            Tank.pontszam = 0;
                             game.setScreen(new CrashScreen(game));
                             Marancsics.tankComing = false;
                         }

@@ -42,9 +42,9 @@ public class InfoStage extends MyStage {
             }
         };;
 
-        text = new MyLabel("A játék valós eseményeken alapul.\nEgy szép napon a főhősünk, Zsolti bemutatott szeretett\nosztályfőnökünknek, Marancsicsnak.\nMarancsics nagyon megharagudott rá, s mindenáron elakarja kapni Zsoltit,\nhogy osztályfőnökit adhasson neki. A Te feladatod az,\nhogy Zsolti minél tovább tudjon menekülni. Vigyázz, mert Marancsics\nneked tudja rúgni az akadályokat!",game.getLabelStyle());
+        text = new MyLabel("A játék valós eseményeken alapul.\nEgy szép napon a föhösünk, Zsolti bemutatott szeretett\nosztályfönökünknek, Marancsicsnak.\nMarancsics nagyon megharagudott rá, s mindenáron elakarja kapni Zsoltit,\nhogy osztályfönökit adhasson neki. A Te feladatod az,\nhogy Zsolti minél tovább tudjon menekülni. Vigyázz, mert Marancsics\nneked tudja rúgni az akadályokat!",game.getLabelStyle());
         back = new MyButton("Vissza a menübe",game.getButtonStyle());
-        credits = new MyLabel("Készítette: Horváth Dániel\nFelkészítő tanár: Tüske Balázs",game.getLabelStyle());
+        credits = new MyLabel("Készítette: Horváth Dániel\nFelkészítö tanár: Tüske Balázs",game.getLabelStyle());
 
         text.setAlignment(0);
         text.setFontScale(0.8f);

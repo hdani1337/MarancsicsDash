@@ -6,6 +6,8 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean jump = false;
     public static boolean fall = false;
+    public static boolean intro = false;
+
     public Zsolti() {
         super(Assets.manager.get(Assets.ZSOLTI));
         setFps(12);
@@ -39,6 +41,14 @@ public class Zsolti extends OneSpriteAnimatedActor {
                     setRotation(getRotation() - delta * 40);
                     if (getY() >= 250) fall = true;
                 }
+            }
+        }
+
+        if(intro){
+            setX(getX() + delta * 180);
+            if(getX() >= 250){
+                setX(250);
+                intro = false;
             }
         }
     }

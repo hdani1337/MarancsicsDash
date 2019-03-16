@@ -14,6 +14,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PlayButton;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
@@ -25,11 +26,14 @@ public class PauseStage extends MyStage {
     MyLabel text;
     MyLabel score;
     MyButton back;
+    TextBackground textBackground;
     private int speed = 2;
 
     public PauseStage(Viewport viewport, Batch batch, final marancsicsGame game, final float tankX, final float tankY, final float zsoltiR, final float zsoltiY) {
         super(viewport, batch, game);
         background = new Background(Assets.manager.get(Assets.GAME_BG));
+
+        textBackground = new TextBackground();
 
         back = new MyButton("Vissza a menübe",game.getButtonStyle());
 
@@ -83,11 +87,14 @@ public class PauseStage extends MyStage {
         score.setPosition(viewport.getWorldWidth() / 2 - score.getWidth() / 1.45f, text.getY() - score.getHeight()*1.5f);
 
         back.setPosition(viewport.getWorldWidth()/2-back.getWidth()/2,score.getY() - 90);
+        textBackground.setSize(back.getWidth() + 36, back.getHeight() + 20);
+        textBackground.setPosition(back.getX() - 18,back.getY() - 10);
 
         addActor(background);
         addActor(logo);
         addActor(playButton);
         addActor(text);
+        addActor(textBackground);
         addActor(score);
         addActor(back);
     }
