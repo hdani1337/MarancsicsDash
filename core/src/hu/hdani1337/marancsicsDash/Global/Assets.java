@@ -34,6 +34,7 @@ public class Assets {
     public static final AssetDescriptor<TextureAtlas> ZSOLTI = new AssetDescriptor<TextureAtlas>("atlas/zsolti.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> MARANCSICS = new AssetDescriptor<TextureAtlas>("atlas/marancsics.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> TANK = new AssetDescriptor<TextureAtlas>("atlas/tank.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<TextureAtlas> COIN = new AssetDescriptor<TextureAtlas>("atlas/coin.atlas", TextureAtlas.class);
     //KÉPEK
     public static final AssetDescriptor<Texture> MENU_BG = new AssetDescriptor<Texture>("pic/menuBg.jpg",Texture.class);
     public static final AssetDescriptor<Texture> GAME_BG = new AssetDescriptor<Texture>("pic/bg.png",Texture.class);
@@ -66,6 +67,7 @@ public class Assets {
         manager.load(ZSOLTI);
         manager.load(MARANCSICS);
         manager.load(TANK);
+        manager.load(COIN);
         manager.load(FONT);
         manager.load(MENU_BG);
         manager.load(GAME_BG);

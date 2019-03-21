@@ -37,8 +37,8 @@ public class Zsolti extends OneSpriteAnimatedActor {
                     setRotation(getRotation() + delta * 30);
                 }
                 if (getY() >= 240) {
-                    setY(getY() + delta * 15);
-                    setRotation(getRotation() - delta * 40);
+                    setY(getY() + delta * 25);
+                    setRotation(getRotation() - delta * 90);
                     if (getY() >= 250) fall = true;
                 }
             }

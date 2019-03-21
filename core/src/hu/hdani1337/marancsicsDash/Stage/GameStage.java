@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
+import hu.hdani1337.marancsicsDash.Actor.Coin;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
 import hu.hdani1337.marancsicsDash.Actor.Tank;
@@ -20,12 +22,14 @@ import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class GameStage extends MyStage {
     Background bg1;
     Background bg2;
     Zsolti zsolti;
     Marancsics marancsics;
+    Coin coin;
     Tank tank;
     JumpIcon jumpIcon;
     PauseButton pauseButton;
@@ -34,6 +38,8 @@ public class GameStage extends MyStage {
     Sound kick;
     Sound crash;
     Music music;
+    Coin coinLabel;
+    MyLabel coinLabelText;
 
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
@@ -47,6 +53,10 @@ public class GameStage extends MyStage {
         music = Assets.manager.get(Assets.GAMEMUSIC);
 
         scoreLabel = new MyLabel(""+Tank.pontszam,game.getLabelStyle());
+
+
+        coinLabel = new Coin(false);
+        coinLabelText = new MyLabel("",game.getLabelStyle());
 
         if(muted){
             music.stop();
@@ -63,6 +73,7 @@ public class GameStage extends MyStage {
             public void act(float delta) {
                 super.act(delta);
                 scoreLabel.setText(""+Tank.pontszam);
+                coinLabelText.setText(""+Coin.coin);
 
                 if(OptionsStage.difficulty == 0){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
                     OptionsStage.difficulty = 2;
@@ -109,6 +120,8 @@ public class GameStage extends MyStage {
                                 crash.play();
                                 music.stop();
                             }
+                            preferences.putLong("coin",Coin.coin);
+                            preferences.flush();
                             game.setScreen(new CrashScreen(game));
                             Marancsics.tankComing = false;
                         }
@@ -120,6 +133,14 @@ public class GameStage extends MyStage {
                         music.pause();
                     }
                     game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
+                }
+
+                if(overlaps(zsolti,coin)){
+                    coin.felvette = true;
+                }
+
+                if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()){
+                    coin.felvette = false;
                 }
 
             }
@@ -184,6 +205,9 @@ public class GameStage extends MyStage {
         marancsics = new Marancsics();
         marancsics.setPosition(60,30);
 
+        coin = new Coin(true);
+        coin.setPosition(-100,-100);
+
         scoreLabel.setFontScale(1.5f);
         scoreLabel.setPosition(viewport.getWorldWidth()/2 - scoreLabel.getWidth()/2,viewport.getWorldHeight() - scoreLabel.getHeight()*1.5f);
 
@@ -193,6 +217,9 @@ public class GameStage extends MyStage {
         bg1.setX(0);
         bg2.setX(bg1.getWidth());
 
+        coinLabel.setPosition(15, Gdx.graphics.getHeight()-15-coinLabel.getHeight());
+        coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/2);
+
         addActor(bg1);
         addActor(bg2);
         addActor(zsolti);
@@ -201,6 +228,9 @@ public class GameStage extends MyStage {
         addActor(scoreLabel);
         addActor(jumpIcon);
         addActor(pauseButton);
+        addActor(coin);
+        addActor(coinLabel);
+        addActor(coinLabelText);
     }
 
     @Override
