@@ -8,10 +8,10 @@ import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class Coin extends OneSpriteAnimatedActor {
     public static boolean felvette = false;
-    private short minimum = 255;
-    private short maximum = 280;
+    private short minimum = 150;
+    private short maximum = 250;
     private boolean mozog;
-    public static long coin = preferences.getInteger("coin");
+    public static long coin = preferences.getLong("coin");
 
     public Coin(boolean act) {
         super(Assets.manager.get(Assets.COIN));
@@ -25,7 +25,7 @@ public class Coin extends OneSpriteAnimatedActor {
 
     public void newPosition(){
         int newY = (int)(Math.random() * maximum + minimum);
-        int newX = (int)(Math.random() * 5120 + 1280);
+        int newX = (int)(Math.random() * 7160 + 2560);
         setPosition(newX,newY);
     }
 

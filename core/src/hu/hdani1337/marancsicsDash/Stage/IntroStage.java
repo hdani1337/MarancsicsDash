@@ -27,8 +27,8 @@ public class IntroStage extends MyStage {
         marancsics = new Marancsics();
         zsolti = new Zsolti();
 
-        marancsics.setPosition(-390,30);
-        zsolti.setPosition(-200,30);
+        marancsics.setPosition(-420,30);
+        zsolti.setPosition(-160,30);
 
         Marancsics.intro = true;
         Zsolti.intro = true;

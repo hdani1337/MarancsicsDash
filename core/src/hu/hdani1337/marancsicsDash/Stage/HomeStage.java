@@ -118,6 +118,8 @@ public class HomeStage extends MyStage {
         textBackground5.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
         textBackground6.setSize(shop.getWidth() + 30, shop.getHeight() + 14);
 
+
+
         start.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

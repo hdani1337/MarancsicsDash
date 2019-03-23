@@ -16,6 +16,7 @@ public class Tank extends OneSpriteAnimatedActor {
 
     public Tank() {
         super(Assets.manager.get(Assets.TANK));
+        addBaseCollisionRectangleShape();
         switch (OptionsStage.difficulty){
             case 0: tankSpeed = 200;
             case 1: tankSpeed = 350;
@@ -23,16 +24,17 @@ public class Tank extends OneSpriteAnimatedActor {
         }
         setFps(24);
         setDebug(false);
+        if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        addBaseCollisionRectangleShape();
+
         if(Marancsics.tankComing == true){
-            setX(getX() + delta * 720);
-            setRotation(getRotation() - delta * 150);
-            setY(getY() + delta * 120);
+            setX(getX() + delta * 1080);
+            setRotation(getRotation() - delta * 180);
+            setY(getY() + delta * 85);
             if(getX() > Gdx.graphics.getWidth()){
                 if(!muted) {
                     crash.play();
@@ -61,8 +63,8 @@ public class Tank extends OneSpriteAnimatedActor {
 
                 switch (OptionsStage.difficulty){
                     case 0: tankSpeed += 20;
-                    case 1: tankSpeed += 35;
-                    case 2: tankSpeed += 50;
+                    case 1: tankSpeed += 30;
+                    case 2: tankSpeed += 40;
                 }
             }
         }

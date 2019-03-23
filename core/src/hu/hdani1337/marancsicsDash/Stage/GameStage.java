@@ -37,6 +37,7 @@ public class GameStage extends MyStage {
     Sound hee;
     Sound kick;
     Sound crash;
+    Sound coinSound;
     Music music;
     Coin coinLabel;
     MyLabel coinLabelText;
@@ -49,11 +50,11 @@ public class GameStage extends MyStage {
         hee = Assets.manager.get(Assets.HEE);
         kick = Assets.manager.get(Assets.KICK);
         crash = Assets.manager.get(Assets.CRASH);
+        coinSound = Assets.manager.get(Assets.COIN_SOUND);
 
         music = Assets.manager.get(Assets.GAMEMUSIC);
 
         scoreLabel = new MyLabel(""+Tank.pontszam,game.getLabelStyle());
-
 
         coinLabel = new Coin(false);
         coinLabelText = new MyLabel("",game.getLabelStyle());
@@ -137,6 +138,9 @@ public class GameStage extends MyStage {
 
                 if(overlaps(zsolti,coin)){
                     coin.felvette = true;
+                    if(!muted) {
+                        coinSound.play(1);
+                    }
                 }
 
                 if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()){
@@ -176,13 +180,17 @@ public class GameStage extends MyStage {
         zsolti = new Zsolti();
         if(backFromPause){
             zsolti.setRotation(zsoltiR);
-            zsolti.setPosition(250,zsoltiY);
+            zsolti.setY(zsoltiY);
+            if(Gdx.graphics.getWidth() >= 1920) zsolti.setX(350);
+            else zsolti.setX(250);
             if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
             if(zsoltiY > 30 &&zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
         }
         else{
-            zsolti.setPosition(250,30);
+            zsolti.setY(30);
         }
+        if(Gdx.graphics.getWidth() >= 1920) zsolti.setX(350);
+        else zsolti.setX(250);
 
         jumpIcon = new JumpIcon();
         jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
@@ -204,6 +212,7 @@ public class GameStage extends MyStage {
 
         marancsics = new Marancsics();
         marancsics.setPosition(60,30);
+        if(Gdx.graphics.getWidth() >= 1920) marancsics.setX(90);
 
         coin = new Coin(true);
         coin.setPosition(-100,-100);

@@ -34,7 +34,8 @@ public class ShopStage extends MyStage {
         myLabel = new MyLabel("Hamarosan!",game.getLabelStyle());
         myButton = new MyButton("Vissza a menübe",game.getButtonStyle());
         coinLabel = new Coin(false);
-        coinLabelText = new MyLabel(""+Coin.coin,game.getLabelStyle());
+        if(Coin.coin >= 0) coinLabelText = new MyLabel(""+Coin.coin,game.getLabelStyle());
+        else coinLabelText = new MyLabel("0",game.getLabelStyle());
 
         coinLabel.setPosition(15, Gdx.graphics.getHeight()-15-coinLabel.getHeight());
         coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/4);
