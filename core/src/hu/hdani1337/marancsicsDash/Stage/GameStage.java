@@ -115,16 +115,26 @@ public class GameStage extends MyStage {
                 }
 
                 if(overlaps(zsolti,tank)){
+                    if (tank.getRotation() <= 3)
+                        if(zsolti.getY() > 30 + tank.getHeight() / 4)
+                            if(zsolti.getY() <= tank.getY()+tank.getHeight())
+                                if(zsolti.getX() + zsolti.getWidth() > tank.getX())
+                                    if(zsolti.getX() < tank.getX() + tank.getWidth())
+                                    {
+                                        Zsolti.forcejump = true;
+                                        System.out.println("asdasdasdasdadsasdads");
+                                    }
 
-                            if(!muted){
-                                crash.play();
-                                music.stop();
-                            }
-                            preferences.putLong("coin",Coin.coin);
-                            preferences.flush();
-                            game.setScreen(new CrashScreen(game));
-                            Marancsics.tankComing = false;
-
+                    if(!Zsolti.forcejump) {
+                        if (!muted) {
+                            crash.play();
+                            music.stop();
+                        }
+                        preferences.putLong("coin", Coin.coin);
+                        preferences.flush();
+                        game.setScreen(new CrashScreen(game));
+                        Marancsics.tankComing = false;
+                    }
                 }
 
                 if(PauseButton.paused){

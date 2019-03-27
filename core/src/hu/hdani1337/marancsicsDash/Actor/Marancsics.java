@@ -13,7 +13,7 @@ public class Marancsics extends OneSpriteAnimatedActor {
         super(Assets.manager.get(Assets.MARANCSICS));
         setFps(8);
         setDebug(false);
-        if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
+        //if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
     }
 
     @Override

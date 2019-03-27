@@ -8,6 +8,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 
 public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean jump = false;
+    public static boolean forcejump = false;
     public static boolean fall = false;
     public static boolean intro = false;
 
@@ -16,9 +17,9 @@ public class Zsolti extends OneSpriteAnimatedActor {
         addCollisionShape("zsoltiHitbox",new MyRectangle(110,205,10,3));
         setFps(12);
         setDebug(false);
-        if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
+       /* if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
         System.out.println(getWidth());
-        System.out.println(getHeight());
+        System.out.println(getHeight());*/
     }
 
     @Override
@@ -26,13 +27,21 @@ public class Zsolti extends OneSpriteAnimatedActor {
         super.act(delta);
 
         if(fall){
-            setY(getY() - delta * 360);
-            setRotation(getRotation() - delta * 30);
-            if (getY() <= 30) {
-                setY(30);
-                setRotation(0);
-                jump = false;
+            if(forcejump)
+            {
                 fall = false;
+                jump = true;
+                forcejump = false;
+            }
+            else {
+                setY(getY() - delta * 360);
+                setRotation(getRotation() - delta * 30);
+                if (getY() <= 30) {
+                    setY(30);
+                    setRotation(0);
+                    jump = false;
+                    fall = false;
+                }
             }
         }
 
@@ -45,7 +54,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
                 if (getY() >= 275) {
                     setY(getY() + delta * 90);
                     setRotation(getRotation() - delta * 25);
-                    if (getY() >= 290) fall = true;
+                    if (getY() >= 285) fall = true;
                 }
             }
         }

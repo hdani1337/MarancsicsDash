@@ -26,7 +26,7 @@ public class Tank extends OneSpriteAnimatedActor {
         }
         setFps(24);
         setDebug(false);
-        if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
+        //if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.8f,getHeight()*1.8f);
     }
 
     @Override

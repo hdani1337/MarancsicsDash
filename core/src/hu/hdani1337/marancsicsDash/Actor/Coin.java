@@ -41,7 +41,7 @@ public class Coin extends OneSpriteAnimatedActor {
                 newPosition();
             }
 
-            System.out.println(coin);
+            //System.out.println(coin);
 
             if (OptionsStage.difficulty == 1) setX(getX() - 5);
             if (OptionsStage.difficulty == 2) setX(getX() - 10);
