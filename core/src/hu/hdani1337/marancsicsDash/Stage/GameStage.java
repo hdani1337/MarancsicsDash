@@ -114,9 +114,8 @@ public class GameStage extends MyStage {
                     marancsics.tankComing = true;
                 }
 
-                if(tank.getX() + 30 >= zsolti.getX()){
-                    if(tank.getX() + 30 <= zsolti.getX() + zsolti.getWidth()){
-                        if(zsolti.getY() <= tank.getY() + 140){
+                if(overlaps(zsolti,tank)){
+
                             if(!muted){
                                 crash.play();
                                 music.stop();
@@ -125,8 +124,7 @@ public class GameStage extends MyStage {
                             preferences.flush();
                             game.setScreen(new CrashScreen(game));
                             Marancsics.tankComing = false;
-                        }
-                    }
+
                 }
 
                 if(PauseButton.paused){

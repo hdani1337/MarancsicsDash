@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyCircle;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
@@ -16,14 +18,14 @@ public class Tank extends OneSpriteAnimatedActor {
 
     public Tank() {
         super(Assets.manager.get(Assets.TANK));
-        addBaseCollisionRectangleShape();
+        addCollisionShape("tankHitbox", new MyRectangle(240,100,36,110));
         switch (OptionsStage.difficulty){
             case 0: tankSpeed = 200;
             case 1: tankSpeed = 350;
             case 2: tankSpeed = 500;
         }
         setFps(24);
-        setDebug(false);
+        //setDebug(false);
         if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
     }
 
