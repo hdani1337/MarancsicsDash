@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 
 public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean jump = false;
@@ -47,14 +48,14 @@ public class Zsolti extends OneSpriteAnimatedActor {
 
         else {
             if (jump) {
-                if (getY() < 275) {
+                if (getY() < JumpIcon.jumpHeight) {
                     setY(getY() + delta * 280);
                     setRotation(getRotation() + delta * 30);
                 }
-                if (getY() >= 275) {
+                if (getY() >= JumpIcon.jumpHeight) {
                     setY(getY() + delta * 90);
                     setRotation(getRotation() - delta * 25);
-                    if (getY() >= 285) fall = true;
+                    if (getY() >= (JumpIcon.jumpHeight + 10)) fall = true;
                 }
             }
         }

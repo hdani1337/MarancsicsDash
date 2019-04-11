@@ -122,7 +122,6 @@ public class GameStage extends MyStage {
                                     if(zsolti.getX() < tank.getX() + tank.getWidth())
                                     {
                                         Zsolti.forcejump = true;
-                                        System.out.println("asdasdasdasdadsasdads");
                                     }
 
                     if(!Zsolti.forcejump) {
