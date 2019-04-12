@@ -101,7 +101,7 @@ public class GameStage extends MyStage {
                     }
                 }
 
-                if(tank.getX() + 60 <= marancsics.getX() + marancsics.getWidth()){
+                if(overlaps(marancsics,tank)){
                     if(!muted) {
                         kick.play();
                         Timer.schedule(new Timer.Task() {
