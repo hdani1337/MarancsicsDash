@@ -17,6 +17,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PlayButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
+import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class PauseStage extends MyStage {
@@ -31,6 +32,12 @@ public class PauseStage extends MyStage {
 
     public PauseStage(Viewport viewport, Batch batch, final marancsicsGame game, final float tankX, final float tankY, final float zsoltiR, final float zsoltiY) {
         super(viewport, batch, game);
+
+        PauseScreen.tankXT = tankX;
+        PauseScreen.tankYT = tankY;
+        PauseScreen.zsoltiRT = zsoltiR;
+        PauseScreen.zsoltiYT = zsoltiY;
+
         background = new Background(Assets.manager.get(Assets.GAME_BG));
 
         textBackground = new TextBackground();

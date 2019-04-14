@@ -35,10 +35,10 @@ public class HomeStage extends MyStage {
     MyButton exit;
     MyButton shop;
     Background bg;
-    Sound uraim;
-    Sound hee;
+    public static Sound uraim;
+    public static Sound hee;
     OneSpriteStaticActor logo;
-    Music music;
+    public static Music music;
     TextBackground textBackground1;
     TextBackground textBackground2;
     TextBackground textBackground3;
