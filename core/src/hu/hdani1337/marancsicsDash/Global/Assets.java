@@ -44,6 +44,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> JUMP = new AssetDescriptor<Texture>("pic/jump.png",Texture.class);
     public static final AssetDescriptor<Texture> PAUSE = new AssetDescriptor<Texture>("pic/pause.png",Texture.class);
     public static final AssetDescriptor<Texture> PLAY = new AssetDescriptor<Texture>("pic/play.png",Texture.class);
+    public static final AssetDescriptor<Texture> RED = new AssetDescriptor<Texture>("pic/piros.png",Texture.class);
+    public static final AssetDescriptor<Texture> GREEN = new AssetDescriptor<Texture>("pic/zöld.png",Texture.class);
     //BETŰTÍPUSOK
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
     //HANGOK
@@ -86,6 +88,8 @@ public class Assets {
         manager.load(GAMEMUSIC);
         manager.load(COIN_SOUND);
         manager.load(MARANCSICS_BOSS);
+        manager.load(RED);
+        manager.load(GREEN);
     }
 
     public static void unload() {

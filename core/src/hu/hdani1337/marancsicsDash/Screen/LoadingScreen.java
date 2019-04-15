@@ -40,7 +40,7 @@ public class LoadingScreen extends MyScreen {
         bitmapFont.draw(spriteBatch,"Betöltés..." + " (" + ((int)(Assets.manager.getProgress()*100f)) + "%)",marancsics.getX()-5,marancsics.getY() - 20);
         spriteBatch.end();
         if (Assets.manager.update()) {
-            game.setScreen(new HomeScreen(game));
+            game.setScreen(new BossScreen(game));
         }
     }
 

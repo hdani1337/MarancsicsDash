@@ -4,6 +4,9 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 
 public class MarancsicsBoss extends OneSpriteAnimatedActor {
+
+    public static byte marancsicsHealth = 100;
+
     public MarancsicsBoss() {
         super(Assets.manager.get(Assets.MARANCSICS_BOSS));
         setFps(18);
