@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.AntiHealth;
 import hu.hdani1337.marancsicsDash.Stage.BossStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 

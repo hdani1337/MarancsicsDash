@@ -1,6 +1,8 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
@@ -15,17 +17,19 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.Health;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Actor.MarancsicsBoss.marancsicsHealth;
+
 public class BossStage extends MyStage {
 
     MyLabel marancsicsElete;
+    Background background;
+    MarancsicsBoss marancsicsBoss;
+    Zsolti zsolti;
+    Health health;
+    AntiHealth antiHealth;
 
     public BossStage(Viewport viewport, Batch batch, marancsicsGame game) {
         super(viewport, batch, game);
-        Background background;
-        MarancsicsBoss marancsicsBoss;
-        Zsolti zsolti;
-        Health health;
-        AntiHealth antiHealth;
 
         marancsicsElete = new MyLabel("Marancsics élete",game.getLabelStyle());
         health = new Health(viewport);
@@ -45,6 +49,17 @@ public class BossStage extends MyStage {
         addActor(health);
         addActor(antiHealth);
         addActor(marancsicsElete);
+
+        zsolti.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                marancsicsHealth -= 5;
+                if(marancsicsHealth < 0) marancsicsHealth = 0;
+                else if(marancsicsHealth > 99.9) marancsicsHealth = 99.9f;
+                System.out.println(marancsicsHealth);
+            }
+        });
 
     }
 
