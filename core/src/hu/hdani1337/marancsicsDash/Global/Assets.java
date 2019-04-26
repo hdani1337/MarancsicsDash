@@ -46,6 +46,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> PLAY = new AssetDescriptor<Texture>("pic/play.png",Texture.class);
     public static final AssetDescriptor<Texture> RED = new AssetDescriptor<Texture>("pic/piros.png",Texture.class);
     public static final AssetDescriptor<Texture> GREEN = new AssetDescriptor<Texture>("pic/zöld.png",Texture.class);
+    public static final AssetDescriptor<Texture> LIGHTSABER = new AssetDescriptor<Texture>("pic/lightSaber.png",Texture.class);
     //BETŰTÍPUSOK
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
     //HANGOK
@@ -90,6 +91,7 @@ public class Assets {
         manager.load(MARANCSICS_BOSS);
         manager.load(RED);
         manager.load(GREEN);
+        manager.load(LIGHTSABER);
     }
 
     public static void unload() {
