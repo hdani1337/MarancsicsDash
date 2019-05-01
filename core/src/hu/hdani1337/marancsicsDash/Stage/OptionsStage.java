@@ -14,6 +14,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
@@ -21,6 +22,7 @@ import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 
 public class OptionsStage extends MyStage {
     public static int difficulty;
+    public static int gamemode;
     public static final Preferences preferences = Gdx.app.getPreferences("marancsicsDashSave");;
 
     Background background;
@@ -30,22 +32,26 @@ public class OptionsStage extends MyStage {
     MyLabel difType; //Könnyű/Normál/Nehéz
     MyLabel dif; //Nehézség:
     MyLabel muting;//Némítás:
+    MyLabel mode;//Játékmód:
+    MyButton modeType;//Story/Endless
     MyButton mutedButton;//Nincs némítva/Némítva
     OneSpriteStaticActor textbg;//nehézség háttere
     OneSpriteStaticActor textbg2;//némítás háttere
     OneSpriteStaticActor textbg3;//visszalépés háttere
+    OneSpriteStaticActor textbg4;//játékmód háttere
     Music music;//zene, hogy lelehessen állítani
 
     public OptionsStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         difficulty = preferences.getInteger("difficulty");
+        gamemode = preferences.getInteger("gamemode");
         muted = preferences.getBoolean("muted");
-
-        System.out.println(difficulty);
 
         if(difficulty != 1 && difficulty != 2 && difficulty !=3){//ha nincs elmentve nehézség, akkor legyen normál
             difficulty = 2;
         }
+
+        if(gamemode != 1 && gamemode != 2) gamemode = 1;//ugyanez a játékmóddal is
 
         background = new Background(Assets.manager.get(Assets.MENU_BG));
         difPlus = new MyButton("+",game.getButtonStyle());
@@ -132,6 +138,7 @@ public class OptionsStage extends MyStage {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 preferences.putInteger("difficulty",difficulty);
+                preferences.putInteger("gamemode",gamemode);
                 preferences.putBoolean("muted",muted);
                 preferences.flush();
                 game.setScreen(new HomeScreen(game));
@@ -151,6 +158,37 @@ public class OptionsStage extends MyStage {
             }
         });
 
+
+        mode = new MyLabel("Játékmód: ",game.getLabelStyle());
+        modeType = new MyButton("",game.getButtonStyle());
+
+        textbg4 = new TextBackground(){
+            @Override
+            public void act(float delta) {
+                super.act(delta);
+                if(gamemode == 1){
+                    modeType.setText("Story");
+                }
+                else{
+                    modeType.setText("Endless");
+                }
+            }
+        };
+
+        modeType.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                if(gamemode == 1){
+                    gamemode = 2;
+                }
+                else{
+                    gamemode = 1;
+                }
+            }
+        });
+
+
         dif.setPosition(30,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
         textbg.setPosition(dif.getX() - 20,dif.getY() - 8);
         textbg.setSize(400,dif.getHeight()*1.5f);
@@ -168,7 +206,11 @@ public class OptionsStage extends MyStage {
         textbg3.setPosition(back.getX()-15,back.getY()-10);
         muting.setPosition(textbg2.getX() + 18,textbg2.getY() + textbg2.getHeight()/6);
         mutedButton.setPosition(muting.getX() + 250,muting.getY());
-
+        textbg4.setPosition(textbg2.getX(), textbg2.getY() - 100);
+        textbg4.setWidth(textbg.getWidth());
+        textbg4.setHeight(textbg.getHeight());
+        mode.setPosition(textbg4.getX() + 18,textbg4.getY() + textbg4.getHeight()/6);
+        modeType.setPosition(mode.getX() + mode.getWidth()*1.55f, mode.getY());
 
         addActor(background);
         addActor(textbg);
@@ -181,6 +223,9 @@ public class OptionsStage extends MyStage {
         addActor(textbg2);
         addActor(muting);
         addActor(mutedButton);
+        addActor(textbg4);
+        addActor(mode);
+        addActor(modeType);
     }
 
     @Override

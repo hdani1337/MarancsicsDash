@@ -54,7 +54,7 @@ public class HomeStage extends MyStage {
         shop = new MyButton("Bolt",game.getButtonStyle());
         options = new MyButton("Beállítások",game.getButtonStyle());
         exit = new MyButton("Kilépés",game.getButtonStyle());
-        ver = new MyLabel("Verzió: 0.5 Beta",game.getLabelStyle());
+        ver = new MyLabel("Verzió: 0.6 Beta",game.getLabelStyle());
         bg = new Background(Assets.manager.get(Assets.MENU_BG));
         uraim = Assets.manager.get(Assets.URAIM);
         hee = Assets.manager.get(Assets.HEE);
@@ -117,8 +117,6 @@ public class HomeStage extends MyStage {
         textBackground4.setSize(exit.getWidth() + 30, exit.getHeight() + 14);
         textBackground5.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
         textBackground6.setSize(shop.getWidth() + 30, shop.getHeight() + 14);
-
-
 
         start.addListener(new ClickListener(){
             @Override

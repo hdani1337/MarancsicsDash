@@ -46,7 +46,6 @@ public class Assets {
     public static final AssetDescriptor<Texture> PLAY = new AssetDescriptor<Texture>("pic/play.png",Texture.class);
     public static final AssetDescriptor<Texture> RED = new AssetDescriptor<Texture>("pic/piros.png",Texture.class);
     public static final AssetDescriptor<Texture> GREEN = new AssetDescriptor<Texture>("pic/zöld.png",Texture.class);
-    public static final AssetDescriptor<Texture> LIGHTSABER = new AssetDescriptor<Texture>("pic/lightSaber.png",Texture.class);
     //BETŰTÍPUSOK
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
     //HANGOK
@@ -55,9 +54,11 @@ public class Assets {
     public static final AssetDescriptor<Sound> KICK = new AssetDescriptor<Sound>("sound/kick.wav",Sound.class);
     public static final AssetDescriptor<Sound> CRASH = new AssetDescriptor<Sound>("sound/crash.wav",Sound.class);
     public static final AssetDescriptor<Sound> COIN_SOUND = new AssetDescriptor<Sound>("sound/coin.mp3",Sound.class);
+    public static final AssetDescriptor<Sound> GLASSBREAK = new AssetDescriptor<Sound>("sound/glass.wav",Sound.class);
     //ZENE
     public static final AssetDescriptor<Music> MENUMUSIC = new AssetDescriptor<Music>("music/menuMusic.mp3",Music.class);
     public static final AssetDescriptor<Music> GAMEMUSIC = new AssetDescriptor<Music>("music/gameMusic.mp3",Music.class);
+    public static final AssetDescriptor<Music> BOSSMUSIC = new AssetDescriptor<Music>("music/bossMusic.mp3",Music.class);
 
     public static void prepare() {
         manager = new AssetManager();
@@ -87,11 +88,12 @@ public class Assets {
         manager.load(PLAY);
         manager.load(MENUMUSIC);
         manager.load(GAMEMUSIC);
+        manager.load(BOSSMUSIC);
         manager.load(COIN_SOUND);
+        manager.load(GLASSBREAK);
         manager.load(MARANCSICS_BOSS);
         manager.load(RED);
         manager.load(GREEN);
-        manager.load(LIGHTSABER);
     }
 
     public static void unload() {

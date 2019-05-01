@@ -17,6 +17,7 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
+import hu.hdani1337.marancsicsDash.Screen.BossScreen;
 import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
@@ -41,9 +42,11 @@ public class GameStage extends MyStage {
     Music music;
     Coin coinLabel;
     MyLabel coinLabelText;
+    int bossScore = (int)(Math.random() * 15 + 10);
 
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
+        System.out.println(bossScore);
 
         Zsolti.jump = false; //Ne ugorjon magától az elején
 
@@ -112,6 +115,12 @@ public class GameStage extends MyStage {
                         }, 0.3f);
                     }
                     marancsics.tankComing = true;
+                }
+
+                if(Tank.pontszam >= bossScore && OptionsStage.gamemode == 1)
+                {
+                    music.stop();
+                    game.setScreen(new BossScreen(game));
                 }
 
                 if(overlaps(zsolti,tank)){
