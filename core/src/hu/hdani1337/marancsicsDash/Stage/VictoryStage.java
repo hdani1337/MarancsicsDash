@@ -5,12 +5,16 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
+import hu.hdani1337.marancsicsDash.Actor.MarancsicsBoss;
+import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
+
+import static hu.hdani1337.marancsicsDash.Stage.BossStage.bossMusic;
 
 public class VictoryStage extends MyStage {
 
@@ -55,6 +59,9 @@ public class VictoryStage extends MyStage {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
+                bossMusic.stop();
+                Tank.pontszam = 0;
+                MarancsicsBoss.marancsicsHealth = 99.9f;
                 game.setScreen(new HomeScreen(game));
             }
         }, 15);
