@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
+import hu.hdani1337.marancsicsDash.Actor.MarancsicsBoss;
 import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
@@ -15,6 +16,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PlayButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
+import hu.hdani1337.marancsicsDash.Screen.BossScreen;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
@@ -29,6 +31,7 @@ public class PauseStage extends MyStage {
     MyButton back;
     TextBackground textBackground;
     private int speed = 2;
+    public static boolean fromBoss;
 
     public PauseStage(Viewport viewport, Batch batch, final marancsicsGame game, final float tankX, final float tankY, final float zsoltiR, final float zsoltiY) {
         super(viewport, batch, game);
@@ -59,7 +62,8 @@ public class PauseStage extends MyStage {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 PauseButton.paused = false;
-                game.setScreen(new GameScreen(game, tankX, tankY,zsoltiR,zsoltiY, true));
+                if(fromBoss) game.setScreen(new BossScreen(game, tankX, tankY,zsoltiR,zsoltiY, true));
+                else game.setScreen(new GameScreen(game, tankX, tankY,zsoltiR,zsoltiY, true));
             }
         });
 
@@ -69,6 +73,7 @@ public class PauseStage extends MyStage {
                 super.clicked(event, x, y);
                 PauseButton.paused = false;
                 Tank.pontszam = 0;
+                MarancsicsBoss.marancsicsHealth = 99.9f;
                 game.setScreen(new HomeScreen(game));
             }
         });

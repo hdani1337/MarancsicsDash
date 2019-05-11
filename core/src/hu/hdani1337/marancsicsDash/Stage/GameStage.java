@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Coin;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.InstantBoss;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
 import hu.hdani1337.marancsicsDash.Actor.Tank;
@@ -42,6 +45,7 @@ public class GameStage extends MyStage {
     Music music;
     Coin coinLabel;
     MyLabel coinLabelText;
+    InstantBoss instantBoss = new InstantBoss();
     int bossScore = (int)(Math.random() * 15 + 10);
 
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
@@ -120,7 +124,7 @@ public class GameStage extends MyStage {
                 if(Tank.pontszam >= bossScore && OptionsStage.gamemode == 1)
                 {
                     music.stop();
-                    game.setScreen(new BossScreen(game));
+                    game.setScreen(new BossScreen(game,0,0,0,0,false));
                 }
 
                 if(overlaps(zsolti,tank)){
@@ -149,6 +153,7 @@ public class GameStage extends MyStage {
                     if(!muted){
                         music.pause();
                     }
+                    PauseStage.fromBoss = false;
                     game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
                 }
 
@@ -256,6 +261,22 @@ public class GameStage extends MyStage {
         addActor(coin);
         addActor(coinLabel);
         addActor(coinLabelText);
+
+        if(ShopStage.boughtInstantBoss)
+        {
+            instantBoss.setSize(jumpIcon.getWidth(),jumpIcon.getHeight());
+            instantBoss.setPosition(jumpIcon.getX(),(((pauseButton.getY() + pauseButton.getHeight()) - (jumpIcon.getY()+jumpIcon.getHeight())))/2);
+            instantBoss.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    music.stop();
+                    game.setScreen(new BossScreen(game,0,0,0,0,false));
+                }
+            });
+            addActor(instantBoss);
+        }
     }
 
     @Override

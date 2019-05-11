@@ -10,6 +10,6 @@ public class Health extends OneSpriteStaticActor {
         super(Assets.manager.get(Assets.GREEN));
         setDebug(false);
         setSize(viewport.getWorldWidth() * 0.80f,60);
-        setPosition(viewport.getWorldWidth() / 2 - getWidth() / 2, viewport.getWorldHeight() - 100);
+        setPosition(40, viewport.getWorldHeight() - 125);
     }
 }

@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -16,13 +17,14 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.AntiHealth;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.Health;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
+import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
+import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.Screen.VictoryScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Actor.MarancsicsBoss.marancsicsHealth;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
-import static hu.hdani1337.marancsicsDash.Stage.HomeStage.hee;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 
 public class BossStage extends MyStage {
@@ -35,12 +37,13 @@ public class BossStage extends MyStage {
     Health health;
     AntiHealth antiHealth;
     JumpIcon jumpIcon;
+    PauseButton pauseButton;
     Sound hee = Assets.manager.get(Assets.HEE);
     Sound crash = Assets.manager.get(Assets.CRASH);
     Sound glassbreak = Assets.manager.get(Assets.GLASSBREAK);
     public static Music bossMusic = Assets.manager.get(Assets.BOSSMUSIC);
 
-    public BossStage(Viewport viewport, Batch batch, marancsicsGame game) {
+    public BossStage(Viewport viewport, Batch batch, final marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
 
         if(!muted)
@@ -54,8 +57,7 @@ public class BossStage extends MyStage {
         health = new Health(viewport);
         antiHealth = new AntiHealth(health.getWidth(),health.getY(),health.getX());
         jumpIcon = new JumpIcon();
-
-        marancsicsElete.setPosition(health.getX()+health.getWidth()/2-marancsicsElete.getWidth()/2,health.getY()+health.getHeight()/2-marancsicsElete.getHeight()/2);
+        pauseButton = new PauseButton();
 
         background = new Background(Assets.manager.get(Assets.GAME_BG));
         background2 = new Background(Assets.manager.get(Assets.GAME_BG));
@@ -64,8 +66,9 @@ public class BossStage extends MyStage {
         marancsicsBoss = new MarancsicsBoss(viewport);
         zsolti = new Zsolti();
 
-        zsolti.setPosition(30,30);
-
+        marancsicsElete.setPosition(health.getX()+health.getWidth()/2-marancsicsElete.getWidth()/2,health.getY()+health.getHeight()/2-marancsicsElete.getHeight()/2);
+        jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
+        pauseButton.setPosition(jumpIcon.getX(),viewport.getWorldHeight() - pauseButton.getHeight() - 15);
         marancsicsBoss.setX(viewport.getWorldWidth()+marancsicsBoss.getWidth());
 
         addActor(background);
@@ -76,8 +79,7 @@ public class BossStage extends MyStage {
         addActor(antiHealth);
         addActor(marancsicsElete);
         addActor(jumpIcon);
-
-        jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
+        addActor(pauseButton);
 
         zsolti.addListener(new ClickListener(){
             @Override
@@ -89,6 +91,17 @@ public class BossStage extends MyStage {
                 System.out.println(marancsicsHealth);
             }
         });
+
+        if(backFromPause){
+            zsolti.setRotation(zsoltiR);
+            zsolti.setPosition(30, zsoltiY);
+            if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            if(zsoltiY > 30 && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
+            marancsicsBoss.setPosition(bossX,bossY);
+        }
+        else{
+            zsolti.setPosition(30,30);
+        }
 
     }
 
@@ -102,6 +115,14 @@ public class BossStage extends MyStage {
         super.act(delta);
         background.setX(background.getX()-5);
         background2.setX(background2.getX()-5);
+
+        if(PauseButton.paused){
+            if(!muted){
+                bossMusic.pause();
+            }
+            PauseStage.fromBoss = true;
+            game.setScreen(new PauseScreen(game,marancsicsBoss.getX(),marancsicsBoss.getY(),zsolti.getRotation(),zsolti.getY()));
+        }
 
         if (background.getX() + background.getWidth() <= 0) background.setX(background2.getX()+background2.getWidth());
         if (background2.getX() + background2.getWidth() <= 0) background2.setX(background.getX()+background.getWidth());

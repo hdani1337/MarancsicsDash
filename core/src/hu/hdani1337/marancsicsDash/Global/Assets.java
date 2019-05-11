@@ -46,6 +46,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> PLAY = new AssetDescriptor<Texture>("pic/play.png",Texture.class);
     public static final AssetDescriptor<Texture> RED = new AssetDescriptor<Texture>("pic/piros.png",Texture.class);
     public static final AssetDescriptor<Texture> GREEN = new AssetDescriptor<Texture>("pic/zöld.png",Texture.class);
+    public static final AssetDescriptor<Texture> INSTANTBOSS = new AssetDescriptor<Texture>("pic/instantBoss.png",Texture.class);
     //BETŰTÍPUSOK
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
     //HANGOK
@@ -55,6 +56,7 @@ public class Assets {
     public static final AssetDescriptor<Sound> CRASH = new AssetDescriptor<Sound>("sound/crash.wav",Sound.class);
     public static final AssetDescriptor<Sound> COIN_SOUND = new AssetDescriptor<Sound>("sound/coin.mp3",Sound.class);
     public static final AssetDescriptor<Sound> GLASSBREAK = new AssetDescriptor<Sound>("sound/glass.wav",Sound.class);
+    public static final AssetDescriptor<Sound> PAY = new AssetDescriptor<Sound>("sound/pay.mp3",Sound.class);
     //ZENE
     public static final AssetDescriptor<Music> MENUMUSIC = new AssetDescriptor<Music>("music/menuMusic.mp3",Music.class);
     public static final AssetDescriptor<Music> GAMEMUSIC = new AssetDescriptor<Music>("music/gameMusic.mp3",Music.class);
@@ -94,6 +96,8 @@ public class Assets {
         manager.load(MARANCSICS_BOSS);
         manager.load(RED);
         manager.load(GREEN);
+        manager.load(INSTANTBOSS);
+        manager.load(PAY);
     }
 
     public static void unload() {

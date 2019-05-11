@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
-import hu.hdani1337.marancsicsDash.Actor.Coin;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
@@ -22,6 +21,7 @@ import hu.hdani1337.marancsicsDash.Screen.IntroScreen;
 import hu.hdani1337.marancsicsDash.Screen.OptionsScreen;
 import hu.hdani1337.marancsicsDash.Screen.ShopScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
+import static hu.hdani1337.marancsicsDash.Stage.BossStage.bossMusic;
 
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
@@ -49,6 +49,7 @@ public class HomeStage extends MyStage {
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
+        bossMusic.stop();
         start = new MyButton("A játék indítása",game.getButtonStyle());
         info = new MyButton("A játékról",game.getButtonStyle());
         shop = new MyButton("Bolt",game.getButtonStyle());

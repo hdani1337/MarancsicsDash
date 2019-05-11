@@ -1,16 +1,15 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
+import hu.hdani1337.marancsicsDash.Actor.MarancsicsBoss;
 import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.TextBackground;
@@ -50,6 +49,7 @@ public class CrashStage extends MyStage {
         }
 
         Tank.pontszam = 0;
+        MarancsicsBoss.marancsicsHealth = 99.9f;
 
         text1 = new TextBackground();
         text2 = new TextBackground();
