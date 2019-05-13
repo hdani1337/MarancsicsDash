@@ -13,7 +13,7 @@ public class VictoryScreen extends MyScreen {
 
     public VictoryScreen(marancsicsGame game) {
         super(game);
-        victoryStage = new VictoryStage(new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()),spriteBatch,game);
+        victoryStage = new VictoryStage(new FitViewport(1280,720),spriteBatch,game);
         Gdx.input.setInputProcessor(victoryStage);
     }
 

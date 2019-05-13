@@ -2,6 +2,7 @@ package hu.hdani1337.marancsicsDash.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.IntroStage;
@@ -12,7 +13,7 @@ public class IntroScreen extends MyScreen {
 
     public IntroScreen(marancsicsGame game) {
         super(game);
-        introStage = new IntroStage(new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()),spriteBatch,game);
+        introStage = new IntroStage(new FitViewport(1280,720),spriteBatch,game);
         Gdx.input.setInputProcessor(introStage);
     }
 

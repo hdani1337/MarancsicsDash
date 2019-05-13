@@ -21,7 +21,7 @@ public class BossScreen extends MyScreen {
 
     public BossScreen(marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(game);
-        bossStage = new BossStage(new  ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()), spriteBatch, game,  bossX,  bossY,  zsoltiR,  zsoltiY,  backFromPause);
+        bossStage = new BossStage(new  ExtendViewport(1280,720), spriteBatch, game,  bossX,  bossY,  zsoltiR,  zsoltiY,  backFromPause);
         Gdx.input.setInputProcessor(bossStage);
     }
 

@@ -70,7 +70,7 @@ public class ShopStage extends MyStage {
 
         instantBoss.setPosition(viewport.getWorldWidth()/2-instantBoss.getWidth()/2,viewport.getWorldHeight()/2-instantBoss.getHeight()/2);
 
-        coinLabel.setPosition(15, Gdx.graphics.getHeight()-15-coinLabel.getHeight());
+        coinLabel.setPosition(15, viewport.getWorldHeight()-15-coinLabel.getHeight());
         coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/4);
 
         textBackground.setSize(myLabel.getWidth() + 48,myLabel.getHeight()+24);

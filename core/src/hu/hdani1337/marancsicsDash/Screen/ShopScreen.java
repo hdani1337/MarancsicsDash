@@ -12,7 +12,7 @@ public class ShopScreen extends MyScreen {
 
     public ShopScreen(marancsicsGame game) {
         super(game);
-        shopStage = new ShopStage(new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()),spriteBatch,game);
+        shopStage = new ShopStage(new FitViewport(1280,720),spriteBatch,game);
         Gdx.input.setInputProcessor(shopStage);
     }
 

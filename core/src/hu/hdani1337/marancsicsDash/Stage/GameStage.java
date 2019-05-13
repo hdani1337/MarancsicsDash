@@ -233,7 +233,6 @@ public class GameStage extends MyStage {
 
         marancsics = new Marancsics();
         marancsics.setPosition(60,30);
-        if(Gdx.graphics.getWidth() >= 1920) marancsics.setX(90);
 
         coin = new Coin(true);
         coin.setPosition(-100,-100);
@@ -247,7 +246,7 @@ public class GameStage extends MyStage {
         bg1.setX(0);
         bg2.setX(bg1.getWidth());
 
-        coinLabel.setPosition(15, Gdx.graphics.getHeight()-15-coinLabel.getHeight());
+        coinLabel.setPosition(15, viewport.getWorldHeight()-15-coinLabel.getHeight());
         coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/2);
 
         addActor(bg1);

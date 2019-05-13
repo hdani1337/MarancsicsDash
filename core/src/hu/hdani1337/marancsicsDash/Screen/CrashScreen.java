@@ -14,7 +14,7 @@ public class CrashScreen extends MyScreen {
 
     public CrashScreen(marancsicsGame game) {
         super(game);
-        crashStage = new CrashStage(new ExtendViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()), spriteBatch, game);
+        crashStage = new CrashStage(new ExtendViewport(1280,720), spriteBatch, game);
         Gdx.input.setInputProcessor(crashStage);
     }
 
