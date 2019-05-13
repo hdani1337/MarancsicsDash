@@ -26,7 +26,7 @@ public class VictoryStage extends MyStage {
 
     public VictoryStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        background = new Background(Assets.manager.get(Assets.GAME_BG));
+        background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
         congratulations = new MyLabel("Gratulálok! Legyözted Marancsicsot!",game.getLabelStyle());
         thanks = new MyLabel("Köszönöm, hogy végigjátszottad a játékot!\nPár hónap kódolás, kép és zenelopkodás után végre \nelkészült a Marancsics Dash címü játék. Köszönöm a\nközremüködést Marancsics Tamás tanárúrnak a hangokért,\ntovábbá a családomnak és osztálytársaimnak a támogatását!",game.getLabelStyle());
 

@@ -41,7 +41,7 @@ public class PauseStage extends MyStage {
         PauseScreen.zsoltiRT = zsoltiR;
         PauseScreen.zsoltiYT = zsoltiY;
 
-        background = new Background(Assets.manager.get(Assets.GAME_BG));
+        background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
 
         textBackground = new TextBackground();
 

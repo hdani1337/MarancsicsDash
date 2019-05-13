@@ -7,11 +7,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 
 public class Background extends OneSpriteStaticActor {
-    public Background(Texture Háttér) {
+    public Background(Texture Háttér, Viewport viewport) {
         super(Háttér);
         setDebug(false);
-        setWidth(1280);
-        setHeight(720);
+        setWidth(viewport.getWorldWidth());
+        setHeight(viewport.getWorldHeight());
         setPosition(0,0);
     }
 

@@ -76,7 +76,7 @@ public class GameStage extends MyStage {
             music.play();
         }
 
-        bg1 = new Background(Assets.manager.get(Assets.GAME_BG)){
+        bg1 = new Background(Assets.manager.get(Assets.GAME_BG),viewport){
             @Override
             public void act(float delta) {
                 super.act(delta);
@@ -171,7 +171,7 @@ public class GameStage extends MyStage {
             }
         };
 
-        bg2 = new Background(Assets.manager.get(Assets.GAME_BG)){
+        bg2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport){
             @Override
             public void act(float delta) {
                 super.act(delta);

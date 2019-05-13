@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
@@ -21,7 +22,7 @@ public class BossScreen extends MyScreen {
 
     public BossScreen(marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(game);
-        bossStage = new BossStage(new  ExtendViewport(1280,720), spriteBatch, game,  bossX,  bossY,  zsoltiR,  zsoltiY,  backFromPause);
+        bossStage = new BossStage(new FitViewport(1280,720), spriteBatch, game,  bossX,  bossY,  zsoltiR,  zsoltiY,  backFromPause);
         Gdx.input.setInputProcessor(bossStage);
     }
 

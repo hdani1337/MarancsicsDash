@@ -36,7 +36,7 @@ public class ShopStage extends MyStage {
 
     public ShopStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        background = new Background(Assets.manager.get(Assets.MENU_BG));
+        background = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
         textBackground = new TextBackground();
         textBackground2 = new TextBackground();
         myLabel = new MyLabel("Instant Boss\nÁr: 100",game.getLabelStyle());

@@ -24,7 +24,7 @@ public class InfoStage extends MyStage {
 
     public InfoStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        bg = new Background(Assets.manager.get(Assets.MENU_BG));
+        bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
 
         textBG = new OneSpriteStaticActor(Assets.manager.get(Assets.TEXT_BG)){
             @Override

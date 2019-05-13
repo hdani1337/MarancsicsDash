@@ -59,17 +59,9 @@ public class Zsolti extends OneSpriteAnimatedActor {
 
         if(intro){
             setX(getX() + delta * 240);
-            if(Gdx.graphics.getWidth() >= 1920){
-                if(getX() >= 350){
-                    setX(350);
-                    intro = false;
-                }
-            }
-            else {
-                if (getX() >= 250) {
-                    setX(250);
-                    intro = false;
-                }
+            if (getX() >= 250) {
+                setX(250);
+                intro = false;
             }
         }
     }

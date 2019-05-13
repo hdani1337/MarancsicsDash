@@ -56,7 +56,7 @@ public class HomeStage extends MyStage {
         options = new MyButton("Beállítások",game.getButtonStyle());
         exit = new MyButton("Kilépés",game.getButtonStyle());
         ver = new MyLabel("Verzió: 0.6.2 Beta",game.getLabelStyle());
-        bg = new Background(Assets.manager.get(Assets.MENU_BG));
+        bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
         uraim = Assets.manager.get(Assets.URAIM);
         hee = Assets.manager.get(Assets.HEE);
         music = Assets.manager.get(Assets.MENUMUSIC);

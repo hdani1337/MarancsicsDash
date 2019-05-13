@@ -53,7 +53,7 @@ public class OptionsStage extends MyStage {
 
         if(gamemode != 1 && gamemode != 2) gamemode = 1;//ugyanez a játékmóddal is
 
-        background = new Background(Assets.manager.get(Assets.MENU_BG));
+        background = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
         difPlus = new MyButton("+",game.getButtonStyle());
         difMinus = new MyButton("-",game.getButtonStyle());
         dif = new MyLabel("Nehézség: ",game.getLabelStyle());

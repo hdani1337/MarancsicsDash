@@ -34,7 +34,7 @@ public class CrashStage extends MyStage {
 
     public CrashStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        bg = new Background(Assets.manager.get(Assets.GAME_BG));
+        bg = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
         text = new MyLabel("Vesztettél!",game.getLabelStyle());
         reset = new MyButton("Új játék",game.getButtonStyle());
         home = new MyButton("Fömenü",game.getButtonStyle());
