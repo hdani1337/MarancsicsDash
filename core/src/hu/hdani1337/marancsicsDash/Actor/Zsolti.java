@@ -18,9 +18,6 @@ public class Zsolti extends OneSpriteAnimatedActor {
         addCollisionShape("zsoltiHitbox",new MyRectangle(110,205,10,3));
         setFps(12);
         setDebug(false);
-       /* if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.5f,getHeight()*1.5f);
-        System.out.println(getWidth());
-        System.out.println(getHeight());*/
     }
 
     @Override

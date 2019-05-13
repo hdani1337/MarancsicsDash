@@ -202,16 +202,15 @@ public class GameStage extends MyStage {
         if(backFromPause){
             zsolti.setRotation(zsoltiR);
             zsolti.setY(zsoltiY);
-            if(Gdx.graphics.getWidth() >= 1920) zsolti.setX(350);
-            else zsolti.setX(250);
+            zsolti.setX(250);
             if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
             if(zsoltiY > 30 &&zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
         }
         else{
             zsolti.setY(30);
         }
-        if(Gdx.graphics.getWidth() >= 1920) zsolti.setX(350);
-        else zsolti.setX(250);
+
+        zsolti.setX(250);
 
         jumpIcon = new JumpIcon();
         jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
