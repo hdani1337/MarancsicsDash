@@ -25,7 +25,6 @@ public class Tank extends OneSpriteAnimatedActor {
         }
         setFps(24);
         setDebug(false);
-        //if(Gdx.graphics.getWidth() >= 1920) setSize(getWidth()*1.8f,getHeight()*1.8f);
     }
 
     @Override
@@ -44,29 +43,18 @@ public class Tank extends OneSpriteAnimatedActor {
 
                 int random = (int) (Math.random() * 5 + 1);
 
-                switch (random) {
-                    case 1:
-                        setX(1800);
-                    case 2:
-                        setX(2100);
-                    case 3:
-                        setX(2400);
-                    case 4:
-                        setX(2700);
-                    case 5:
-                        setX(3000);
-                    default:
-                        setX(1800);
-                }
+                if (random == 2) setX(2100);
+                else if (random == 3) setX(2400);
+                else if (random == 4) setX(2700);
+                else if (random == 5) setX(3000);
+                else setX(1800);
 
                 Marancsics.tankComing = false;
 
-
-                switch (OptionsStage.difficulty){
-                    case 0: tankSpeed += 20;
-                    case 1: tankSpeed += 30;
-                    case 2: tankSpeed += 40;
-                }
+                if (OptionsStage.difficulty == 0) tankSpeed += 15;
+                else if (OptionsStage.difficulty == 1) tankSpeed += 25;
+                else if (OptionsStage.difficulty == 2) tankSpeed += 35;
+                else tankSpeed += 30;
             }
         }
         else {

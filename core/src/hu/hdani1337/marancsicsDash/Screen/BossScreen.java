@@ -10,6 +10,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.Stage.BossStage;
+import hu.hdani1337.marancsicsDash.Stage.CrashStage;
 import hu.hdani1337.marancsicsDash.Stage.PauseStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
@@ -22,7 +23,11 @@ public class BossScreen extends MyScreen {
 
     public BossScreen(marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(game);
-        bossStage = new BossStage(new FitViewport(1280,720), spriteBatch, game,  bossX,  bossY,  zsoltiR,  zsoltiY,  backFromPause);
+        float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
+        if (keparany >= (21/9f)) bossStage = new BossStage(new FitViewport(1680,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (19/9f)) bossStage = new BossStage(new FitViewport(1520,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (18/9f)) bossStage = new BossStage(new FitViewport(1440,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else bossStage = new BossStage(new FitViewport(1280,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
         Gdx.input.setInputProcessor(bossStage);
     }
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
+import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 import hu.hdani1337.marancsicsDash.Stage.PauseStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
@@ -21,7 +22,11 @@ public class PauseScreen extends MyScreen {
 
     public PauseScreen(marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY) {
         super(game);
-        pauseStage = new PauseStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
+        float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
+        if (keparany >= (21/9f)) pauseStage = new PauseStage(new FitViewport(1680,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
+        else if (keparany >= (19/9f)) pauseStage = new PauseStage(new FitViewport(1520,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
+        else if (keparany >= (18/9f)) pauseStage = new PauseStage(new FitViewport(1440,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
+        else pauseStage = new PauseStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
         Gdx.input.setInputProcessor(pauseStage);
     }
 

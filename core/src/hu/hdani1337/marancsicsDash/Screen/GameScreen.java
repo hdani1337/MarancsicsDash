@@ -19,7 +19,11 @@ public class GameScreen extends MyScreen {
 
     public GameScreen(marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(game);
-        gameStage = new GameStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
+        if (keparany >= (21/9f)) gameStage = new GameStage(new FitViewport(1680,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (19/9f)) gameStage = new GameStage(new FitViewport(1520,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (18/9f)) gameStage = new GameStage(new FitViewport(1440,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        else gameStage = new GameStage(new FitViewport(1280,720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
         Gdx.input.setInputProcessor(gameStage);
     }
 
