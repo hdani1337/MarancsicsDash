@@ -25,6 +25,7 @@ import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
@@ -76,127 +77,8 @@ public class GameStage extends MyStage {
             music.play();
         }
 
-        bg1 = new Background(Assets.manager.get(Assets.GAME_BG),viewport){
-            @Override
-            public void act(float delta) {
-                super.act(delta);
-                scoreLabel.setText(""+Tank.pontszam);
-                coinLabelText.setText(""+Coin.coin);
-
-                if(OptionsStage.difficulty == 0){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
-                    OptionsStage.difficulty = 2;
-                }
-
-                if(OptionsStage.difficulty == 1){
-                    bg1.setX(bg1.getX()-5);
-                    if(bg1.getX() < -bg1.getWidth()){
-                        bg1.setX(bg2.getX()+bg2.getWidth()-5);
-                    }
-                }
-
-                if(OptionsStage.difficulty == 2){
-                    bg1.setX(bg1.getX()-10);
-                    if(bg1.getX() < -bg1.getWidth()){
-                        bg1.setX(bg2.getX()+bg2.getWidth()-10);
-                    }
-                }
-
-                if(OptionsStage.difficulty == 3){
-                    bg1.setX(bg1.getX()-15);
-                    if(bg1.getX() < -bg1.getWidth()){
-                        bg1.setX(bg2.getX()+bg2.getWidth()-15);
-                    }
-                }
-
-                if(overlaps(marancsics,tank)){
-                    if(!muted) {
-                        kick.play();
-                        Timer.schedule(new Timer.Task() {
-                            @Override
-                            public void run() {
-                                hee.play();
-                            }
-                        }, 0.3f);
-                    }
-                    marancsics.tankComing = true;
-                }
-
-                if(Tank.pontszam >= bossScore && OptionsStage.gamemode == 1)
-                {
-                    music.stop();
-                    game.setScreen(new BossScreen(game,0,0,0,0,false));
-                }
-
-                if(overlaps(zsolti,tank)){
-                    if (tank.getRotation() <= 3)
-                        if(zsolti.getY() > 30 + tank.getHeight() / 4)
-                            if(zsolti.getY() <= tank.getY()+tank.getHeight())
-                                if(zsolti.getX() + zsolti.getWidth() > tank.getX())
-                                    if(zsolti.getX() < tank.getX() + tank.getWidth())
-                                    {
-                                        Zsolti.forcejump  = true;
-                                    }
-
-                    if(!Zsolti.forcejump) {
-                        if (!muted) {
-                            crash.play();
-                            music.stop();
-                        }
-                        preferences.putLong("coin", Coin.coin);
-                        preferences.flush();
-                        game.setScreen(new CrashScreen(game));
-                        Marancsics.tankComing = false;
-                    }
-                }
-
-                if(PauseButton.paused){
-                    if(!muted){
-                        music.pause();
-                    }
-                    PauseStage.fromBoss = false;
-                    game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
-                }
-
-                if(overlaps(zsolti,coin)){
-                    coin.felvette = true;
-                    if(!muted) {
-                        coinSound.play(1);
-                    }
-                }
-
-                if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()){
-                    coin.felvette = false;
-                }
-
-            }
-        };
-
-        bg2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport){
-            @Override
-            public void act(float delta) {
-                super.act(delta);
-                if(OptionsStage.difficulty == 1){
-                    bg2.setX(bg2.getX()-5);
-                    if(bg2.getX() < -bg2.getWidth()){
-                        bg2.setX(bg1.getX()+bg1.getWidth()-5);
-                    }
-                }
-
-                if(OptionsStage.difficulty == 2){
-                    bg2.setX(bg2.getX()-10);
-                    if(bg2.getX() < -bg2.getWidth()){
-                        bg2.setX(bg1.getX()+bg1.getWidth()-10);
-                    }
-                }
-
-                if(OptionsStage.difficulty == 3){
-                    bg2.setX(bg2.getX()-15);
-                    if(bg2.getX() < -bg2.getWidth()){
-                        bg2.setX(bg1.getX()+bg1.getWidth()-15);
-                    }
-                }
-            }
-        };
+        bg1 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
+        bg2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
 
         zsolti = new Zsolti();
         if(backFromPause){
@@ -280,5 +162,112 @@ public class GameStage extends MyStage {
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(OptionsStage.difficulty == 0){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
+            OptionsStage.difficulty = 2;
+        }
+
+        else if(OptionsStage.difficulty == 1){
+            bg2.setX(bg2.getX()-5);
+            if(bg2.getX() < -bg2.getWidth()){
+                bg2.setX(bg1.getX()+bg1.getWidth()-5);
+            }
+
+            bg1.setX(bg1.getX()-5);
+            if(bg1.getX() < -bg1.getWidth()){
+                bg1.setX(bg2.getX()+bg2.getWidth()-5);
+            }
+        }
+
+        else if(OptionsStage.difficulty == 2){
+            bg2.setX(bg2.getX()-10);
+            if(bg2.getX() < -bg2.getWidth()){
+                bg2.setX(bg1.getX()+bg1.getWidth()-10);
+            }
+
+            bg1.setX(bg1.getX()-10);
+            if(bg1.getX() < -bg1.getWidth()){
+                bg1.setX(bg2.getX()+bg2.getWidth()-10);
+            }
+        }
+
+        else if(OptionsStage.difficulty == 3){
+            bg2.setX(bg2.getX()-15);
+            if(bg2.getX() < -bg2.getWidth()){
+                bg2.setX(bg1.getX()+bg1.getWidth()-15);
+            }
+
+            bg1.setX(bg1.getX()-15);
+            if(bg1.getX() < -bg1.getWidth()){
+                bg1.setX(bg2.getX()+bg2.getWidth()-15);
+            }
+        }
+
+        scoreLabel.setText(""+Tank.pontszam);
+        coinLabelText.setText(""+Coin.coin);
+
+        if(overlaps(marancsics,tank)){
+            if(!muted) {
+                kick.play();
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        hee.play();
+                    }
+                }, 0.3f);
+            }
+            marancsics.tankComing = true;
+        }
+
+        if(Tank.pontszam >= bossScore && OptionsStage.gamemode == 1)
+        {
+            music.stop();
+            game.setScreen(new BossScreen(game,0,0,0,0,false));
+        }
+
+        if(overlaps(zsolti,tank)){
+            if (tank.getRotation() <= 3)
+                if(zsolti.getY() > 30 + tank.getHeight() / 4)
+                    if(zsolti.getY() <= tank.getY()+tank.getHeight())
+                        if(zsolti.getX() + zsolti.getWidth() > tank.getX())
+                            if(zsolti.getX() < tank.getX() + tank.getWidth())
+                            {
+                                Zsolti.forcejump  = true;
+                            }
+
+            if(!Zsolti.forcejump) {
+                if (!muted) {
+                    crash.play();
+                    music.stop();
+                }
+                preferences.putLong("coin", Coin.coin);
+                preferences.flush();
+                game.setScreen(new CrashScreen(game));
+                Marancsics.tankComing = false;
+            }
+        }
+
+        if(PauseButton.paused){
+            if(!muted){
+                music.pause();
+            }
+            PauseStage.fromBoss = false;
+            game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
+        }
+
+        if(overlaps(zsolti,coin)){
+            coin.felvette = true;
+            if(!muted) {
+                coinSound.play(1);
+            }
+        }
+
+        if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()){
+            coin.felvette = false;
+        }
     }
 }
