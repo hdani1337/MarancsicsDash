@@ -23,13 +23,13 @@ import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class ShopStage extends MyStage {
     Background background;
-    TextBackground textBackground;
-    TextBackground textBackground2;
-    MyButton myButton;
-    MyLabel myLabel;
-    Coin coinLabel;
+    TextBackground textBackground = new TextBackground();
+    TextBackground textBackground2 = new TextBackground();
+    MyButton myButton = new MyButton("Vissza a menübe",game.getButtonStyle());
+    MyLabel myLabel = new MyLabel("Instant Boss\nÁr: 100",game.getLabelStyle());
+    Coin coinLabel = new Coin(false);
     MyLabel coinLabelText;
-    InstantBoss instantBoss;
+    InstantBoss instantBoss = new InstantBoss();;
     Sound paySound = Assets.manager.get(Assets.PAY);
 
     public static boolean boughtInstantBoss = preferences.getBoolean("boughtInstantBoss");
@@ -37,17 +37,24 @@ public class ShopStage extends MyStage {
     public ShopStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         background = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
-        textBackground = new TextBackground();
-        textBackground2 = new TextBackground();
-        myLabel = new MyLabel("Instant Boss\nÁr: 100",game.getLabelStyle());
-        myButton = new MyButton("Vissza a menübe",game.getButtonStyle());
-        coinLabel = new Coin(false);
+
+        setTexts();
+        addListeners();
+        setSizesAndPositions(viewport);
+        addActors();
+    }
+
+    void setTexts()
+    {
         if(Coin.coin >= 0) coinLabelText = new MyLabel(""+Coin.coin,game.getLabelStyle());
         else coinLabelText = new MyLabel("0",game.getLabelStyle());
 
         if(boughtInstantBoss) myLabel.setText("Instant Boss\nMár megvetted!");
 
-        instantBoss = new InstantBoss();
+    }
+
+    void addListeners()
+    {
         instantBoss.addListener(new ClickListener()
         {
             @Override
@@ -68,6 +75,17 @@ public class ShopStage extends MyStage {
             }
         });
 
+        myButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                game.setScreen(new HomeScreen(game));
+            }
+        });
+    }
+
+    void setSizesAndPositions(Viewport viewport)
+    {
         instantBoss.setPosition(viewport.getWorldWidth()/2-instantBoss.getWidth()/2,viewport.getWorldHeight()/2-instantBoss.getHeight()/2);
 
         coinLabel.setPosition(15, viewport.getWorldHeight()-15-coinLabel.getHeight());
@@ -83,14 +101,10 @@ public class ShopStage extends MyStage {
         myButton.setPosition(viewport.getWorldWidth() - myButton.getWidth() - 15,15);
         textBackground2.setPosition(myButton.getX() - 15,myButton.getY() - 8);
 
-        myButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                game.setScreen(new HomeScreen(game));
-            }
-        });
+    }
 
+    void addActors()
+    {
         addActor(background);
         addActor(textBackground);
         addActor(textBackground2);

@@ -26,20 +26,25 @@ public class OptionsStage extends MyStage {
     public static final Preferences preferences = Gdx.app.getPreferences("marancsicsDashSave");;
 
     Background background;
-    MyButton difPlus;//plusz gomb
-    MyButton difMinus;//minusz gomb
-    MyButton back;//vissza gomb
-    MyLabel difType; //Könnyű/Normál/Nehéz
-    MyLabel dif; //Nehézség:
-    MyLabel muting;//Némítás:
-    MyLabel mode;//Játékmód:
-    MyButton modeType;//Story/Endless
-    MyButton mutedButton;//Nincs némítva/Némítva
-    OneSpriteStaticActor textbg;//nehézség háttere
-    OneSpriteStaticActor textbg2;//némítás háttere
-    OneSpriteStaticActor textbg3;//visszalépés háttere
-    OneSpriteStaticActor textbg4;//játékmód háttere
-    Music music;//zene, hogy lelehessen állítani
+    MyButton difPlus = new MyButton("+",game.getButtonStyle());//plusz gomb
+    MyButton difMinus = new MyButton("-",game.getButtonStyle());//minusz gomb
+    MyButton back = new MyButton("Vissza a menübe",game.getButtonStyle());//vissza gomb
+
+    MyLabel difType = new MyLabel("",game.getLabelStyle()); //Könnyű/Normál/Nehéz
+    MyLabel dif = new MyLabel("Nehézség: ",game.getLabelStyle()); //Nehézség:
+
+    MyButton mutedButton = new MyButton("",game.getButtonStyle());//Nincs némítva/Némítva
+    MyLabel muting = new MyLabel("Némítás: ",game.getLabelStyle());//Némítás:
+
+    MyLabel mode = new MyLabel("Játékmód: ",game.getLabelStyle());//Játékmód:
+    MyButton modeType = new MyButton("",game.getButtonStyle());//Story/Endless
+
+    TextBackground textbg = new TextBackground();//nehézség háttere
+    TextBackground textbg2 = new TextBackground();//némítás háttere
+    TextBackground textbg3 = new TextBackground();;//visszalépés háttere
+    TextBackground textbg4 = new TextBackground();;//játékmód háttere
+
+    Music music = Assets.manager.get(Assets.MENUMUSIC);;//zene, hogy lelehessen állítani
 
     public OptionsStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -54,59 +59,14 @@ public class OptionsStage extends MyStage {
         if(gamemode != 1 && gamemode != 2) gamemode = 1;//ugyanez a játékmóddal is
 
         background = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
-        difPlus = new MyButton("+",game.getButtonStyle());
-        difMinus = new MyButton("-",game.getButtonStyle());
-        dif = new MyLabel("Nehézség: ",game.getLabelStyle());
-        difType = new MyLabel("",game.getLabelStyle());
-        back = new MyButton("Vissza a menübe",game.getButtonStyle());
-        music = Assets.manager.get(Assets.MENUMUSIC);
-        textbg = new OneSpriteStaticActor(Assets.manager.get(Assets.TEXT_BG)){
-            @Override
-            public void act(float delta) {
-                super.act(delta);
-                if(difficulty == 1){
-                    difType.setText("Könnyü");
-                }
-                else if(difficulty == 2){
-                    difType.setText("Normál");
-                }
-                else if(difficulty == 3){
-                    difType.setText("Nehéz");
-                }
-                else{
-                    System.out.println("A fejlesztő egy buzi.");
-                    difType.setText("Hiba");
-                }
-            }
-        };
-        textbg.setDebug(false);
 
-        muting = new MyLabel("Némítás: ",game.getLabelStyle());
-        mutedButton = new MyButton("",game.getButtonStyle());
+        addListeners();
+        setPositionsAndSizes(viewport);
+        addActors();
+    }
 
-        textbg2 = new OneSpriteStaticActor(Assets.manager.get(Assets.TEXT_BG)){
-            @Override
-            public void act(float delta) {
-                super.act(delta);
-                if(muted){
-                    mutedButton.setText("Némítva");
-                    music.stop();
-                }
-                else{
-                    mutedButton.setText("Nincs némítva");
-                }
-            }
-        };
-
-        textbg3 = new OneSpriteStaticActor(Assets.manager.get(Assets.TEXT_BG)){
-            @Override
-            public void setDebug(boolean enabled) {
-                super.setDebug(false);
-            }
-        };
-
-        textbg2.setDebug(false);
-
+    void addListeners()
+    {
         difMinus.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -158,23 +118,6 @@ public class OptionsStage extends MyStage {
             }
         });
 
-
-        mode = new MyLabel("Játékmód: ",game.getLabelStyle());
-        modeType = new MyButton("",game.getButtonStyle());
-
-        textbg4 = new TextBackground(){
-            @Override
-            public void act(float delta) {
-                super.act(delta);
-                if(gamemode == 1){
-                    modeType.setText("Story");
-                }
-                else{
-                    modeType.setText("Endless");
-                }
-            }
-        };
-
         modeType.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -187,8 +130,10 @@ public class OptionsStage extends MyStage {
                 }
             }
         });
+    }
 
-
+    void setPositionsAndSizes(Viewport viewport)
+    {
         dif.setPosition(30,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
         textbg.setPosition(dif.getX() - 20,dif.getY() - 8);
         textbg.setSize(400,dif.getHeight()*1.5f);
@@ -211,7 +156,10 @@ public class OptionsStage extends MyStage {
         textbg4.setHeight(textbg.getHeight());
         mode.setPosition(textbg4.getX() + 18,textbg4.getY() + textbg4.getHeight()/6);
         modeType.setPosition(mode.getX() + mode.getWidth()*1.55f, mode.getY());
+    }
 
+    void addActors()
+    {
         addActor(background);
         addActor(textbg);
         addActor(dif);
@@ -231,5 +179,41 @@ public class OptionsStage extends MyStage {
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        //Némítás
+        if(muted){
+            mutedButton.setText("Némítva");
+            music.stop();
+        }
+        else{
+            mutedButton.setText("Nincs némítva");
+        }
+
+        //Nehézségek
+        if(difficulty == 1){
+            difType.setText("Könnyü");
+        }
+        else if(difficulty == 2){
+            difType.setText("Normál");
+        }
+        else if(difficulty == 3){
+            difType.setText("Nehéz");
+        }
+        else{
+            System.out.println("A fejlesztő egy buzi.");
+            difType.setText("Hiba");
+        }
+
+        //Játékmód
+        if(gamemode == 1){
+            modeType.setText("Story");
+        }
+        else{
+            modeType.setText("Endless");
+        }
     }
 }

@@ -14,25 +14,33 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 public class IntroStage extends MyStage {
     Background background;
     Background background2;
-    Marancsics marancsics;
-    Zsolti zsolti;
+    Marancsics marancsics = new Marancsics();
+    Zsolti zsolti = new Zsolti();
 
     public IntroStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
         background2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-        background.setPosition(0,0);
-        background2.setPosition(background.getWidth(),0);
-
-        marancsics = new Marancsics();
-        zsolti = new Zsolti();
-
-        marancsics.setPosition(-420,30);
-        zsolti.setPosition(-160,30);
 
         Marancsics.intro = true;
         Zsolti.intro = true;
 
+        setPositions();
+        addActors();
+    }
+
+    void setPositions()
+    {
+        background.setPosition(0,0);
+        background2.setPosition(background.getWidth(),0);
+
+        marancsics.setPosition(-420,30);
+        zsolti.setPosition(-160,30);
+
+    }
+
+    void addActors()
+    {
         addActor(background);
         addActor(background2);
         addActor(marancsics);

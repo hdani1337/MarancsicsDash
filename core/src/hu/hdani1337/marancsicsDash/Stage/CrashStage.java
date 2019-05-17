@@ -23,39 +23,40 @@ public class CrashStage extends MyStage {
     int highscore = preferences.getInteger("highscore");;
 
     Background bg;
-    MyLabel text;
-    MyLabel score;
-    MyButton reset;
-    MyButton home;
-    TextBackground text1;
-    TextBackground text2;
-    TextBackground text3;
-    TextBackground text4;
+    MyLabel text = new MyLabel("Vesztettél!",game.getLabelStyle());;
+    MyLabel score = new MyLabel("Elért pontszám: "+Tank.pontszam+ "\nRekord: " + highscore,game.getLabelStyle());
+    MyButton reset = new MyButton("Új játék",game.getButtonStyle());
+    MyButton home = new MyButton("Fömenü",game.getButtonStyle());
+    TextBackground text1 = new TextBackground();
+    TextBackground text2 = new TextBackground();
+    TextBackground text3 = new TextBackground();
+    TextBackground text4 = new TextBackground();
 
     public CrashStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         bg = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-        text = new MyLabel("Vesztettél!",game.getLabelStyle());
-        reset = new MyButton("Új játék",game.getButtonStyle());
-        home = new MyButton("Fömenü",game.getButtonStyle());
 
-        score = new MyLabel("Elért pontszám: "+Tank.pontszam+ "\nRekord: " + highscore,game.getLabelStyle());
-        score.setAlignment(0);
+        Tank.pontszam = 0;
+        MarancsicsBoss.marancsicsHealth = 99.9f;
 
+        record();
+        setPositionsAndSizes(viewport);
+        addListeners();
+        addActors();
+    }
+
+    void record()
+    {
         if(Tank.pontszam > highscore){
             preferences.putInteger("highscore",Tank.pontszam);
             preferences.flush();
             score.setText("Elért pontszám: "+Tank.pontszam+ "\nRekordot döntöttél!");
         }
+    }
 
-        Tank.pontszam = 0;
-        MarancsicsBoss.marancsicsHealth = 99.9f;
-
-        text1 = new TextBackground();
-        text2 = new TextBackground();
-        text3 = new TextBackground();
-        text4 = new TextBackground();
-
+    void setPositionsAndSizes(Viewport viewport)
+    {
+        score.setAlignment(0);
         text.setPosition(viewport.getWorldWidth()/2-text.getWidth(),viewport.getWorldHeight()/2+text.getHeight()+150);
         text.setFontScale(2);
         text1.setPosition(text.getX()-25,text.getY()-25);
@@ -76,7 +77,10 @@ public class CrashStage extends MyStage {
         text4.setHeight(120);
         text4.setWidth(score.getWidth()+72);
         text4.setPosition(score.getX()-36,score.getY()-20);
+    }
 
+    void addListeners()
+    {
         reset.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -92,7 +96,10 @@ public class CrashStage extends MyStage {
                 game.setScreen(new HomeScreen(game));
             }
         });
+    }
 
+    void addActors()
+    {
         addActor(bg);
         addActor(text1);
         addActor(text2);

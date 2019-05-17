@@ -29,15 +29,15 @@ import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 
 public class BossStage extends MyStage {
 
-    MyLabel marancsicsElete;
+    MyLabel marancsicsElete = new MyLabel("Marancsics élete",game.getLabelStyle());
     Background background;
     Background background2;
     MarancsicsBoss marancsicsBoss;
-    Zsolti zsolti;
+    Zsolti zsolti = new Zsolti();
     Health health;
     AntiHealth antiHealth;
-    JumpIcon jumpIcon;
-    PauseButton pauseButton;
+    JumpIcon jumpIcon = new JumpIcon();
+    PauseButton pauseButton = new PauseButton();
     Sound hee = Assets.manager.get(Assets.HEE);
     Sound crash = Assets.manager.get(Assets.CRASH);
     Sound glassbreak = Assets.manager.get(Assets.GLASSBREAK);
@@ -45,6 +45,8 @@ public class BossStage extends MyStage {
 
     public BossStage(Viewport viewport, Batch batch, final marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
+        Zsolti.jump = false;
+        Zsolti.fall = false;
 
         if(!muted)
         {
@@ -53,24 +55,45 @@ public class BossStage extends MyStage {
             bossMusic.setLooping(true);
         }
 
-        marancsicsElete = new MyLabel("Marancsics élete",game.getLabelStyle());
         health = new Health(viewport);
         antiHealth = new AntiHealth(health.getWidth(),health.getY(),health.getX());
-        jumpIcon = new JumpIcon();
-        pauseButton = new PauseButton();
 
         background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
         background2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
+
+        marancsicsBoss = new MarancsicsBoss(viewport);
+
+        gameContinue(bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        setPositions(viewport);
+        addActors();
+    }
+
+    void gameContinue(float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause)
+    {
+        if(backFromPause){
+            zsolti.setRotation(zsoltiR);
+            zsolti.setPosition(30, zsoltiY);
+            if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            else if(zsoltiY > 30 && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
+            marancsicsBoss.setPosition(bossX,bossY);
+        }
+        else{
+            zsolti.setPosition(30,30);
+        }
+    }
+
+    void setPositions(Viewport viewport)
+    {
         background.setPosition(0,0);
         background2.setPosition(background.getWidth(),0);
-        marancsicsBoss = new MarancsicsBoss(viewport);
-        zsolti = new Zsolti();
-
         marancsicsElete.setPosition(health.getX()+health.getWidth()/2-marancsicsElete.getWidth()/2,health.getY()+health.getHeight()/2-marancsicsElete.getHeight()/2);
         jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
         pauseButton.setPosition(jumpIcon.getX(),viewport.getWorldHeight() - pauseButton.getHeight() - 15);
         marancsicsBoss.setX(viewport.getWorldWidth()+marancsicsBoss.getWidth());
+    }
 
+    void addActors()
+    {
         addActor(background);
         addActor(background2);
         addActor(marancsicsBoss);
@@ -80,29 +103,6 @@ public class BossStage extends MyStage {
         addActor(marancsicsElete);
         addActor(jumpIcon);
         addActor(pauseButton);
-
-        zsolti.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                marancsicsHealth -= 5;
-                if(marancsicsHealth < 0) marancsicsHealth = 0;
-                else if(marancsicsHealth > 99.9) marancsicsHealth = 99.9f;
-                System.out.println(marancsicsHealth);
-            }
-        });
-
-        if(backFromPause){
-            zsolti.setRotation(zsoltiR);
-            zsolti.setPosition(30, zsoltiY);
-            if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            if(zsoltiY > 30 && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
-            marancsicsBoss.setPosition(bossX,bossY);
-        }
-        else{
-            zsolti.setPosition(30,30);
-        }
-
     }
 
     @Override

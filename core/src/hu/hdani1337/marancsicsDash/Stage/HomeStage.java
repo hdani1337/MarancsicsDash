@@ -29,43 +29,36 @@ public class HomeStage extends MyStage {
     private int speed = 2;
     public static boolean muted = preferences.getBoolean("muted");
 
-    MyButton start;
-    MyButton info;
-    MyButton options;
-    MyButton exit;
-    MyButton shop;
-    Background bg;
-    public static Sound uraim;
-    public static Sound hee;
-    OneSpriteStaticActor logo;
-    public static Music music;
-    TextBackground textBackground1;
-    TextBackground textBackground2;
-    TextBackground textBackground3;
-    TextBackground textBackground4;
-    TextBackground textBackground5;
-    TextBackground textBackground6;
-    MyLabel ver;
+    //Gombok
+    MyButton start = new MyButton("A játék indítása",game.getButtonStyle());
+    MyButton info = new MyButton("A játékról",game.getButtonStyle());
+    MyButton options = new MyButton("Beállítások",game.getButtonStyle());
+    MyButton exit = new MyButton("Kilépés",game.getButtonStyle());
+    MyButton shop = new MyButton("Bolt",game.getButtonStyle());
+
+    Background bg;//háttér
+
+    //Hangok
+    public static Sound uraim = Assets.manager.get(Assets.URAIM);
+    public static Sound hee = Assets.manager.get(Assets.HEE);
+    public static Music music = Assets.manager.get(Assets.MENUMUSIC);
+
+    OneSpriteStaticActor logo;//logo
+
+    //Gombok hátterei
+    TextBackground textBackground1 = new TextBackground();
+    TextBackground textBackground2 = new TextBackground();
+    TextBackground textBackground3 = new TextBackground();
+    TextBackground textBackground4 = new TextBackground();
+    TextBackground textBackground5 = new TextBackground();
+    TextBackground textBackground6 = new TextBackground();
+
+    MyLabel ver = new MyLabel("Verzió: 0.6.2 Beta",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         bossMusic.stop();
-        start = new MyButton("A játék indítása",game.getButtonStyle());
-        info = new MyButton("A játékról",game.getButtonStyle());
-        shop = new MyButton("Bolt",game.getButtonStyle());
-        options = new MyButton("Beállítások",game.getButtonStyle());
-        exit = new MyButton("Kilépés",game.getButtonStyle());
-        ver = new MyLabel("Verzió: 0.6.2 Beta",game.getLabelStyle());
         bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
-        uraim = Assets.manager.get(Assets.URAIM);
-        hee = Assets.manager.get(Assets.HEE);
-        music = Assets.manager.get(Assets.MENUMUSIC);
-        textBackground1 = new TextBackground();
-        textBackground2 = new TextBackground();
-        textBackground3 = new TextBackground();
-        textBackground4 = new TextBackground();
-        textBackground5 = new TextBackground();
-        textBackground6 = new TextBackground();
 
         logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
             @Override
@@ -81,6 +74,14 @@ public class HomeStage extends MyStage {
             }
         };
 
+        playMusic();
+        addListeners();
+        setPositions(viewport);
+        addActors();
+    }
+
+    void playMusic()
+    {
         if(muted){
             music.stop();
             uraim.setVolume(0,0.0f);
@@ -91,7 +92,10 @@ public class HomeStage extends MyStage {
             music.setVolume(0.5f);
             music.play();
         }
+    }
 
+    void setPositions(Viewport viewport)
+    {
         start.setX(viewport.getWorldWidth()/2 - start.getWidth()/2);
         start.setY(viewport.getWorldHeight()/2 - start.getHeight()/2);
         info.setY(start.getY() - info.getHeight()*2);
@@ -119,6 +123,11 @@ public class HomeStage extends MyStage {
         textBackground5.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
         textBackground6.setSize(shop.getWidth() + 30, shop.getHeight() + 14);
 
+        logo.setPosition(viewport.getWorldWidth()/2 - logo.getWidth()/2, viewport.getWorldHeight() - logo.getHeight()*1.5f);
+    }
+
+    void addListeners()
+    {
         start.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -182,9 +191,10 @@ public class HomeStage extends MyStage {
                 game.setScreen(new ShopScreen(game));
             }
         });
+    }
 
-        logo.setPosition(viewport.getWorldWidth()/2 - logo.getWidth()/2, viewport.getWorldHeight() - logo.getHeight()*1.5f);
-
+    void addActors()
+    {
         addActor(bg);
         addActor(textBackground1);
         addActor(textBackground2);

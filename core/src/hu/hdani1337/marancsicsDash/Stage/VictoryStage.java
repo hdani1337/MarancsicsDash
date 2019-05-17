@@ -19,20 +19,22 @@ import static hu.hdani1337.marancsicsDash.Stage.BossStage.bossMusic;
 public class VictoryStage extends MyStage {
 
     Background background;
-    MyLabel congratulations;
-    MyLabel thanks;
-    TextBackground textBackground1;
-    TextBackground textBackground2;
+    MyLabel congratulations = new MyLabel("Gratulálok! Legyözted Marancsicsot!",game.getLabelStyle());
+    MyLabel thanks = new MyLabel("Köszönöm, hogy végigjátszottad a játékot!\nPár hónap kódolás, kép és zenelopkodás után végre \nelkészült a Marancsics Dash címü játék. Köszönöm a\nközremüködést Marancsics Tamás tanárúrnak a hangokért,\ntovábbá a családomnak és osztálytársaimnak a támogatását!",game.getLabelStyle());
+    TextBackground textBackground1 = new TextBackground();
+    TextBackground textBackground2 = new TextBackground();
 
     public VictoryStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-        congratulations = new MyLabel("Gratulálok! Legyözted Marancsicsot!",game.getLabelStyle());
-        thanks = new MyLabel("Köszönöm, hogy végigjátszottad a játékot!\nPár hónap kódolás, kép és zenelopkodás után végre \nelkészült a Marancsics Dash címü játék. Köszönöm a\nközremüködést Marancsics Tamás tanárúrnak a hangokért,\ntovábbá a családomnak és osztálytársaimnak a támogatását!",game.getLabelStyle());
 
-        textBackground1 = new TextBackground();
-        textBackground2 = new TextBackground();
+        setPositionsAndSizes(viewport);
+        addActors();
+        timers();
+    }
 
+    void setPositionsAndSizes(Viewport viewport)
+    {
         congratulations.setPosition(viewport.getWorldWidth()/2-congratulations.getWidth()/2,viewport.getWorldHeight()/2-congratulations.getHeight()/2);
         thanks.setPosition(viewport.getWorldWidth()/2-thanks.getWidth()/2,viewport.getWorldHeight()/2-thanks.getHeight()/2);
         thanks.setAlignment(0);
@@ -42,10 +44,17 @@ public class VictoryStage extends MyStage {
 
         textBackground2.setSize(thanks.getWidth() + 90, thanks.getHeight() + 64);
         textBackground2.setPosition(thanks.getX() - 45,thanks.getY() - 32);
+    }
 
+    void addActors()
+    {
         addActor(background);
         addActor(textBackground1);
         addActor(congratulations);
+    }
+
+    void timers()
+    {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {

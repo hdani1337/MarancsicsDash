@@ -24,12 +24,12 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class PauseStage extends MyStage {
     Background background;
-    PlayButton playButton;
+    PlayButton playButton = new PlayButton();
     OneSpriteStaticActor logo;
-    MyLabel text;
-    MyLabel score;
-    MyButton back;
-    TextBackground textBackground;
+    MyLabel text = new MyLabel("Megállítva",game.getLabelStyle());
+    MyLabel score = new MyLabel("Jelenlegi pontszámod: "+ Tank.pontszam,game.getLabelStyle());
+    MyButton back = new MyButton("Vissza a menübe",game.getButtonStyle());
+    TextBackground textBackground = new TextBackground();
     private int speed = 2;
     public static boolean fromBoss;
 
@@ -43,20 +43,13 @@ public class PauseStage extends MyStage {
 
         background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
 
-        textBackground = new TextBackground();
+        addListeners(tankX,tankY,zsoltiR,zsoltiY);
+        setSizesAndPositions(viewport);
+        addActors();
+    }
 
-        back = new MyButton("Vissza a menübe",game.getButtonStyle());
-
-        playButton = new PlayButton();
-        playButton.setSize(160,160);
-        playButton.setPosition(viewport.getWorldWidth() / 2 - playButton.getWidth() / 2, viewport.getWorldHeight() / 2 - playButton.getHeight()/2);
-
-        text = new MyLabel("Megállítva",game.getLabelStyle());
-        text.setFontScale(1.7f);
-
-        score = new MyLabel("Jelenlegi pontszámod: "+ Tank.pontszam,game.getLabelStyle());
-        score.setFontScale(1.4f);
-
+    void addListeners(final float tankX, final float tankY, final float zsoltiR, final float zsoltiY)
+    {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -91,6 +84,15 @@ public class PauseStage extends MyStage {
                 setDebug(false);
             }
         };
+    }
+
+    void setSizesAndPositions(Viewport viewport)
+    {
+        playButton.setSize(160,160);
+        playButton.setPosition(viewport.getWorldWidth() / 2 - playButton.getWidth() / 2, viewport.getWorldHeight() / 2 - playButton.getHeight()/2);
+
+        text.setFontScale(1.7f);
+        score.setFontScale(1.4f);
 
         logo.setPosition(viewport.getWorldWidth()/2-logo.getWidth()/2,viewport.getWorldHeight()/2 + logo.getHeight()/2.5f);
 
@@ -101,7 +103,10 @@ public class PauseStage extends MyStage {
         back.setPosition(viewport.getWorldWidth()/2-back.getWidth()/2,score.getY() - 90);
         textBackground.setSize(back.getWidth() + 36, back.getHeight() + 20);
         textBackground.setPosition(back.getX() - 18,back.getY() - 10);
+    }
 
+    void addActors()
+    {
         addActor(background);
         addActor(logo);
         addActor(playButton);

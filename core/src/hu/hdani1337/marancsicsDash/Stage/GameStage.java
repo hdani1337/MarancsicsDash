@@ -30,106 +30,117 @@ import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class GameStage extends MyStage {
+    //Hátterek
     Background bg1;
     Background bg2;
-    Zsolti zsolti;
-    Marancsics marancsics;
-    Coin coin;
-    Tank tank;
-    JumpIcon jumpIcon;
-    PauseButton pauseButton;
-    MyLabel scoreLabel;
-    Sound hee;
-    Sound kick;
-    Sound crash;
-    Sound coinSound;
-    Music music;
-    Coin coinLabel;
-    MyLabel coinLabelText;
+
+    //Actorok
+    Zsolti zsolti = new Zsolti();
+    Marancsics marancsics = new Marancsics();
+    Coin coin = new Coin(true);
+    Tank tank = new Tank();
+
+    //UI
+    Coin coinLabel = new Coin(false);
     InstantBoss instantBoss = new InstantBoss();
-    int bossScore = (int)(Math.random() * 15 + 10);
+    JumpIcon jumpIcon = new JumpIcon();
+    PauseButton pauseButton = new PauseButton();
+    MyLabel scoreLabel = new MyLabel("" + Tank.pontszam, game.getLabelStyle());
+    MyLabel coinLabelText = new MyLabel("", game.getLabelStyle());
+
+    //Hangok
+    Sound hee = Assets.manager.get(Assets.HEE);
+    Sound kick = Assets.manager.get(Assets.KICK);
+    Sound crash = Assets.manager.get(Assets.CRASH);
+    Sound coinSound = Assets.manager.get(Assets.COIN_SOUND);
+    Music music = Assets.manager.get(Assets.GAMEMUSIC);
+
+    int bossScore = (int) (Math.random() * 15 + 10);
 
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
-        System.out.println(bossScore);
-
         Zsolti.jump = false; //Ne ugorjon magától az elején
 
-        hee = Assets.manager.get(Assets.HEE);
-        kick = Assets.manager.get(Assets.KICK);
-        crash = Assets.manager.get(Assets.CRASH);
-        coinSound = Assets.manager.get(Assets.COIN_SOUND);
+        playMusic();
 
-        music = Assets.manager.get(Assets.GAMEMUSIC);
+        bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
 
-        scoreLabel = new MyLabel(""+Tank.pontszam,game.getLabelStyle());
+        instantBoss.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                music.stop();
+                game.setScreen(new BossScreen(game,0,0,0,0,false));
+            }
+        });
 
-        coinLabel = new Coin(false);
-        coinLabelText = new MyLabel("",game.getLabelStyle());
+        gameContinue(tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        setSizes();
+        setPositions(viewport);
+        addActors();
+    }
 
-        if(muted){
+    void playMusic()
+    {
+        if (muted) {
             music.stop();
 
-        }
-        else {
+        } else {
             music.setLooping(true);
             music.setVolume(0.5f);
             music.play();
         }
+    }
 
-        bg1 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-        bg2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-
-        zsolti = new Zsolti();
-        if(backFromPause){
+    void gameContinue(float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause)//megállították e a játékot
+    {
+        if (backFromPause) {
             zsolti.setRotation(zsoltiR);
-            zsolti.setY(zsoltiY);
-            zsolti.setX(250);
-            if(zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            if(zsoltiY > 30 &&zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
-        }
-        else{
-            zsolti.setY(30);
+            zsolti.setPosition(250, zsoltiY);
+            if (zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            if (zsoltiY > 30 && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
+        } else {
+            zsolti.setPosition(250, 30);
         }
 
-        zsolti.setX(250);
+        if (backFromPause) {
+            tank.setPosition(tankX, tankY);
+            if (!muted) music.play();
+        } else tank.setPosition(2400, -40);
+    }
 
-        jumpIcon = new JumpIcon();
-        jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
-
-        tank = new Tank();
-        tank.setSize(240,240);
-
-        if(backFromPause){
-            tank.setY(tankY);
-            tank.setX(tankX);
-            if(!muted){
-                music.play();
-            }
-        }
-        else{
-            tank.setY(-40);
-            tank.setX(2400);
-        }
-
-        marancsics = new Marancsics();
-        marancsics.setPosition(60,30);
-
-        coin = new Coin(true);
-        coin.setPosition(-100,-100);
-
+    void setSizes()//actorok méretezése
+    {
+        tank.setSize(240, 240);
         scoreLabel.setFontScale(1.5f);
-        scoreLabel.setPosition(viewport.getWorldWidth()/2 - scoreLabel.getWidth()/2,viewport.getWorldHeight() - scoreLabel.getHeight()*1.5f);
+        instantBoss.setSize(jumpIcon.getWidth(),jumpIcon.getHeight());
+    }
 
-        pauseButton = new PauseButton();
-        pauseButton.setPosition(viewport.getWorldWidth() - pauseButton.getWidth() * 1.1f,viewport.getWorldHeight() - 175);
+    void setPositions(Viewport viewport)//actorok elhelyezése
+    {
+        marancsics.setPosition(60, 30);
+
+        coin.setPosition(-100, -100);
+
+        scoreLabel.setPosition(viewport.getWorldWidth() / 2 - scoreLabel.getWidth() / 2, viewport.getWorldHeight() - scoreLabel.getHeight() * 1.5f);
+
+        jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f, 15);
+
+        pauseButton.setPosition(viewport.getWorldWidth() - pauseButton.getWidth() * 1.1f, viewport.getWorldHeight() - 175);
+
+        instantBoss.setPosition(jumpIcon.getX(),(((pauseButton.getY() + pauseButton.getHeight()) - (jumpIcon.getY()+jumpIcon.getHeight())))/2);
 
         bg1.setX(0);
         bg2.setX(bg1.getWidth());
 
-        coinLabel.setPosition(15, viewport.getWorldHeight()-15-coinLabel.getHeight());
-        coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/2);
+        coinLabel.setPosition(15, viewport.getWorldHeight() - 15 - coinLabel.getHeight());
+        coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight() / 2);
+    }
 
+    void addActors()//actorok hozzáadása
+    {
         addActor(bg1);
         addActor(bg2);
         addActor(zsolti);
@@ -142,22 +153,9 @@ public class GameStage extends MyStage {
         addActor(coinLabel);
         addActor(coinLabelText);
 
-        if(ShopStage.boughtInstantBoss)
-        {
-            instantBoss.setSize(jumpIcon.getWidth(),jumpIcon.getHeight());
-            instantBoss.setPosition(jumpIcon.getX(),(((pauseButton.getY() + pauseButton.getHeight()) - (jumpIcon.getY()+jumpIcon.getHeight())))/2);
-            instantBoss.addListener(new ClickListener()
-            {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    super.clicked(event, x, y);
-                    music.stop();
-                    game.setScreen(new BossScreen(game,0,0,0,0,false));
-                }
-            });
-            addActor(instantBoss);
-        }
+        if (ShopStage.boughtInstantBoss) addActor(instantBoss);
     }
+
 
     @Override
     public void init() {
