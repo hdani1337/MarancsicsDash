@@ -24,9 +24,11 @@ public class BossScreen extends MyScreen {
     public BossScreen(marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(game);
         float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
-        if (keparany >= (21/9f)) bossStage = new BossStage(new FitViewport(1680,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
-        else if (keparany >= (19/9f)) bossStage = new BossStage(new FitViewport(1520,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
-        else if (keparany >= (18/9f)) bossStage = new BossStage(new FitViewport(1440,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        if (keparany >= (21/9.0f)) bossStage = new BossStage(new FitViewport(1680,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (19/9.0f)) bossStage = new BossStage(new FitViewport(1520,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (18.67/9.0f)) bossStage = new BossStage(new FitViewport(1493,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (18.5f/9.0f)) bossStage = new BossStage(new FitViewport(1480,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        else if (keparany >= (18/9.0f)) bossStage = new BossStage(new FitViewport(1440,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
         else bossStage = new BossStage(new FitViewport(1280,720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
         Gdx.input.setInputProcessor(bossStage);
     }
