@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -26,6 +27,17 @@ public class marancsicsGame extends MyGame {
 		buttonStyle.downFontColor = new Color(1, 0, 0, 1);
 
 		return buttonStyle;
+	}
+
+	public static int keparany()
+	{
+		float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
+		int egyArany = 80;//egy arányra eső szélesség 720-as magasságnál ((720/9)*x)
+		int x = 1;//szélességi arány
+
+		while (keparany > (x/9.0f)) x++;
+
+		return x * egyArany;
 	}
 
 	@Override

@@ -1,11 +1,8 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
@@ -63,8 +60,8 @@ public class BossStage extends MyStage {
 
         marancsicsBoss = new MarancsicsBoss(viewport);
 
-        gameContinue(bossX,bossY,zsoltiR,zsoltiY,backFromPause);
         setPositions(viewport);
+        gameContinue(bossX,bossY,zsoltiR,zsoltiY,backFromPause);
         addActors();
     }
 
