@@ -5,6 +5,8 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 
+import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
+
 public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean jump = false;
     public static boolean forcejump = false;
@@ -32,8 +34,8 @@ public class Zsolti extends OneSpriteAnimatedActor {
             else {
                 setY(getY() - delta * 360);
                 setRotation(getRotation() - delta * 30);
-                if (getY() <= 30) {
-                    setY(30);
+                if (getY() <= ground) {
+                    setY(ground);
                     setRotation(0);
                     jump = false;
                     fall = false;

@@ -22,14 +22,17 @@ import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
+
 public class PauseStage extends MyStage {
-    Background background;
+    Background bg;
     PlayButton playButton = new PlayButton();
     OneSpriteStaticActor logo;
     MyLabel text = new MyLabel("Megállítva",game.getLabelStyle());
     MyLabel score = new MyLabel("Jelenlegi pontszámod: "+ Tank.pontszam,game.getLabelStyle());
     MyButton back = new MyButton("Vissza a menübe",game.getButtonStyle());
     TextBackground textBackground = new TextBackground();
+    TextBackground textBackground2 = new TextBackground();
     private int speed = 2;
     public static boolean fromBoss;
 
@@ -41,11 +44,28 @@ public class PauseStage extends MyStage {
         PauseScreen.zsoltiRT = zsoltiR;
         PauseScreen.zsoltiYT = zsoltiY;
 
-        background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-
+        setBackground(viewport);
         addListeners(tankX,tankY,zsoltiR,zsoltiY);
         setSizesAndPositions(viewport);
         addActors();
+    }
+
+    void setBackground(Viewport viewport)
+    {
+        if(selectedBackground == 0)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        }
+
+        else if(selectedBackground == 1)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);;
+        }
+
+        else if(selectedBackground == 2)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+        }
     }
 
     void addListeners(final float tankX, final float tankY, final float zsoltiR, final float zsoltiY)
@@ -89,27 +109,31 @@ public class PauseStage extends MyStage {
     void setSizesAndPositions(Viewport viewport)
     {
         playButton.setSize(160,160);
-        playButton.setPosition(viewport.getWorldWidth() / 2 - playButton.getWidth() / 2, viewport.getWorldHeight() / 2 - playButton.getHeight()/2);
+        playButton.setPosition(viewport.getWorldWidth() / 2 - playButton.getWidth() / 2, viewport.getWorldHeight() / 2 - playButton.getHeight()/2 + 30);
 
         text.setFontScale(1.7f);
         score.setFontScale(1.4f);
 
-        logo.setPosition(viewport.getWorldWidth()/2-logo.getWidth()/2,viewport.getWorldHeight()/2 + logo.getHeight()/2.5f);
+        logo.setPosition(viewport.getWorldWidth()/2-logo.getWidth()/2,viewport.getWorldHeight()/2 + logo.getHeight()/2.3f);
 
-        text.setPosition(viewport.getWorldWidth()/2 - text.getWidth() / 1.15f, playButton.getY() - text.getHeight()*2);
+        text.setPosition(viewport.getWorldWidth()/2 - text.getWidth() / 1.15f, playButton.getY() - text.getHeight()*2.75f);
 
         score.setPosition(viewport.getWorldWidth() / 2 - score.getWidth() / 1.45f, text.getY() - score.getHeight()*1.5f);
 
-        back.setPosition(viewport.getWorldWidth()/2-back.getWidth()/2,score.getY() - 90);
+        back.setPosition(viewport.getWorldWidth()/2-back.getWidth()/2,score.getY() - 105);
         textBackground.setSize(back.getWidth() + 36, back.getHeight() + 20);
         textBackground.setPosition(back.getX() - 18,back.getY() - 10);
+
+        textBackground2.setSize(600,150);
+        textBackground2.setPosition(viewport.getWorldWidth()/2-textBackground2.getWidth()/2,score.getY() - 25);
     }
 
     void addActors()
     {
-        addActor(background);
+        addActor(bg);
         addActor(logo);
         addActor(playButton);
+        addActor(textBackground2);
         addActor(text);
         addActor(textBackground);
         addActor(score);

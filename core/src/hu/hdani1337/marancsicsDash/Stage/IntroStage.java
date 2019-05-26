@@ -11,38 +11,63 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
+
 public class IntroStage extends MyStage {
-    Background background;
-    Background background2;
+    Background bg1;
+    Background bg2;
     Marancsics marancsics = new Marancsics();
     Zsolti zsolti = new Zsolti();
 
     public IntroStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
-        background2 = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
 
         Marancsics.intro = true;
         Zsolti.intro = true;
 
+        Zsolti.jump = false;
+
+        setBackground(viewport);
         setPositions();
         addActors();
     }
 
+    void setBackground(Viewport viewport)
+    {
+        if(selectedBackground == 0)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        }
+
+        else if(selectedBackground == 1)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
+        }
+
+        else if(selectedBackground == 2)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+            ground = 90;
+        }
+    }
+
     void setPositions()
     {
-        background.setPosition(0,0);
-        background2.setPosition(background.getWidth(),0);
+        bg1.setPosition(0,0);
+        bg2.setPosition(bg1.getWidth(),0);
 
-        marancsics.setPosition(-420,30);
-        zsolti.setPosition(-160,30);
-
+        marancsics.setPosition(-420,ground);
+        zsolti.setPosition(-160,ground);
     }
 
     void addActors()
     {
-        addActor(background);
-        addActor(background2);
+        addActor(bg1);
+        addActor(bg2);
         addActor(marancsics);
         addActor(zsolti);
     }

@@ -7,10 +7,11 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.jump;
+import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 
 public class JumpIcon extends OneSpriteStaticActor {
 
-    public static int jumpHeight = 275;
+    public static int jumpHeight = ground + 245;
 
     public JumpIcon() {
         super(Assets.manager.get(Assets.JUMP));
@@ -24,7 +25,7 @@ public class JumpIcon extends OneSpriteStaticActor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                jumpHeight = 250 + (int)(Math.random() * 75 + 1);
+                jumpHeight = ground + 220 + (int)(Math.random() * 75 + 1);
                 jump = true;
             }
         });

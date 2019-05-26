@@ -18,6 +18,7 @@ import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
 
 public class CrashStage extends MyStage {
     int highscore = preferences.getInteger("highscore");;
@@ -34,15 +35,33 @@ public class CrashStage extends MyStage {
 
     public CrashStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        bg = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
 
         Tank.pontszam = 0;
         MarancsicsBoss.marancsicsHealth = 99.9f;
 
+        setBackground(viewport);
         record();
         setPositionsAndSizes(viewport);
         addListeners();
         addActors();
+    }
+
+    void setBackground(Viewport viewport)
+    {
+        if(selectedBackground == 0)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        }
+
+        else if(selectedBackground == 1)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);;
+        }
+
+        else if(selectedBackground == 2)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+        }
     }
 
     void record()

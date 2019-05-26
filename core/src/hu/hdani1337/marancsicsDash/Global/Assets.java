@@ -39,13 +39,18 @@ public class Assets {
     //KÉPEK
     public static final AssetDescriptor<Texture> MENU_BG = new AssetDescriptor<Texture>("pic/menuBg.jpg",Texture.class);
     public static final AssetDescriptor<Texture> GAME_BG = new AssetDescriptor<Texture>("pic/bg.png",Texture.class);
+    public static final AssetDescriptor<Texture> GAME_BG2 = new AssetDescriptor<Texture>("pic/bg2.png",Texture.class);
+    public static final AssetDescriptor<Texture> GAME_BG3 = new AssetDescriptor<Texture>("pic/bg3.jpg",Texture.class);
     public static final AssetDescriptor<Texture> LOGO = new AssetDescriptor<Texture>("pic/logo.png",Texture.class);
+    public static final AssetDescriptor<Texture> SHOP_LOGO = new AssetDescriptor<Texture>("pic/marancshop.png",Texture.class);
     public static final AssetDescriptor<Texture> TEXT_BG = new AssetDescriptor<Texture>("pic/textBG.png",Texture.class);
     public static final AssetDescriptor<Texture> JUMP = new AssetDescriptor<Texture>("pic/jump.png",Texture.class);
     public static final AssetDescriptor<Texture> PAUSE = new AssetDescriptor<Texture>("pic/pause.png",Texture.class);
     public static final AssetDescriptor<Texture> PLAY = new AssetDescriptor<Texture>("pic/play.png",Texture.class);
     public static final AssetDescriptor<Texture> RED = new AssetDescriptor<Texture>("pic/piros.png",Texture.class);
     public static final AssetDescriptor<Texture> GREEN = new AssetDescriptor<Texture>("pic/zöld.png",Texture.class);
+    public static final AssetDescriptor<Texture> LEFT = new AssetDescriptor<Texture>("pic/left.png",Texture.class);
+    public static final AssetDescriptor<Texture> RIGHT = new AssetDescriptor<Texture>("pic/right.png",Texture.class);
     public static final AssetDescriptor<Texture> INSTANTBOSS = new AssetDescriptor<Texture>("pic/instantBoss.png",Texture.class);
     //BETŰTÍPUSOK
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
@@ -79,7 +84,10 @@ public class Assets {
         manager.load(FONT);
         manager.load(MENU_BG);
         manager.load(GAME_BG);
+        manager.load(GAME_BG2);
+        manager.load(GAME_BG3);
         manager.load(LOGO);
+        manager.load(SHOP_LOGO);
         manager.load(TEXT_BG);
         manager.load(URAIM);
         manager.load(HEE);
@@ -96,6 +104,8 @@ public class Assets {
         manager.load(MARANCSICS_BOSS);
         manager.load(RED);
         manager.load(GREEN);
+        manager.load(LEFT);
+        manager.load(RIGHT);
         manager.load(INSTANTBOSS);
         manager.load(PAY);
     }

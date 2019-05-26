@@ -32,6 +32,7 @@ import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.gamemode;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
 
 public class GameStage extends MyStage {
     //Hátterek
@@ -61,6 +62,8 @@ public class GameStage extends MyStage {
 
     int bossScore = (int) (Math.random() * 15 + 10);
 
+    public static int ground = 30;
+
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
         Zsolti.jump = false; //Ne ugorjon magától az elején
@@ -70,8 +73,7 @@ public class GameStage extends MyStage {
 
         playMusic();
 
-        bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
-        bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        setBackground(viewport);
 
         instantBoss.addListener(new ClickListener()
         {
@@ -87,6 +89,28 @@ public class GameStage extends MyStage {
         setSizes();
         setPositions(viewport);
         addActors();
+    }
+
+    void setBackground(Viewport viewport)
+    {
+        if(selectedBackground == 0)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        }
+
+        else if(selectedBackground == 1)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
+        }
+
+        else if(selectedBackground == 2)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+            ground = 90;
+        }
     }
 
     void playMusic()
@@ -106,16 +130,16 @@ public class GameStage extends MyStage {
         if (backFromPause) {
             zsolti.setRotation(zsoltiR);
             zsolti.setPosition(250, zsoltiY);
-            if (zsoltiY > 30 && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            if (zsoltiY > 30 && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
+            if (zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
         } else {
-            zsolti.setPosition(250, 30);
+            zsolti.setPosition(250, ground);
         }
 
         if (backFromPause) {
             tank.setPosition(tankX, tankY);
             if (!muted) music.play();
-        } else tank.setPosition(2400, -40);
+        } else tank.setPosition(2400, ground - 70);
     }
 
     void setSizes()//actorok méretezése
@@ -127,9 +151,11 @@ public class GameStage extends MyStage {
 
     void setPositions(Viewport viewport)//actorok elhelyezése
     {
-        marancsics.setPosition(60, 30);
+        marancsics.setPosition(60, ground);
 
         coin.setPosition(-100, -100);
+
+        tank.setX(viewport.getWorldWidth() * 2);
 
         scoreLabel.setPosition(viewport.getWorldWidth() / 2 - scoreLabel.getWidth() / 2, viewport.getWorldHeight() - scoreLabel.getHeight() * 1.5f);
 
@@ -208,7 +234,7 @@ public class GameStage extends MyStage {
 
         if(overlaps(zsolti,tank)){
             if (tank.getRotation() <= 3)
-                if(zsolti.getY() > 30 + tank.getHeight() / 4)
+                if(zsolti.getY() > ground + tank.getHeight() / 4)
                     if(zsolti.getY() <= tank.getY()+tank.getHeight())
                         if(zsolti.getX() + zsolti.getWidth() > tank.getX())
                             if(zsolti.getX() < tank.getX() + tank.getWidth())

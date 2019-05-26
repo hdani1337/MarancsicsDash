@@ -7,6 +7,8 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
+import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
+
 public class MarancsicsBoss extends OneSpriteAnimatedActor {
 
     public static float marancsicsHealth = 99.9f;
@@ -21,6 +23,7 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         setDebug(false);
         tempView = viewport;
         setFps(18);
+        setY(ground - 15);
         setSize(getWidth()*1.5f,getHeight()*1.5f);
         if(OptionsStage.difficulty == 1) speed = 4;
         else if(OptionsStage.difficulty == 3) speed = 8;

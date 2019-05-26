@@ -15,10 +15,11 @@ import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.BossStage.bossMusic;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
 
 public class VictoryStage extends MyStage {
 
-    Background background;
+    Background bg;
     MyLabel congratulations = new MyLabel("Gratulálok! Legyözted Marancsicsot!",game.getLabelStyle());
     MyLabel thanks = new MyLabel("Köszönöm, hogy végigjátszottad a játékot!\nPár hónap kódolás, kép és zenelopkodás után végre \nelkészült a Marancsics Dash címü játék. Köszönöm a\nközremüködést Marancsics Tamás tanárúrnak a hangokért,\ntovábbá a családomnak és osztálytársaimnak a támogatását!",game.getLabelStyle());
     TextBackground textBackground1 = new TextBackground();
@@ -26,11 +27,29 @@ public class VictoryStage extends MyStage {
 
     public VictoryStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        background = new Background(Assets.manager.get(Assets.GAME_BG),viewport);
 
+        setBackground(viewport);
         setPositionsAndSizes(viewport);
         addActors();
         timers();
+    }
+
+    void setBackground(Viewport viewport)
+    {
+        if(selectedBackground == 0)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+        }
+
+        else if(selectedBackground == 1)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);;
+        }
+
+        else if(selectedBackground == 2)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
+        }
     }
 
     void setPositionsAndSizes(Viewport viewport)
@@ -48,7 +67,7 @@ public class VictoryStage extends MyStage {
 
     void addActors()
     {
-        addActor(background);
+        addActor(bg);
         addActor(textBackground1);
         addActor(congratulations);
     }
