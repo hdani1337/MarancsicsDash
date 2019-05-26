@@ -24,6 +24,7 @@ import static hu.hdani1337.marancsicsDash.Actor.MarancsicsBoss.marancsicsHealth;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
 
 public class BossStage extends MyStage {
@@ -90,13 +91,13 @@ public class BossStage extends MyStage {
     {
         if(backFromPause){
             zsolti.setRotation(zsoltiR);
-            zsolti.setPosition(250, zsoltiY);
+            zsolti.setPosition(50, zsoltiY);
             if(zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
             else if(zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
             marancsicsBoss.setPosition(bossX,bossY);
         }
         else{
-            zsolti.setPosition(250,ground);
+            zsolti.setPosition(50,ground);
         }
     }
 
@@ -131,8 +132,8 @@ public class BossStage extends MyStage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        bg1.setX(bg1.getX()-5);
-        bg2.setX(bg2.getX()-5);
+        bg1.setX(bg1.getX()-difficulty*3);
+        bg2.setX(bg2.getX()-difficulty*3);
 
         if(PauseButton.paused){
             if(!muted){

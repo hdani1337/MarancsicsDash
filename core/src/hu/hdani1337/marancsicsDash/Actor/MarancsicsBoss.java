@@ -8,6 +8,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 
 public class MarancsicsBoss extends OneSpriteAnimatedActor {
 
@@ -25,7 +26,7 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         setFps(18);
         setY(ground - 15);
         setSize(getWidth()*1.5f,getHeight()*1.5f);
-        speed = OptionsStage.difficulty * 3;
+        speed = (int)(Math.random() * 3 + 2);
     }
 
     @Override
@@ -33,13 +34,11 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         super.act(delta);
         if (marancsicsHealth < 0) marancsicsHealth = 0;
         else if (marancsicsHealth > 99.9) marancsicsHealth = 99.9f;
-        setX(getX() - speed);
+        setX(getX() - difficulty*3 - speed);
         if (getX() + getWidth() < 0)
         {
-            setX(tempView.getWorldWidth());
-            if(OptionsStage.difficulty == 1) speed = (int)(Math.random() * 6 + 8);
-            else if(OptionsStage.difficulty == 3) speed = (int)(Math.random() * 6 + 12);
-            else speed = (int)(Math.random() * 6 + 10);
+            setX(tempView.getWorldWidth() + speed * 50);
+            speed = (int)(Math.random() * 3 + 2);
         }
     }
 }
