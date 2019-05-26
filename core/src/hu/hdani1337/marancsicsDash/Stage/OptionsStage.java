@@ -20,9 +20,9 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 
 public class OptionsStage extends MyStage {
-    public static int difficulty;
-    public static int gamemode;
-    public static final Preferences preferences = Gdx.app.getPreferences("marancsicsDashSave");;
+    public static final Preferences preferences = Gdx.app.getPreferences("marancsicsDashSave");
+    public static int difficulty = preferences.getInteger("difficulty");;
+    public static int gamemode = preferences.getInteger("gamemode");;
 
     Background background;
     MyButton difPlus = new MyButton("+",game.getButtonStyle());//plusz gomb
@@ -47,8 +47,6 @@ public class OptionsStage extends MyStage {
 
     public OptionsStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-        difficulty = preferences.getInteger("difficulty");
-        gamemode = preferences.getInteger("gamemode");
         muted = preferences.getBoolean("muted");
 
         if(difficulty != 1 && difficulty != 2 && difficulty !=3){//ha nincs elmentve nehézség, akkor legyen normál

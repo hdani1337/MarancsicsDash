@@ -24,8 +24,13 @@ import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Actor.Tank.pontszam;
+import static hu.hdani1337.marancsicsDash.Actor.Zsolti.forcejump;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
+import static hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton.paused;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.gamemode;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class GameStage extends MyStage {
@@ -44,7 +49,7 @@ public class GameStage extends MyStage {
     InstantBoss instantBoss = new InstantBoss();
     JumpIcon jumpIcon = new JumpIcon();
     PauseButton pauseButton = new PauseButton();
-    MyLabel scoreLabel = new MyLabel("" + Tank.pontszam, game.getLabelStyle());
+    MyLabel scoreLabel = new MyLabel("" + pontszam, game.getLabelStyle());
     MyLabel coinLabelText = new MyLabel("", game.getLabelStyle());
 
     //Hangok
@@ -59,6 +64,9 @@ public class GameStage extends MyStage {
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
         Zsolti.jump = false; //Ne ugorjon magától az elején
+        if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
+            difficulty = 2;
+        }
 
         playMusic();
 
@@ -152,7 +160,7 @@ public class GameStage extends MyStage {
         addActor(coinLabel);
         addActor(coinLabelText);
 
-        if (ShopStage.boughtInstantBoss) addActor(instantBoss);
+        if (ShopStage.boughtInstantBoss && gamemode != 2) addActor(instantBoss);
     }
 
 
@@ -164,47 +172,19 @@ public class GameStage extends MyStage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(OptionsStage.difficulty == 0){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
-            OptionsStage.difficulty = 2;
-        }
-
-        else if(OptionsStage.difficulty == 1){
-            bg2.setX(bg2.getX()-5);
+        if(difficulty >= 1){
+            bg2.setX(bg2.getX()-difficulty*6);
             if(bg2.getX() < -bg2.getWidth()){
-                bg2.setX(bg1.getX()+bg1.getWidth()-5);
+                bg2.setX(bg1.getX()+bg1.getWidth()-difficulty*6);
             }
 
-            bg1.setX(bg1.getX()-5);
+            bg1.setX(bg1.getX()-difficulty*6);
             if(bg1.getX() < -bg1.getWidth()){
-                bg1.setX(bg2.getX()+bg2.getWidth()-5);
+                bg1.setX(bg2.getX()+bg2.getWidth()-difficulty*6);
             }
         }
 
-        else if(OptionsStage.difficulty == 2){
-            bg2.setX(bg2.getX()-10);
-            if(bg2.getX() < -bg2.getWidth()){
-                bg2.setX(bg1.getX()+bg1.getWidth()-10);
-            }
-
-            bg1.setX(bg1.getX()-10);
-            if(bg1.getX() < -bg1.getWidth()){
-                bg1.setX(bg2.getX()+bg2.getWidth()-10);
-            }
-        }
-
-        else if(OptionsStage.difficulty == 3){
-            bg2.setX(bg2.getX()-15);
-            if(bg2.getX() < -bg2.getWidth()){
-                bg2.setX(bg1.getX()+bg1.getWidth()-15);
-            }
-
-            bg1.setX(bg1.getX()-15);
-            if(bg1.getX() < -bg1.getWidth()){
-                bg1.setX(bg2.getX()+bg2.getWidth()-15);
-            }
-        }
-
-        scoreLabel.setText(""+Tank.pontszam);
+        scoreLabel.setText(""+ pontszam);
         coinLabelText.setText(""+Coin.coin);
 
         if(overlaps(marancsics,tank)){
@@ -220,7 +200,7 @@ public class GameStage extends MyStage {
             marancsics.tankComing = true;
         }
 
-        if(Tank.pontszam >= bossScore && OptionsStage.gamemode == 1)
+        if(pontszam >= bossScore && gamemode != 2)
         {
             music.stop();
             game.setScreen(new BossScreen(game,0,0,0,0,false));
@@ -233,10 +213,10 @@ public class GameStage extends MyStage {
                         if(zsolti.getX() + zsolti.getWidth() > tank.getX())
                             if(zsolti.getX() < tank.getX() + tank.getWidth())
                             {
-                                Zsolti.forcejump  = true;
+                                forcejump  = true;
                             }
 
-            if(!Zsolti.forcejump) {
+            if(!forcejump) {
                 if (!muted) {
                     crash.play();
                     music.stop();
@@ -248,7 +228,7 @@ public class GameStage extends MyStage {
             }
         }
 
-        if(PauseButton.paused){
+        if(paused){
             if(!muted){
                 music.pause();
             }

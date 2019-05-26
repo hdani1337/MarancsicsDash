@@ -23,17 +23,10 @@ public class Marancsics extends OneSpriteAnimatedActor {
         super.act(delta);
         if(intro){
             setX(getX() + delta * 280);
-            if(Gdx.graphics.getWidth() >= 1920) {
-                if (getX() >= 90) {
-                    setX(90);
-                    intro = false;
-                }
-            }
-            else {
-                if (getX() >= 60) {
-                    setX(60);
-                    intro = false;
-                }
+
+            if (getX() >= 60) {
+                setX(60);
+                intro = false;
             }
         }
     }

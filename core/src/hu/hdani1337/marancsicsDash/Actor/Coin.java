@@ -4,6 +4,7 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
+import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class Coin extends OneSpriteAnimatedActor {
@@ -43,9 +44,8 @@ public class Coin extends OneSpriteAnimatedActor {
 
             //System.out.println(coin);
 
-            if (OptionsStage.difficulty == 1) setX(getX() - 5);
-            if (OptionsStage.difficulty == 2) setX(getX() - 10);
-            if (OptionsStage.difficulty == 3) setX(getX() - 15);
+            setX(getX() - difficulty*6);
+
         }
     }
 }
