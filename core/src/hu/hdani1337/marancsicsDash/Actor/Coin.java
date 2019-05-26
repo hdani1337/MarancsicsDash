@@ -2,7 +2,6 @@ package hu.hdani1337.marancsicsDash.Actor;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
-import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;

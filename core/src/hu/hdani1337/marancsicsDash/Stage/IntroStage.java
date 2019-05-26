@@ -18,7 +18,7 @@ public class IntroStage extends MyStage {
     Background bg1;
     Background bg2;
     Marancsics marancsics = new Marancsics();
-    Zsolti zsolti = new Zsolti();
+    Zsolti zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
 
     public IntroStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -39,12 +39,14 @@ public class IntroStage extends MyStage {
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+            ground = 30;
         }
 
         else if(selectedBackground == 1)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
+            ground = 30;
         }
 
         else if(selectedBackground == 2)

@@ -1,6 +1,7 @@
 package hu.hdani1337.marancsicsDash.Actor;
 
-import hu.hdani1337.marancsicsDash.Global.Assets;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
@@ -13,8 +14,8 @@ public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean fall = false;
     public static boolean intro = false;
 
-    public Zsolti() {
-        super(Assets.manager.get(Assets.ZSOLTI));
+    public Zsolti(TextureAtlas texture) {
+        super(texture);
         addCollisionShape("zsoltiHitbox",new MyRectangle(110,205,10,3));
         setFps(12);
         setDebug(false);

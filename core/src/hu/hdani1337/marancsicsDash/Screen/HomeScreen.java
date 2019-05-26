@@ -21,7 +21,6 @@ public class HomeScreen extends MyScreen {
         super(game);
         homeStage = new HomeStage(new FitViewport(keparany(),720),spriteBatch,game);
         Gdx.input.setInputProcessor(homeStage);
-        System.out.println(keparany());
     }
 
     @Override

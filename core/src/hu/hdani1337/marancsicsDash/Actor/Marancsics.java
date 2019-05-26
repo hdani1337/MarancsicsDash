@@ -1,7 +1,5 @@
 package hu.hdani1337.marancsicsDash.Actor;
 
-import com.badlogic.gdx.Gdx;
-
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;

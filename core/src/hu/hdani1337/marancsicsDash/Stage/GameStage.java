@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Coin;
+import hu.hdani1337.marancsicsDash.Actor.Mushroom;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.InstantBoss;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
@@ -24,6 +25,7 @@ import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Actor.Mushroom.superZS;
 import static hu.hdani1337.marancsicsDash.Actor.Tank.pontszam;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.forcejump;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
@@ -33,6 +35,7 @@ import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.gamemode;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
+import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtZsolti;
 
 public class GameStage extends MyStage {
     //Hátterek
@@ -40,10 +43,11 @@ public class GameStage extends MyStage {
     Background bg2;
 
     //Actorok
-    Zsolti zsolti = new Zsolti();
-    Marancsics marancsics = new Marancsics();
+    static Zsolti zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+    static Marancsics marancsics = new Marancsics();
     Coin coin = new Coin(true);
-    Tank tank = new Tank();
+    static Tank tank = new Tank();
+    Mushroom mushroom = new Mushroom();
 
     //UI
     Coin coinLabel = new Coin(false);
@@ -61,6 +65,9 @@ public class GameStage extends MyStage {
     Music music = Assets.manager.get(Assets.GAMEMUSIC);
 
     int bossScore = (int) (Math.random() * 15 + 10);
+    public static float zsoltitempy;
+    public static float zsoltitempr;
+    public static boolean backFromSuper = false;
 
     public static int ground = 30;
 
@@ -91,18 +98,45 @@ public class GameStage extends MyStage {
         addActors();
     }
 
+    void superZsolti()
+    {
+        mushroom.superZS = true;
+        zsoltitempy = zsolti.getY();
+        zsoltitempr = zsolti.getRotation();
+        zsolti.remove();
+        zsolti = new Zsolti(Assets.manager.get(Assets.SUPERZSOLTI));
+        zsolti.setPosition(250,zsoltitempy);
+        zsolti.setRotation(zsoltitempr);
+        addActor(zsolti);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                superZS = false;
+                zsoltitempy = zsolti.getY();
+                zsoltitempr = zsolti.getRotation();
+                zsolti.remove();
+                zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+                zsolti.setPosition(250,zsoltitempy);
+                zsolti.setRotation(zsoltitempr);
+                addActor(zsolti);
+            }
+        }, 8);
+    }
+
     void setBackground(Viewport viewport)
     {
         if(selectedBackground == 0)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
+            ground = 30;
         }
 
         else if(selectedBackground == 1)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
+            ground = 30;
         }
 
         else if(selectedBackground == 2)
@@ -134,6 +168,7 @@ public class GameStage extends MyStage {
             if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
         } else {
             zsolti.setPosition(250, ground);
+            zsolti.setRotation(0);
         }
 
         if (backFromPause) {
@@ -154,6 +189,7 @@ public class GameStage extends MyStage {
         marancsics.setPosition(60, ground);
 
         coin.setPosition(-100, -100);
+        mushroom.setPosition(-100, -100);
 
         tank.setX(viewport.getWorldWidth() * 2);
 
@@ -186,6 +222,7 @@ public class GameStage extends MyStage {
         addActor(coinLabel);
         addActor(coinLabelText);
 
+        if (boughtZsolti) addActor(mushroom);
         if (ShopStage.boughtInstantBoss && gamemode != 2) addActor(instantBoss);
     }
 
@@ -226,6 +263,14 @@ public class GameStage extends MyStage {
             marancsics.tankComing = true;
         }
 
+        if(overlaps(zsolti,mushroom)) superZsolti();
+
+        if(backFromSuper)
+        {
+            addActor(zsolti);
+            backFromSuper = false;
+        }
+
         if(pontszam >= bossScore && gamemode != 2)
         {
             music.stop();
@@ -233,25 +278,30 @@ public class GameStage extends MyStage {
         }
 
         if(overlaps(zsolti,tank)){
-            if (tank.getRotation() <= 3)
-                if(zsolti.getY() > ground + tank.getHeight() / 4)
-                    if(zsolti.getY() <= tank.getY()+tank.getHeight())
-                        if(zsolti.getX() + zsolti.getWidth() > tank.getX())
-                            if(zsolti.getX() < tank.getX() + tank.getWidth())
-                            {
-                                forcejump  = true;
-                            }
+            if(!superZS) {
+                if (tank.getRotation() <= 3)
+                    if (zsolti.getY() > ground + tank.getHeight() / 4)
+                        if (zsolti.getY() <= tank.getY() + tank.getHeight())
+                            if (zsolti.getX() + zsolti.getWidth() > tank.getX())
+                                if (zsolti.getX() < tank.getX() + tank.getWidth()) {
+                                    forcejump = true;
+                                }
 
-            if(!forcejump) {
-                if (!muted) {
-                    crash.play();
-                    music.stop();
+                if (!forcejump) {
+                    if (!muted) {
+                        crash.play();
+                        music.stop();
+                    }
+                    preferences.putLong("coin", Coin.coin);
+                    preferences.flush();
+                    game.setScreen(new CrashScreen(game));
+                    Marancsics.tankComing = false;
                 }
-                preferences.putLong("coin", Coin.coin);
-                preferences.flush();
-                game.setScreen(new CrashScreen(game));
-                Marancsics.tankComing = false;
             }
+            else
+                {
+                    marancsics.tankComing = true;
+                }
         }
 
         if(paused){

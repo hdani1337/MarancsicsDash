@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Coin;
+import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
@@ -40,6 +41,7 @@ public class ShopStage extends MyStage {
     InstantBoss instantBoss = new InstantBoss();
     Siberia siberia = new Siberia();
     Zala zala = new Zala();
+    Zsolti superZS = new Zsolti(Assets.manager.get(Assets.SUPERZSOLTI));
 
     Left left = new Left();
     Right right = new Right();
@@ -49,12 +51,10 @@ public class ShopStage extends MyStage {
     int itemID = 0;
     int speed = 2;
 
-
     public static boolean boughtInstantBoss = preferences.getBoolean("boughtInstantBoss");
-    /*public static boolean boughtSiberia = preferences.getBoolean("boughtSiberia");
-    public static boolean boughtZala = preferences.getBoolean("boughtZala");*/
-     public static boolean boughtSiberia = true;
-    public static boolean boughtZala = true;
+    public static boolean boughtSiberia = preferences.getBoolean("boughtSiberia");
+    public static boolean boughtZala = preferences.getBoolean("boughtZala");
+    public static boolean boughtZsolti = preferences.getBoolean("boughtZsolti");
 
     public ShopStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -85,6 +85,7 @@ public class ShopStage extends MyStage {
         if (itemID == 0){
             siberia.remove();
             zala.remove();
+            superZS.remove();
             addActor(instantBoss);
             if(boughtInstantBoss)
             {
@@ -101,6 +102,7 @@ public class ShopStage extends MyStage {
         else if (itemID == 1){
             instantBoss.remove();
             zala.remove();
+            superZS.remove();
             addActor(siberia);
             if(boughtSiberia)
             {
@@ -116,8 +118,26 @@ public class ShopStage extends MyStage {
 
         else if (itemID == 2){
             siberia.remove();
+            superZS.remove();
             instantBoss.remove();
             addActor(zala);
+            if(boughtZala)
+            {
+                purchase.remove();
+                textBackground3.remove();
+            }
+            else
+            {
+                addActor(textBackground3);
+                addActor(purchase);
+            }
+        }
+
+        else if (itemID == 3){
+            siberia.remove();
+            zala.remove();
+            instantBoss.remove();
+            addActor(superZS);
             if(boughtZala)
             {
                 purchase.remove();
@@ -154,6 +174,15 @@ public class ShopStage extends MyStage {
             else myLabel.setText("Zala\nÁr: 200");
         }
 
+        if(itemID == 3)
+        {
+            Zsolti.jump = false;
+            Zsolti.fall = false;
+            Zsolti.forcejump = false;
+            Zsolti.intro = false;
+            if (boughtZala) myLabel.setText("Super Zsolti\nMár megvetted!");
+            else myLabel.setText("Super Zsolti\nÁr: 250");
+        }
     }
 
     void addListeners()
@@ -162,8 +191,8 @@ public class ShopStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (itemID == 2) {
-                    itemID = 2;
+                if (itemID == 3) {
+                    itemID = 3;
                 } else {
                     itemID++;
                 }
@@ -237,6 +266,22 @@ public class ShopStage extends MyStage {
                         }
                     }
                 }
+
+                else if (itemID == 3)
+                {
+                    if(!boughtSiberia) {
+                        if (Coin.coin >= 250) {
+                            if (!muted) paySound.play();
+                            Coin.coin -= 250;
+                            coinLabelText.setText(""+Coin.coin);
+                            myLabel.setText("Super Zsolti\nMár megvetted!");
+                            boughtZsolti = true;
+                            preferences.putLong("coin", Coin.coin);
+                            preferences.putBoolean("boughtZsolti", boughtZsolti);
+                            preferences.flush();
+                        }
+                    }
+                }
             }
         });
 
@@ -248,6 +293,7 @@ public class ShopStage extends MyStage {
                 preferences.putBoolean("boughtInstantBoss", boughtInstantBoss);
                 preferences.putBoolean("boughtSiberia", boughtSiberia);
                 preferences.putBoolean("boughtZala", boughtZala);
+                preferences.putBoolean("boughtZsolti", boughtZsolti);
                 preferences.flush();
                 game.setScreen(new HomeScreen(game));
             }
@@ -259,6 +305,7 @@ public class ShopStage extends MyStage {
         instantBoss.setPosition(viewport.getWorldWidth()/2-instantBoss.getWidth()/2,viewport.getWorldHeight()/2-instantBoss.getHeight()/2);
         siberia.setPosition(viewport.getWorldWidth()/2-siberia.getWidth()/2,viewport.getWorldHeight()/2-siberia.getHeight()/2 + 50);
         zala.setPosition(viewport.getWorldWidth()/2-zala.getWidth()/2,viewport.getWorldHeight()/2-zala.getHeight()/2 + 50);
+        superZS.setPosition(viewport.getWorldWidth()/2-superZS.getWidth()/2,viewport.getWorldHeight()/2-superZS.getHeight()/2 + 25);
 
         coinLabel.setPosition(15, viewport.getWorldHeight()-15-coinLabel.getHeight());
         coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/4);
@@ -277,7 +324,7 @@ public class ShopStage extends MyStage {
         left.setPosition(textBackground.getX() - left.getWidth() - 30,textBackground.getY());
         right.setPosition(textBackground.getX() + textBackground.getWidth() + 30,textBackground.getY());
 
-        myButton.setPosition(viewport.getWorldWidth() - myButton.getWidth() - 15,15);
+        myButton.setPosition(viewport.getWorldWidth() - (myButton.getWidth() + 25),50);
         textBackground2.setPosition(myButton.getX() - 15,myButton.getY() - 8);
 
         purchase.setPosition(viewport.getWorldWidth()/2-purchase.getWidth()/2,myLabel.getY() - 90);

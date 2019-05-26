@@ -32,6 +32,7 @@ public class Assets {
 
     //ATLASOK
     public static final AssetDescriptor<TextureAtlas> ZSOLTI = new AssetDescriptor<TextureAtlas>("atlas/zsolti.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<TextureAtlas> SUPERZSOLTI = new AssetDescriptor<TextureAtlas>("atlas/superZsolti.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> MARANCSICS = new AssetDescriptor<TextureAtlas>("atlas/marancsics.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> TANK = new AssetDescriptor<TextureAtlas>("atlas/tank.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> COIN = new AssetDescriptor<TextureAtlas>("atlas/coin.atlas", TextureAtlas.class);
@@ -52,6 +53,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> LEFT = new AssetDescriptor<Texture>("pic/left.png",Texture.class);
     public static final AssetDescriptor<Texture> RIGHT = new AssetDescriptor<Texture>("pic/right.png",Texture.class);
     public static final AssetDescriptor<Texture> INSTANTBOSS = new AssetDescriptor<Texture>("pic/instantBoss.png",Texture.class);
+    public static final AssetDescriptor<Texture> GOMBA = new AssetDescriptor<Texture>("pic/mushroom.png",Texture.class);
     //BETŰTÍPUSOK
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(fontParameter.fontFileName, BitmapFont.class, fontParameter);
     //HANGOK
@@ -78,6 +80,7 @@ public class Assets {
         manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
         manager.load(ZSOLTI);
+        manager.load(SUPERZSOLTI);
         manager.load(MARANCSICS);
         manager.load(TANK);
         manager.load(COIN);
@@ -87,6 +90,7 @@ public class Assets {
         manager.load(GAME_BG2);
         manager.load(GAME_BG3);
         manager.load(LOGO);
+        manager.load(GOMBA);
         manager.load(SHOP_LOGO);
         manager.load(TEXT_BG);
         manager.load(URAIM);

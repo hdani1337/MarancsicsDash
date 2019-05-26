@@ -1,7 +1,5 @@
 package hu.hdani1337.marancsicsDash.MyBaseClasses.UI;
 
-import com.badlogic.gdx.graphics.Texture;
-
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 

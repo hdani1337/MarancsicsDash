@@ -12,7 +12,7 @@ import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 public class MarancsicsBoss extends OneSpriteAnimatedActor {
 
     public static float marancsicsHealth = 99.9f;
-    private byte speed;
+    private int speed;
     public Viewport tempView;
 
     public MarancsicsBoss(Viewport viewport) {
@@ -25,9 +25,7 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         setFps(18);
         setY(ground - 15);
         setSize(getWidth()*1.5f,getHeight()*1.5f);
-        if(OptionsStage.difficulty == 1) speed = 4;
-        else if(OptionsStage.difficulty == 3) speed = 8;
-        else speed = 6;
+        speed = OptionsStage.difficulty * 3;
     }
 
     @Override
@@ -39,9 +37,9 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         if (getX() + getWidth() < 0)
         {
             setX(tempView.getWorldWidth());
-            if(OptionsStage.difficulty == 1) speed = (byte)(Math.random() * 5 + 4);
-            else if(OptionsStage.difficulty == 3) speed = (byte)(Math.random() * 5 + 5);
-            else speed = (byte)(Math.random() * 5 + 7);
+            if(OptionsStage.difficulty == 1) speed = (int)(Math.random() * 6 + 8);
+            else if(OptionsStage.difficulty == 3) speed = (int)(Math.random() * 6 + 12);
+            else speed = (int)(Math.random() * 6 + 10);
         }
     }
 }

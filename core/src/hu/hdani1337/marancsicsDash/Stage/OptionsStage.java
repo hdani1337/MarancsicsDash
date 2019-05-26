@@ -153,7 +153,7 @@ public class OptionsStage extends MyStage {
         textbg.setPosition(dif.getX() - 20,dif.getY() - 8);
         textbg.setSize(400,dif.getHeight()*1.5f);
         difType.setPosition(dif.getX() + 260,dif.getY());
-        back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),125);
+        back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),50);
         textbg2.setPosition(textbg.getX(),textbg.getY() - 100);
         textbg2.setWidth(textbg.getWidth());
         textbg2.setHeight(textbg.getHeight());

@@ -123,7 +123,8 @@ public class HomeStage extends MyStage {
         textBackground5.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
         textBackground6.setSize(shop.getWidth() + 30, shop.getHeight() + 14);
 
-        logo.setPosition(viewport.getWorldWidth()/2 - logo.getWidth()/2, viewport.getWorldHeight() - logo.getHeight()*1.5f);
+        logo.setWidthWhithAspectRatio(500);
+        logo.setPosition(viewport.getWorldWidth()/2 - logo.getWidth()/2, viewport.getWorldHeight() - logo.getHeight()*1.4f);
     }
 
     void addListeners()

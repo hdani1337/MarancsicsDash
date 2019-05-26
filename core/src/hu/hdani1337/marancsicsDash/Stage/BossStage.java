@@ -32,7 +32,7 @@ public class BossStage extends MyStage {
     Background bg1;
     Background bg2;
     MarancsicsBoss marancsicsBoss;
-    Zsolti zsolti = new Zsolti();
+    Zsolti zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
     Health health;
     AntiHealth antiHealth;
     JumpIcon jumpIcon = new JumpIcon();
@@ -90,13 +90,13 @@ public class BossStage extends MyStage {
     {
         if(backFromPause){
             zsolti.setRotation(zsoltiR);
-            zsolti.setPosition(30, zsoltiY);
+            zsolti.setPosition(250, zsoltiY);
             if(zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
             else if(zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
             marancsicsBoss.setPosition(bossX,bossY);
         }
         else{
-            zsolti.setPosition(30,ground);
+            zsolti.setPosition(250,ground);
         }
     }
 

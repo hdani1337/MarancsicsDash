@@ -45,7 +45,7 @@ public class InfoStage extends MyStage {
         textBG.setSize(textBG.getWidth()*3.1f,textBG.getHeight()*3.1f);
         textBG.setPosition(viewport.getWorldWidth()/2-textBG.getWidth()/2,(viewport.getWorldHeight()/2-textBG.getHeight()/2)+30);
         text.setPosition(viewport.getWorldWidth()/2 - text.getWidth()/2,(viewport.getWorldHeight()/2 - text.getHeight()/2)+30);
-        back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),125);
+        back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),50);
         credits.setPosition(15,100);
         textBG2.setWidth(290);
         textBG2.setHeight(60);
