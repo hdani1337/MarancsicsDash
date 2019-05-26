@@ -138,7 +138,7 @@ public class ShopStage extends MyStage {
             zala.remove();
             instantBoss.remove();
             addActor(superZS);
-            if(boughtZala)
+            if(boughtZsolti)
             {
                 purchase.remove();
                 textBackground3.remove();
@@ -180,7 +180,7 @@ public class ShopStage extends MyStage {
             Zsolti.fall = false;
             Zsolti.forcejump = false;
             Zsolti.intro = false;
-            if (boughtZala) myLabel.setText("Super Zsolti\nMár megvetted!");
+            if (boughtZsolti) myLabel.setText("Super Zsolti\nMár megvetted!");
             else myLabel.setText("Super Zsolti\nÁr: 250");
         }
     }
@@ -269,7 +269,7 @@ public class ShopStage extends MyStage {
 
                 else if (itemID == 3)
                 {
-                    if(!boughtSiberia) {
+                    if(!boughtZsolti) {
                         if (Coin.coin >= 250) {
                             if (!muted) paySound.play();
                             Coin.coin -= 250;

@@ -64,6 +64,7 @@ public class Assets {
     public static final AssetDescriptor<Sound> COIN_SOUND = new AssetDescriptor<Sound>("sound/coin.mp3",Sound.class);
     public static final AssetDescriptor<Sound> GLASSBREAK = new AssetDescriptor<Sound>("sound/glass.wav",Sound.class);
     public static final AssetDescriptor<Sound> PAY = new AssetDescriptor<Sound>("sound/pay.mp3",Sound.class);
+    public static final AssetDescriptor<Sound> POWERUP = new AssetDescriptor<Sound>("sound/powerup.mp3",Sound.class);
     //ZENE
     public static final AssetDescriptor<Music> MENUMUSIC = new AssetDescriptor<Music>("music/menuMusic.mp3",Music.class);
     public static final AssetDescriptor<Music> GAMEMUSIC = new AssetDescriptor<Music>("music/gameMusic.mp3",Music.class);
@@ -112,6 +113,7 @@ public class Assets {
         manager.load(RIGHT);
         manager.load(INSTANTBOSS);
         manager.load(PAY);
+        manager.load(POWERUP);
     }
 
     public static void unload() {

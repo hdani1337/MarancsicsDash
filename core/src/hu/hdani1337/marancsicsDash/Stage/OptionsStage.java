@@ -58,8 +58,7 @@ public class OptionsStage extends MyStage {
             difficulty = 2;
         }
 
-        if(selectedBackground != 10 && selectedBackground != 1) selectedBackground = 0;
-        else if(!boughtSiberia && !boughtZala) selectedBackground = 0;
+        if(selectedBackground != 2 && selectedBackground != 1) selectedBackground = 0;
 
         if(gamemode != 1 && gamemode != 2) gamemode = 1;//ugyanez a játékmóddal is
 

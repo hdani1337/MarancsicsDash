@@ -62,6 +62,7 @@ public class GameStage extends MyStage {
     Sound kick = Assets.manager.get(Assets.KICK);
     Sound crash = Assets.manager.get(Assets.CRASH);
     Sound coinSound = Assets.manager.get(Assets.COIN_SOUND);
+    Sound powerUp = Assets.manager.get(Assets.POWERUP);
     Music music = Assets.manager.get(Assets.GAMEMUSIC);
 
     int bossScore = (int) (Math.random() * 15 + 10);
@@ -189,7 +190,7 @@ public class GameStage extends MyStage {
         marancsics.setPosition(60, ground);
 
         coin.setPosition(-100, -100);
-        mushroom.setPosition(-100, -100);
+        mushroom.setPosition((int)(Math.random() * 8240 + 3840),(int)(Math.random() * 250 + 150));
 
         tank.setX(viewport.getWorldWidth() * 2);
 
@@ -235,23 +236,23 @@ public class GameStage extends MyStage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(difficulty >= 1){
-            bg2.setX(bg2.getX()-difficulty*6);
-            if(bg2.getX() < -bg2.getWidth()){
-                bg2.setX(bg1.getX()+bg1.getWidth()-difficulty*6);
+        if (difficulty >= 1) {
+            bg2.setX(bg2.getX() - difficulty * 6);
+            if (bg2.getX() < -bg2.getWidth()) {
+                bg2.setX(bg1.getX() + bg1.getWidth() - difficulty * 6);
             }
 
-            bg1.setX(bg1.getX()-difficulty*6);
-            if(bg1.getX() < -bg1.getWidth()){
-                bg1.setX(bg2.getX()+bg2.getWidth()-difficulty*6);
+            bg1.setX(bg1.getX() - difficulty * 6);
+            if (bg1.getX() < -bg1.getWidth()) {
+                bg1.setX(bg2.getX() + bg2.getWidth() - difficulty * 6);
             }
         }
 
-        scoreLabel.setText(""+ pontszam);
-        coinLabelText.setText(""+Coin.coin);
+        scoreLabel.setText("" + pontszam);
+        coinLabelText.setText("" + Coin.coin);
 
-        if(overlaps(marancsics,tank)){
-            if(!muted) {
+        if (overlaps(marancsics, tank)) {
+            if (!muted) {
                 kick.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -263,7 +264,11 @@ public class GameStage extends MyStage {
             marancsics.tankComing = true;
         }
 
-        if(overlaps(zsolti,mushroom)) superZsolti();
+        if (overlaps(zsolti, mushroom))
+        {
+            superZsolti();
+            powerUp.play();
+        }
 
         if(backFromSuper)
         {
@@ -300,6 +305,7 @@ public class GameStage extends MyStage {
             }
             else
                 {
+                    kick.play();
                     marancsics.tankComing = true;
                 }
         }
