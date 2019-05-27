@@ -267,7 +267,7 @@ public class GameStage extends MyStage {
         if (overlaps(zsolti, mushroom))
         {
             superZsolti();
-            powerUp.play();
+            if(!muted) powerUp.play();
         }
 
         if(backFromSuper)
@@ -283,16 +283,21 @@ public class GameStage extends MyStage {
         }
 
         if(overlaps(zsolti,tank)){
-            if(!superZS) {
-                if (tank.getRotation() <= 3)
-                    if (zsolti.getY() > ground + tank.getHeight() / 4)
-                        if (zsolti.getY() <= tank.getY() + tank.getHeight())
-                            if (zsolti.getX() + zsolti.getWidth() > tank.getX())
-                                if (zsolti.getX() < tank.getX() + tank.getWidth()) {
-                                    forcejump = true;
-                                }
+            if (tank.getRotation() <= 3)
+                if (zsolti.getY() > ground + tank.getHeight() / 4)
+                    if (zsolti.getY() <= tank.getY() + tank.getHeight())
+                        if (zsolti.getX() + zsolti.getWidth() > tank.getX())
+                            if (zsolti.getX() < tank.getX() + tank.getWidth()) {
+                                forcejump = true;
+                            }
 
-                if (!forcejump) {
+            if (!forcejump) {
+                if(superZS)
+                {
+                    if(!muted) kick.play();
+                    marancsics.tankComing = true;
+                }
+                else {
                     if (!muted) {
                         crash.play();
                         music.stop();
@@ -303,11 +308,6 @@ public class GameStage extends MyStage {
                     Marancsics.tankComing = false;
                 }
             }
-            else
-                {
-                    kick.play();
-                    marancsics.tankComing = true;
-                }
         }
 
         if(paused){

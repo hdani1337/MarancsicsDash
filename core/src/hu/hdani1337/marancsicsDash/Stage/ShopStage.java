@@ -31,6 +31,7 @@ public class ShopStage extends MyStage {
     TextBackground textBackground = new TextBackground();
     TextBackground textBackground2 = new TextBackground();
     TextBackground textBackground3 = new TextBackground();
+    TextBackground bgbg = new TextBackground();
     MyButton myButton = new MyButton("Vissza a menübe",game.getButtonStyle());
     MyButton purchase = new MyButton("Vásárlás",game.getButtonStyle());
     MyLabel myLabel = new MyLabel("Instant Boss\nÁr: 100",game.getLabelStyle());
@@ -83,8 +84,10 @@ public class ShopStage extends MyStage {
     void setActor()
     {
         if (itemID == 0){
+            left.remove();
             siberia.remove();
             zala.remove();
+            bgbg.remove();
             superZS.remove();
             addActor(instantBoss);
             if(boughtInstantBoss)
@@ -103,7 +106,9 @@ public class ShopStage extends MyStage {
             instantBoss.remove();
             zala.remove();
             superZS.remove();
+            addActor(bgbg);
             addActor(siberia);
+            addActor(left);
             if(boughtSiberia)
             {
                 purchase.remove();
@@ -117,9 +122,11 @@ public class ShopStage extends MyStage {
         }
 
         else if (itemID == 2){
+            addActor(right);
             siberia.remove();
             superZS.remove();
             instantBoss.remove();
+            addActor(bgbg);
             addActor(zala);
             if(boughtZala)
             {
@@ -134,8 +141,10 @@ public class ShopStage extends MyStage {
         }
 
         else if (itemID == 3){
+            right.remove();
             siberia.remove();
             zala.remove();
+            bgbg.remove();
             instantBoss.remove();
             addActor(superZS);
             if(boughtZsolti)
@@ -306,6 +315,9 @@ public class ShopStage extends MyStage {
         siberia.setPosition(viewport.getWorldWidth()/2-siberia.getWidth()/2,viewport.getWorldHeight()/2-siberia.getHeight()/2 + 50);
         zala.setPosition(viewport.getWorldWidth()/2-zala.getWidth()/2,viewport.getWorldHeight()/2-zala.getHeight()/2 + 50);
         superZS.setPosition(viewport.getWorldWidth()/2-superZS.getWidth()/2,viewport.getWorldHeight()/2-superZS.getHeight()/2 + 25);
+
+        bgbg.setSize(siberia.getWidth() + 16, siberia.getHeight() + 18);
+        bgbg.setPosition(siberia.getX() - 8, siberia.getY() - 10);
 
         coinLabel.setPosition(15, viewport.getWorldHeight()-15-coinLabel.getHeight());
         coinLabelText.setPosition(coinLabel.getX() + coinLabel.getWidth() + 10, coinLabel.getY() + coinLabel.getHeight()/4);
