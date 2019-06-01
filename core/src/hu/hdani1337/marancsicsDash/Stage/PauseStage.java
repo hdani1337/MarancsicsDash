@@ -45,7 +45,7 @@ public class PauseStage extends MyStage {
         PauseScreen.zsoltiYT = zsoltiY;
 
         setBackground(viewport);
-        addListeners(tankX,tankY,zsoltiR,zsoltiY);
+        addListeners(tankX, tankY, zsoltiR, zsoltiY);
         setSizesAndPositions(viewport);
         addActors();
     }

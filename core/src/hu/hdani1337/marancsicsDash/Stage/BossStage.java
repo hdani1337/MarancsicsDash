@@ -29,7 +29,7 @@ import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
 
 public class BossStage extends MyStage {
 
-    MyLabel marancsicsElete = new MyLabel("Marancsics élete",game.getLabelStyle());
+    MyLabel marancsicsElete = new MyLabel("Marancsics élete", game.getLabelStyle());
     Background bg1;
     Background bg2;
     MarancsicsBoss marancsicsBoss;
@@ -49,71 +49,58 @@ public class BossStage extends MyStage {
         Zsolti.fall = false;
         Zsolti.doThings = true;
 
-        if(!muted)
-        {
+        if (!muted) {
             bossMusic.play();
             bossMusic.setVolume(0.5f);
             bossMusic.setLooping(true);
         }
 
         health = new Health(viewport);
-        antiHealth = new AntiHealth(health.getWidth(),health.getY(),health.getX());
+        antiHealth = new AntiHealth(health.getWidth(), health.getY(), health.getX());
 
         marancsicsBoss = new MarancsicsBoss(viewport);
 
         setBackground(viewport);
         setPositions(viewport);
-        gameContinue(bossX,bossY,zsoltiR,zsoltiY,backFromPause);
+        gameContinue(bossX, bossY, zsoltiR, zsoltiY, backFromPause);
         addActors();
     }
 
-    void setBackground(Viewport viewport)
-    {
-        if(selectedBackground == 0)
-        {
+    void setBackground(Viewport viewport) {
+        if (selectedBackground == 0) {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
-        }
-
-        else if(selectedBackground == 1)
-        {
+        } else if (selectedBackground == 1) {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
-        }
-
-        else if(selectedBackground == 2)
-        {
+        } else if (selectedBackground == 2) {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
         }
     }
 
-    void gameContinue(float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause)
-    {
-        if(backFromPause){
+    void gameContinue(float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
+        if (backFromPause) {
             zsolti.setRotation(zsoltiR);
             zsolti.setPosition(50, zsoltiY);
-            if(zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            else if(zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
-            marancsicsBoss.setPosition(bossX,bossY);
-        }
-        else{
-            zsolti.setPosition(50,ground);
+            if (zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            else if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
+            marancsicsBoss.setPosition(bossX, bossY);
+        } else {
+            zsolti.setPosition(50, ground);
         }
     }
 
-    void setPositions(Viewport viewport)
-    {
-        bg1.setPosition(0,0);
-        bg2.setPosition(bg1.getWidth(),0);
-        marancsicsElete.setPosition(health.getX()+health.getWidth()/2-marancsicsElete.getWidth()/2,health.getY()+health.getHeight()/2-marancsicsElete.getHeight()/2);
-        jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f,15);
-        pauseButton.setPosition(jumpIcon.getX(),viewport.getWorldHeight() - pauseButton.getHeight() - 15);
-        marancsicsBoss.setX(viewport.getWorldWidth()+marancsicsBoss.getWidth());
+    void setPositions(Viewport viewport) {
+        bg1.setPosition(0, 0);
+        bg2.setPosition(bg1.getWidth(), 0);
+        marancsicsElete.setPosition(health.getX() + health.getWidth() / 2 - marancsicsElete.getWidth() / 2, health.getY() + health.getHeight() / 2 - marancsicsElete.getHeight() / 2);
+        jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f, 15);
+        pauseButton.setPosition(jumpIcon.getX(), viewport.getWorldHeight() - pauseButton.getHeight() - 15);
+        marancsicsBoss.setX(viewport.getWorldWidth() + marancsicsBoss.getWidth());
     }
 
-    void addActors()
-    {
+    void addActors() {
         addActor(bg1);
         addActor(bg2);
         addActor(marancsicsBoss);
@@ -125,28 +112,27 @@ public class BossStage extends MyStage {
         addActor(pauseButton);
     }
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        bg1.setX(bg1.getX()-difficulty*3);
-        bg2.setX(bg2.getX()-difficulty*3);
-
-        if(PauseButton.paused){
-            if(!muted){
+    void pause() {
+        if (PauseButton.paused) {
+            if (!muted) {
                 bossMusic.pause();
             }
             PauseStage.fromBoss = true;
-            game.setScreen(new PauseScreen(game,marancsicsBoss.getX(),marancsicsBoss.getY(),zsolti.getRotation(),zsolti.getY()));
+            game.setScreen(new PauseScreen(game, marancsicsBoss.getX(), marancsicsBoss.getY(), zsolti.getRotation(), zsolti.getY()));
         }
+    }
 
+    void moveBackgrounds()
+    {
+        bg1.setX(bg1.getX()-difficulty*3);
+        bg2.setX(bg2.getX()-difficulty*3);
         if (bg1.getX() + bg1.getWidth() <= 0) bg1.setX(bg2.getX()+bg2.getWidth());
         if (bg2.getX() + bg2.getWidth() <= 0) bg2.setX(bg1.getX()+bg1.getWidth());
 
+    }
+
+    void jumpingOnCar()
+    {
         if (marancsicsHealth <= 0) game.setScreen(new VictoryScreen(game));
 
         else if(overlaps(zsolti,marancsicsBoss)) {
@@ -155,7 +141,7 @@ public class BossStage extends MyStage {
                     if (zsolti.getY() <= marancsicsBoss.getY() + marancsicsBoss.getHeight())
                         if (zsolti.getX() + zsolti.getWidth() > marancsicsBoss.getX())
                             if (zsolti.getX() < marancsicsBoss.getX() + marancsicsBoss.getWidth()) {
-                                if(Zsolti.fall) {
+                                if(Zsolti.fall) {//Ekkor van az autón
                                     Zsolti.forcejump = true;
                                     marancsicsHealth -= (int) (Math.random() * 5 + 3);
                                     if(!muted)
@@ -167,14 +153,27 @@ public class BossStage extends MyStage {
                             }
                 }
                 else
+                {//Ekkor ütközik szemből
+                    game.setScreen(new CrashScreen(game));
+                    if(!muted)
                     {
-                        game.setScreen(new CrashScreen(game));
-                        if(!muted)
-                        {
-                            crash.play();
-                            bossMusic.stop();
-                        }
+                        crash.play();
+                        bossMusic.stop();
                     }
+                }
         }
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        pause();//Megvan e állítva
+        moveBackgrounds();//Háttér mozgatása
+        jumpingOnCar();//Ütközés
     }
 }

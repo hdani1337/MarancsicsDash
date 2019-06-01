@@ -66,25 +66,38 @@ public class GameStage extends MyStage {
     Sound powerUp = Assets.manager.get(Assets.POWERUP);
     Music music = Assets.manager.get(Assets.GAMEMUSIC);
 
+    //Egyéb értékek
     int bossScore = (int) (Math.random() * 15 + 10);
     public static float zsoltitempy;
     public static float zsoltitempr;
-    public static boolean backFromSuper = false;
     private boolean dontRepeat = false;
 
+    //Talaj
     public static int ground = 30;
 
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
+        defaultValues();//Default értékek
+        playMusic();//Háttérzene
+        setBackground(viewport);//Háttérkép beállítása
+        addListeners();//Listenerek
+        setSizes();//Méretek állítása
+        setPositions(viewport);//Pozicionálás
+        gameContinue(tankX,tankY,zsoltiR,zsoltiY,backFromPause);//Meg volt e állítva, ha igen, állítsa át a pozíciókat
+        addActors();//Actorok hozzáadása
+    }
+
+    void defaultValues()
+    {
         Zsolti.jump = false; //Ne ugorjon magától az elején
         Zsolti.doThings = true;
         if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
             difficulty = 2;
         }
-        playMusic();
+    }
 
-        setBackground(viewport);
-
+    void addListeners()
+    {
         instantBoss.addListener(new ClickListener()
         {
             @Override
@@ -94,11 +107,6 @@ public class GameStage extends MyStage {
                 game.setScreen(new BossScreen(game,0,0,0,0,false));
             }
         });
-
-        gameContinue(tankX,tankY,zsoltiR,zsoltiY,backFromPause);
-        setSizes();
-        setPositions(viewport);
-        addActors();
     }
 
     void superZsolti()
@@ -115,17 +123,22 @@ public class GameStage extends MyStage {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                superZS = false;
-                zsoltitempy = zsolti.getY();
-                zsoltitempr = zsolti.getRotation();
-                zsolti.remove();
-                zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
-                Zsolti.doThings = true;
-                zsolti.setPosition(250,zsoltitempy);
-                zsolti.setRotation(zsoltitempr);
-                addActor(zsolti);
+                backToNormal();//Default Zsolti
             }
         }, 8);
+    }
+
+    void backToNormal()
+    {
+        superZS = false;
+        zsoltitempy = zsolti.getY();
+        zsoltitempr = zsolti.getRotation();
+        zsolti.remove();
+        zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+        Zsolti.doThings = true;
+        zsolti.setPosition(250,zsoltitempy);
+        zsolti.setRotation(zsoltitempr);
+        addActor(zsolti);
     }
 
     void setBackground(Viewport viewport)
@@ -169,17 +182,11 @@ public class GameStage extends MyStage {
         if (backFromPause) {
             zsolti.setRotation(zsoltiR);
             zsolti.setPosition(250, zsoltiY);
-            if (zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
-        } else {
-            zsolti.setPosition(250, ground);
-            zsolti.setRotation(0);
-        }
-
-        if (backFromPause) {
             tank.setPosition(tankX, tankY);
             if (!muted) music.play();
-        } else tank.setPosition(2400, ground - 70);
+            if (zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
+            if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
+        }
     }
 
     void setSizes()//actorok méretezése
@@ -197,7 +204,11 @@ public class GameStage extends MyStage {
         mushroom.setPosition((int)(Math.random() * 8240 + 3840),(int)(Math.random() * 250 + 150));
 
         tank.setX(viewport.getWorldWidth() * (int)(Math.random() * 4 + 2));
+        tank.setY(ground-70);
         tank.setRotation(0);
+
+        zsolti.setPosition(250, ground);
+        zsolti.setRotation(0);
 
         scoreLabel.setPosition(viewport.getWorldWidth() / 2 - scoreLabel.getWidth() / 2, viewport.getWorldHeight() - scoreLabel.getHeight() * 1.5f);
 
@@ -245,7 +256,7 @@ public class GameStage extends MyStage {
                 if (zsolti.getY() <= tank.getY() + tank.getHeight())
                     if (zsolti.getX()> tank.getX())
                         if (zsolti.getX() < tank.getX() + tank.getWidth()) {
-                            forcejump = true;
+                            forcejump = true;//Ekkor van a tank tetején, ugrás
                         }
 
         if (!forcejump) {
@@ -256,7 +267,7 @@ public class GameStage extends MyStage {
                         dontRepeat = true;
                     }
                 }
-                marancsics.tankComing = true;
+                marancsics.tankComing = true;//Super Zsolti belerúg a tankba
                 dontRepeat = false;
             } else {
                 if (!muted) {
@@ -266,17 +277,17 @@ public class GameStage extends MyStage {
                     }
                 }
                 preferences.putLong("coin", Coin.coin);
-                preferences.flush();
+                preferences.flush();//Coin elmentése
                 Marancsics.tankComing = false;
                 dontRepeat = false;
-                game.setScreen(new CrashScreen(game));
+                game.setScreen(new CrashScreen(game));//Ütközés, vesztés képernyő
             }
         }
     }
 
     private void crashThread()
     {
-        if(!multitasking) {
+        if(!multitasking) {//Ha mobilon megy, akkor menjen külön szálra
             new Thread(new Runnable() {
                 public void run() {
                     crash();
@@ -284,11 +295,11 @@ public class GameStage extends MyStage {
             }).start();
 
         }
-        else crash();
+        else crash();//Gépen laggolna
     }
 
     private void backgroundMoving()
-    {
+    {//Két háttér folyamatosan mozog egymás mellett
         if (difficulty >= 1) {
             bg2.setX(bg2.getX() - difficulty * 6);
             if (bg2.getX() < -bg2.getWidth()) {
@@ -302,15 +313,9 @@ public class GameStage extends MyStage {
         }
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        backgroundMoving();
-
-        scoreLabel.setText("" + pontszam);
-        coinLabelText.setText("" + Coin.coin);
-
-        if (overlaps(marancsics, tank)) {
+    void utkozesek()
+    {
+        if (overlaps(marancsics, tank)) {//Marancsics belerúg a tankba
             if (!muted && !dontRepeat) {
                 kick.play();
                 Timer.schedule(new Timer.Task() {
@@ -326,25 +331,25 @@ public class GameStage extends MyStage {
 
         if (overlaps(zsolti, mushroom))
         {
-            superZsolti();
+            superZsolti();//Super Zsolti
             if(!muted &&! dontRepeat) powerUp.play();
             dontRepeat = false;
         }
 
-        if(backFromSuper)
-        {
-            addActor(zsolti);
-            backFromSuper = false;
+        if(overlaps(zsolti,coin)){//Felvette a pénzt
+            coin.felvette = true;
+            if(!muted) {
+                coinSound.play(1);
+            }
         }
 
-        if(pontszam >= bossScore && gamemode != 2)
-        {
-            music.stop();
-            game.setScreen(new BossScreen(game,0,0,0,0,false));
-        }
+        if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
 
-        if(overlaps(zsolti,tank)) crashThread();
+        if(overlaps(zsolti,tank)) crashThread();//Zsolti ütközik a tankkal, feladat külön szálra
+    }
 
+    void pause()
+    {
         if(paused){
             if(!muted){
                 music.pause();
@@ -352,14 +357,30 @@ public class GameStage extends MyStage {
             PauseStage.fromBoss = false;
             game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
         }
+    }
 
-        if(overlaps(zsolti,coin)){
-            coin.felvette = true;
-            if(!muted) {
-                coinSound.play(1);
-            }
+    void switchBoss()
+    {
+        if(pontszam >= bossScore && gamemode != 2)
+        {
+            music.stop();
+            game.setScreen(new BossScreen(game,0,0,0,0,false));
         }
+    }
 
-        if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;
+    void refreshLabels()
+    {
+        scoreLabel.setText("" + pontszam);//Pontszám folyamatos frissítése
+        coinLabelText.setText("" + Coin.coin);//Pénzszám folyamatos ismétlése
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        backgroundMoving();//Metódusban levan írva, hogy mi mit csinál
+        utkozesek();//Metódusban levan írva, hogy mi mit csinál
+        pause();//Ha megállítják a játékot, váltsunk paused képre
+        switchBoss();//Ha nem endless és átlép egy random számot, akkor boss
+        refreshLabels();//Labelek folyamatos frissítése
     }
 }

@@ -60,7 +60,15 @@ public class HomeStage extends MyStage {
         super(viewport, batch, game);
         bossMusic.stop();
         bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
+        logo();
+        playMusic();
+        addListeners();
+        setPositions(viewport);
+        addActors();
+    }
 
+    void logo()
+    {
         logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
             @Override
             public void act(float delta) {
@@ -74,11 +82,6 @@ public class HomeStage extends MyStage {
                 setDebug(false);
             }
         };
-
-        playMusic();
-        addListeners();
-        setPositions(viewport);
-        addActors();
     }
 
     void playMusic()
