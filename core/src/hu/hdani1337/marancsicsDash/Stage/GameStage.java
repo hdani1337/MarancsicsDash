@@ -28,6 +28,7 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 import static hu.hdani1337.marancsicsDash.Actor.Mushroom.superZS;
 import static hu.hdani1337.marancsicsDash.Actor.Tank.pontszam;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.forcejump;
+import static hu.hdani1337.marancsicsDash.Actor.Zsolti.multitasking;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton.paused;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
@@ -69,6 +70,7 @@ public class GameStage extends MyStage {
     public static float zsoltitempy;
     public static float zsoltitempr;
     public static boolean backFromSuper = false;
+    private boolean dontRepeat = false;
 
     public static int ground = 30;
 
@@ -79,7 +81,6 @@ public class GameStage extends MyStage {
         if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
             difficulty = 2;
         }
-
         playMusic();
 
         setBackground(viewport);
@@ -195,7 +196,8 @@ public class GameStage extends MyStage {
         coin.setPosition(-100, -100);
         mushroom.setPosition((int)(Math.random() * 8240 + 3840),(int)(Math.random() * 250 + 150));
 
-        tank.setX(viewport.getWorldWidth() * 2);
+        tank.setX(viewport.getWorldWidth() * (int)(Math.random() * 4 + 2));
+        tank.setRotation(0);
 
         scoreLabel.setPosition(viewport.getWorldWidth() / 2 - scoreLabel.getWidth() / 2, viewport.getWorldHeight() - scoreLabel.getHeight() * 1.5f);
 
@@ -236,9 +238,57 @@ public class GameStage extends MyStage {
 
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
+    private void crash()
+    {
+        if (tank.getRotation() <= 3)
+            if (zsolti.getY() > ground + tank.getHeight() / 4)
+                if (zsolti.getY() <= tank.getY() + tank.getHeight())
+                    if (zsolti.getX()> tank.getX())
+                        if (zsolti.getX() < tank.getX() + tank.getWidth()) {
+                            forcejump = true;
+                        }
+
+        if (!forcejump) {
+            if (superZS) {
+                if (!muted) {
+                    if(!dontRepeat) {
+                        kick.play();
+                        dontRepeat = true;
+                    }
+                }
+                marancsics.tankComing = true;
+                dontRepeat = false;
+            } else {
+                if (!muted) {
+                    if(!dontRepeat) {
+                        crash.play();
+                        music.stop();
+                    }
+                }
+                preferences.putLong("coin", Coin.coin);
+                preferences.flush();
+                Marancsics.tankComing = false;
+                dontRepeat = false;
+                game.setScreen(new CrashScreen(game));
+            }
+        }
+    }
+
+    private void crashThread()
+    {
+        if(!multitasking) {
+            new Thread(new Runnable() {
+                public void run() {
+                    crash();
+                }
+            }).start();
+
+        }
+        else crash();
+    }
+
+    private void backgroundMoving()
+    {
         if (difficulty >= 1) {
             bg2.setX(bg2.getX() - difficulty * 6);
             if (bg2.getX() < -bg2.getWidth()) {
@@ -250,12 +300,18 @@ public class GameStage extends MyStage {
                 bg1.setX(bg2.getX() + bg2.getWidth() - difficulty * 6);
             }
         }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        backgroundMoving();
 
         scoreLabel.setText("" + pontszam);
         coinLabelText.setText("" + Coin.coin);
 
         if (overlaps(marancsics, tank)) {
-            if (!muted) {
+            if (!muted && !dontRepeat) {
                 kick.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -265,12 +321,14 @@ public class GameStage extends MyStage {
                 }, 0.3f);
             }
             marancsics.tankComing = true;
+            dontRepeat = false;
         }
 
         if (overlaps(zsolti, mushroom))
         {
             superZsolti();
-            if(!muted) powerUp.play();
+            if(!muted &&! dontRepeat) powerUp.play();
+            dontRepeat = false;
         }
 
         if(backFromSuper)
@@ -285,33 +343,7 @@ public class GameStage extends MyStage {
             game.setScreen(new BossScreen(game,0,0,0,0,false));
         }
 
-        if(overlaps(zsolti,tank)){
-            if (tank.getRotation() <= 3)
-                if (zsolti.getY() > ground + tank.getHeight() / 4)
-                    if (zsolti.getY() <= tank.getY() + tank.getHeight())
-                        if (zsolti.getX() + zsolti.getWidth() > tank.getX())
-                            if (zsolti.getX() < tank.getX() + tank.getWidth()) {
-                                forcejump = true;
-                            }
-
-            if (!forcejump) {
-                if(superZS)
-                {
-                    if(!muted) kick.play();
-                    marancsics.tankComing = true;
-                }
-                else {
-                    if (!muted) {
-                        crash.play();
-                        music.stop();
-                    }
-                    preferences.putLong("coin", Coin.coin);
-                    preferences.flush();
-                    game.setScreen(new CrashScreen(game));
-                    Marancsics.tankComing = false;
-                }
-            }
-        }
+        if(overlaps(zsolti,tank)) crashThread();
 
         if(paused){
             if(!muted){
@@ -328,8 +360,6 @@ public class GameStage extends MyStage {
             }
         }
 
-        if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()){
-            coin.felvette = false;
-        }
+        if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;
     }
 }

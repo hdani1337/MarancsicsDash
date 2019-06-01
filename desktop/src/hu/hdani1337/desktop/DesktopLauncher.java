@@ -2,6 +2,8 @@ package hu.hdani1337.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
+import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class DesktopLauncher {
@@ -10,5 +12,6 @@ public class DesktopLauncher {
 		new LwjglApplication(new marancsicsGame(), config);
 		config.width = 1520;
 		config.height = 720;
+		Zsolti.multitasking = true;
 	}
 }

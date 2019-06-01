@@ -9,6 +9,7 @@ import android.view.View;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
+import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -16,8 +17,10 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.useWakelock = true;
 		initialize(new marancsicsGame(), config);
 		hideVirtualButtons();
+		Zsolti.multitasking = true;
 	}
 
 	@Override
@@ -31,15 +34,7 @@ public class AndroidLauncher extends AndroidApplication {
 		//ne lépjen ki a back gombbal
 	}
 
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new marancsicsGame(), config);
-		hideVirtualButtons();
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void hideVirtualButtons() {
 		getWindow().getDecorView().setSystemUiVisibility(
 				View.SYSTEM_UI_FLAG_LAYOUT_STABLE

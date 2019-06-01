@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Background;
+import hu.hdani1337.marancsicsDash.Actor.Tank;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
@@ -53,7 +54,7 @@ public class HomeStage extends MyStage {
     TextBackground textBackground5 = new TextBackground();
     TextBackground textBackground6 = new TextBackground();
 
-    MyLabel ver = new MyLabel("Verzió: 0.6.5 Beta",game.getLabelStyle());//verziószám
+    MyLabel ver = new MyLabel("Verzió: 0.7 Gamma",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -180,6 +181,7 @@ public class HomeStage extends MyStage {
                     }, 0.65f);
                 }
                 else{
+                    getBatch().dispose();
                     Gdx.app.exit();
                 }
             }
