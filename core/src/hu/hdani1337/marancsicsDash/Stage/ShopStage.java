@@ -23,6 +23,7 @@ import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.Zala;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
@@ -43,11 +44,13 @@ public class ShopStage extends MyStage {
     Siberia siberia = new Siberia();
     Zala zala = new Zala();
     Zsolti superZS = new Zsolti(Assets.manager.get(Assets.SUPERZSOLTI));
+    Zsolti doubleJump = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
 
     Left left = new Left();
     Right right = new Right();
 
     Sound paySound = Assets.manager.get(Assets.PAY);
+    Sound noMoney = Assets.manager.get(Assets.ERROR);
 
     int itemID = 0;
     int speed = 2;
@@ -56,6 +59,7 @@ public class ShopStage extends MyStage {
     public static boolean boughtSiberia = preferences.getBoolean("boughtSiberia");
     public static boolean boughtZala = preferences.getBoolean("boughtZala");
     public static boolean boughtZsolti = preferences.getBoolean("boughtZsolti");
+    public static boolean boughtDouble = preferences.getBoolean("boughtDouble");
 
     public ShopStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -88,6 +92,7 @@ public class ShopStage extends MyStage {
             siberia.remove();
             zala.remove();
             bgbg.remove();
+            doubleJump.remove();
             superZS.remove();
             addActor(instantBoss);
             if(boughtInstantBoss)
@@ -106,6 +111,7 @@ public class ShopStage extends MyStage {
             instantBoss.remove();
             zala.remove();
             superZS.remove();
+            doubleJump.remove();
             addActor(bgbg);
             addActor(siberia);
             addActor(left);
@@ -126,6 +132,7 @@ public class ShopStage extends MyStage {
             siberia.remove();
             superZS.remove();
             instantBoss.remove();
+            doubleJump.remove();
             addActor(bgbg);
             addActor(zala);
             if(boughtZala)
@@ -141,13 +148,37 @@ public class ShopStage extends MyStage {
         }
 
         else if (itemID == 3){
+            addActor(right);
+            siberia.remove();
+            zala.remove();
+            bgbg.remove();
+            instantBoss.remove();
+            doubleJump.remove();
+            addActor(superZS);
+            if(boughtZsolti)
+            {
+                purchase.remove();
+                textBackground3.remove();
+            }
+            else
+            {
+                addActor(textBackground3);
+                addActor(purchase);
+            }
+        }
+
+        else if (itemID == 4){
             right.remove();
             siberia.remove();
             zala.remove();
             bgbg.remove();
             instantBoss.remove();
-            addActor(superZS);
-            if(boughtZsolti)
+            superZS.remove();
+            doubleJump = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+            Zsolti.doThings = true;
+            doubleJump.setPosition(getViewport().getWorldWidth()/2-superZS.getWidth()/2,getViewport().getWorldHeight()/2-superZS.getHeight()/2 + 25);
+            addActor(doubleJump);
+            if(boughtDouble)
             {
                 purchase.remove();
                 textBackground3.remove();
@@ -189,8 +220,21 @@ public class ShopStage extends MyStage {
             Zsolti.fall = false;
             Zsolti.forcejump = false;
             Zsolti.intro = false;
+            Zsolti.doThings = false;
             if (boughtZsolti) myLabel.setText("Super Zsolti\nMár megvetted!");
             else myLabel.setText("Super Zsolti\nÁr: 250");
+        }
+
+        if(itemID == 4)
+        {
+            ground = (int)doubleJump.getY();
+            Zsolti.jump = true;
+            Zsolti.fall = false;
+            Zsolti.forcejump = false;
+            Zsolti.intro = false;
+            Zsolti.doThings = true;
+            if (boughtDouble) myLabel.setText("Double Jump\nMár megvetted!");
+            else myLabel.setText("Double Jump\nÁr: 250");
         }
     }
 
@@ -200,8 +244,8 @@ public class ShopStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (itemID == 3) {
-                    itemID = 3;
+                if (itemID == 4) {
+                    itemID = 4;
                 } else {
                     itemID++;
                 }
@@ -236,11 +280,15 @@ public class ShopStage extends MyStage {
                             Coin.coin -= 100;
                             coinLabelText.setText(""+Coin.coin);
                             myLabel.setText("Instant Boss\nMár megvetted!");
+                            textBackground3.remove();
+                            purchase.remove();
                             boughtInstantBoss = true;
                             preferences.putLong("coin", Coin.coin);
                             preferences.putBoolean("boughtInstantBoss", boughtInstantBoss);
                             preferences.flush();
                         }
+
+                        else noMoney.play();
                     }
                 }
 
@@ -253,10 +301,14 @@ public class ShopStage extends MyStage {
                             coinLabelText.setText(""+Coin.coin);
                             myLabel.setText("Szibéria\nMár megvetted!");
                             boughtSiberia = true;
+                            textBackground3.remove();
+                            purchase.remove();
                             preferences.putLong("coin", Coin.coin);
                             preferences.putBoolean("boughtSiberia", boughtSiberia);
                             preferences.flush();
                         }
+
+                        else noMoney.play();
                     }
                 }
 
@@ -269,10 +321,14 @@ public class ShopStage extends MyStage {
                             coinLabelText.setText(""+Coin.coin);
                             myLabel.setText("Zala\nMár megvetted!");
                             boughtZala = true;
+                            textBackground3.remove();
+                            purchase.remove();
                             preferences.putLong("coin", Coin.coin);
                             preferences.putBoolean("boughtZala", boughtZala);
                             preferences.flush();
                         }
+
+                        else noMoney.play();
                     }
                 }
 
@@ -285,10 +341,34 @@ public class ShopStage extends MyStage {
                             coinLabelText.setText(""+Coin.coin);
                             myLabel.setText("Super Zsolti\nMár megvetted!");
                             boughtZsolti = true;
+                            textBackground3.remove();
+                            purchase.remove();
                             preferences.putLong("coin", Coin.coin);
                             preferences.putBoolean("boughtZsolti", boughtZsolti);
                             preferences.flush();
                         }
+
+                        else noMoney.play();
+                    }
+                }
+
+                else if (itemID == 4)
+                {
+                    if(!boughtDouble) {
+                        if (Coin.coin >= 250) {
+                            if (!muted) paySound.play();
+                            Coin.coin -= 250;
+                            coinLabelText.setText(""+Coin.coin);
+                            myLabel.setText("Double Jump\nMár megvetted!");
+                            boughtDouble = true;
+                            textBackground3.remove();
+                            purchase.remove();
+                            preferences.putLong("coin", Coin.coin);
+                            preferences.putBoolean("boughtDouble", boughtDouble);
+                            preferences.flush();
+                        }
+
+                        else noMoney.play();
                     }
                 }
             }
@@ -303,6 +383,7 @@ public class ShopStage extends MyStage {
                 preferences.putBoolean("boughtSiberia", boughtSiberia);
                 preferences.putBoolean("boughtZala", boughtZala);
                 preferences.putBoolean("boughtZsolti", boughtZsolti);
+                preferences.putBoolean("boughtDouble", boughtDouble);
                 preferences.flush();
                 game.setScreen(new HomeScreen(game));
             }
@@ -315,6 +396,7 @@ public class ShopStage extends MyStage {
         siberia.setPosition(viewport.getWorldWidth()/2-siberia.getWidth()/2,viewport.getWorldHeight()/2-siberia.getHeight()/2 + 50);
         zala.setPosition(viewport.getWorldWidth()/2-zala.getWidth()/2,viewport.getWorldHeight()/2-zala.getHeight()/2 + 50);
         superZS.setPosition(viewport.getWorldWidth()/2-superZS.getWidth()/2,viewport.getWorldHeight()/2-superZS.getHeight()/2 + 25);
+        doubleJump.setPosition(viewport.getWorldWidth()/2-superZS.getWidth()/2,viewport.getWorldHeight()/2-superZS.getHeight()/2 + 25);
 
         bgbg.setSize(siberia.getWidth() + 16, siberia.getHeight() + 18);
         bgbg.setPosition(siberia.getX() - 8, siberia.getY() - 10);

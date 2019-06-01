@@ -21,6 +21,7 @@ public class Tank extends OneSpriteAnimatedActor {
         addCollisionShape("tankHitbox", new MyRectangle(200,75,76,110));
         setY(ground - 70);
         setFps(24);
+        tankSpeed = 5;
         setDebug(false);
     }
 

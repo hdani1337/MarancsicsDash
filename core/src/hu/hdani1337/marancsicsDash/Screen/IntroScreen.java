@@ -19,6 +19,11 @@ public class IntroScreen extends MyScreen {
     }
 
     @Override
+    public void dispose() {
+        super.dispose();
+    }
+
+    @Override
     public void init() {
 
     }

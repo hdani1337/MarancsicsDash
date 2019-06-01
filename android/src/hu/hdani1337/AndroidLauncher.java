@@ -1,6 +1,7 @@
 package hu.hdani1337;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,25 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		initialize(new marancsicsGame(), config);
+		hideVirtualButtons();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		hideVirtualButtons();
+	}
+
+	@Override
+	public void onBackPressed() {
+		//ne lépjen ki a back gombbal
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new marancsicsGame(), config);
 		hideVirtualButtons();

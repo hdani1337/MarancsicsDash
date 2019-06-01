@@ -27,6 +27,7 @@ public class IntroStage extends MyStage {
         Zsolti.intro = true;
 
         Zsolti.jump = false;
+        Zsolti.doThings = true;
 
         setBackground(viewport);
         setPositions();

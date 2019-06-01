@@ -75,6 +75,7 @@ public class GameStage extends MyStage {
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
         super(viewport, batch, game);
         Zsolti.jump = false; //Ne ugorjon magától az elején
+        Zsolti.doThings = true;
         if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
             difficulty = 2;
         }
@@ -106,6 +107,7 @@ public class GameStage extends MyStage {
         zsoltitempr = zsolti.getRotation();
         zsolti.remove();
         zsolti = new Zsolti(Assets.manager.get(Assets.SUPERZSOLTI));
+        Zsolti.doThings = true;
         zsolti.setPosition(250,zsoltitempy);
         zsolti.setRotation(zsoltitempr);
         addActor(zsolti);
@@ -117,6 +119,7 @@ public class GameStage extends MyStage {
                 zsoltitempr = zsolti.getRotation();
                 zsolti.remove();
                 zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+                Zsolti.doThings = true;
                 zsolti.setPosition(250,zsoltitempy);
                 zsolti.setRotation(zsoltitempr);
                 addActor(zsolti);

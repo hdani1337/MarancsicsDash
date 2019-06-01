@@ -47,6 +47,7 @@ public class BossStage extends MyStage {
         super(viewport, batch, game);
         Zsolti.jump = false;
         Zsolti.fall = false;
+        Zsolti.doThings = true;
 
         if(!muted)
         {
