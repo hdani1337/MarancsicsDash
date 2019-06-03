@@ -129,7 +129,16 @@ public class GameStage extends MyStage {
     }
 
     void backToNormal()
-    {
+    {/* itt ez tök jól működik alapjáraton
+      * de ha a metódus hívása előtt átváltunk pause screenre
+      * akkor a visszalépés után a következő bug lép fel:
+      * meghívódik a metódus, de Zsoltit eltávolítja, de
+      * a default Zsolti nem jelenik meg
+      * isActorShowing(zsolti) returns true
+      * zsolti.getY() és zsolti.getX() a megszokott értékeket adja
+      * ha mégegyszer átlépünk a pause screenre és vissza, akkor Zsolti megjelenik
+      * ha mégegy gombát felveszünk, Super Zsolti megjelenik, majd default Zsolti is megjelenik
+    */
         superZS = false;
         zsoltitempy = zsolti.getY();
         zsoltitempr = zsolti.getRotation();
