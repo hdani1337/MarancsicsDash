@@ -93,7 +93,7 @@ public class OptionsStage extends MyStage {
                 preferences.putInteger("selectedBackground",selectedBackground);
                 preferences.putBoolean("muted",muted);
                 preferences.flush();
-                game.setScreen(new HomeScreen(game));
+                game.setScreenBackByStackPop();
             }
         });
 

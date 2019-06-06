@@ -3,10 +3,10 @@ package hu.hdani1337.marancsicsDash.Actor;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 
+import static hu.hdani1337.marancsicsDash.Actor.Zsolti.nowSuper;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 
 public class Mushroom extends OneSpriteStaticActor {
-    public static boolean superZS = false;
 
     public Mushroom() {
         super(Assets.manager.get(Assets.GOMBA));
@@ -23,7 +23,7 @@ public class Mushroom extends OneSpriteStaticActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(superZS || getX() + getWidth() < 0) newPosition();
+        if(nowSuper || getX() + getWidth() < 0) newPosition();
         else setX(getX() - difficulty * 6);
     }
 }

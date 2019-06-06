@@ -2,6 +2,7 @@ package hu.hdani1337.marancsicsDash.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Tank;
@@ -21,14 +22,10 @@ public class PauseScreen extends MyScreen {
     public static float zsoltiRT;
     public static float zsoltiYT;
 
-    public PauseScreen(marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY) {
+    public PauseScreen(marancsicsGame game, Screen screen) {
         super(game);
-        pauseStage = new PauseStage(new FitViewport(keparany(),720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY);
+        pauseStage = new PauseStage(new FitViewport(keparany(),720),spriteBatch,game,screen);
         Gdx.input.setInputProcessor(pauseStage);
-        tankXT = tankX;
-        tankYT = tankY;
-        zsoltiRT = zsoltiR;
-        zsoltiYT   = zsoltiY;
     }
 
     @Override
@@ -43,8 +40,7 @@ public class PauseScreen extends MyScreen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
         {
             PauseButton.paused = false;
-            if(fromBoss) game.setScreen(new BossScreen(game, tankXT, tankYT, zsoltiRT, zsoltiYT, true));
-            else game.setScreen(new GameScreen(game, tankXT, tankYT, zsoltiRT, zsoltiYT, true));
+            game.setScreenBackByStackPop();
         }
 
         else if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))

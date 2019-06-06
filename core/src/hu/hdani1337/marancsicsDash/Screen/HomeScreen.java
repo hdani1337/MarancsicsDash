@@ -20,12 +20,17 @@ public class HomeScreen extends MyScreen {
     public HomeScreen(marancsicsGame game) {
         super(game);
         homeStage = new HomeStage(new FitViewport(keparany(),720),spriteBatch,game);
-        Gdx.input.setInputProcessor(homeStage);
     }
 
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        Gdx.input.setInputProcessor(homeStage);
     }
 
     public void render(float delta){

@@ -18,9 +18,14 @@ public class GameScreen extends MyScreen {
 
     GameStage gameStage;
 
-    public GameScreen(marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
+    public GameScreen(marancsicsGame game) {
         super(game);
-        gameStage = new GameStage(new FitViewport(keparany(),720),spriteBatch,game,tankX,tankY,zsoltiR,zsoltiY,backFromPause);
+        gameStage = new GameStage(new FitViewport(keparany(),720),spriteBatch,game);
+    }
+
+    @Override
+    public void show() {
+        super.show();
         Gdx.input.setInputProcessor(gameStage);
     }
 

@@ -18,7 +18,7 @@ public class IntroStage extends MyStage {
     Background bg1;
     Background bg2;
     Marancsics marancsics = new Marancsics();
-    Zsolti zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+    Zsolti zsolti = new Zsolti();
 
     public IntroStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -85,6 +85,6 @@ public class IntroStage extends MyStage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(!Marancsics.intro) game.setScreen(new GameScreen(game,0,0,0,0,false));
+        if(!Marancsics.intro) game.setScreen(new GameScreen(game));
     }
 }

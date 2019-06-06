@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -36,16 +37,11 @@ public class PauseStage extends MyStage {
     private int speed = 2;
     public static boolean fromBoss;
 
-    public PauseStage(Viewport viewport, Batch batch, final marancsicsGame game, final float tankX, final float tankY, final float zsoltiR, final float zsoltiY) {
+    public PauseStage(Viewport viewport, Batch batch, final marancsicsGame game, final Screen screen) {
         super(viewport, batch, game);
 
-        PauseScreen.tankXT = tankX;
-        PauseScreen.tankYT = tankY;
-        PauseScreen.zsoltiRT = zsoltiR;
-        PauseScreen.zsoltiYT = zsoltiY;
-
         setBackground(viewport);
-        addListeners(tankX, tankY, zsoltiR, zsoltiY);
+        addListeners(screen);
         setSizesAndPositions(viewport);
         addActors();
     }
@@ -68,15 +64,14 @@ public class PauseStage extends MyStage {
         }
     }
 
-    void addListeners(final float tankX, final float tankY, final float zsoltiR, final float zsoltiY)
+    void addListeners(final Screen screen)
     {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 PauseButton.paused = false;
-                if(fromBoss) game.setScreen(new BossScreen(game, tankX, tankY,zsoltiR,zsoltiY, true));
-                else game.setScreen(new GameScreen(game, tankX, tankY,zsoltiR,zsoltiY, true));
+                game.setScreen(screen);
             }
         });
 

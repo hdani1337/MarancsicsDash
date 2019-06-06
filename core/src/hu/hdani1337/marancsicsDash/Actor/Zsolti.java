@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Timer;
 
+import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyCircle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
 import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
@@ -17,11 +18,16 @@ public class Zsolti extends OneSpriteAnimatedActor {
     public static boolean fall = false;
     public static boolean intro = false;
     boolean jumped;
+    public static float superTime = 0;
+    public static boolean nowSuper = false;
     public static boolean doThings = true;
     public static boolean multitasking = false;//ez azért kell, mert gépen laggol a threading, én meg balfasz vagyok még hozzá
 
-    public Zsolti(TextureAtlas texture) {
-        super(texture);
+    TextureAtlas normal = Assets.manager.get(Assets.ZSOLTI);
+    TextureAtlas superZS = Assets.manager.get(Assets.SUPERZSOLTI);
+
+    public Zsolti() {
+        super(Assets.manager.get(Assets.ZSOLTI));
         addCollisionShape("zsoltiHitbox",new MyRectangle(110,80,10,13));
         addCollisionShape("zsoltiHitbox2",new MyRectangle(90,115,20,93));
         setFps(12);
@@ -32,6 +38,18 @@ public class Zsolti extends OneSpriteAnimatedActor {
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(superTime > 0)
+        {
+            if(superTime != 1337) superTime -= delta;
+            textureAtlas = superZS;
+            if(superTime <= 0) superTime = 0;
+        }
+        else
+        {
+            nowSuper = false;
+            textureAtlas = normal;
+        }
+
         if (doThings) {
             if (ground >= 270) reJumpThread();
 
@@ -58,12 +76,13 @@ public class Zsolti extends OneSpriteAnimatedActor {
             jump = true;
             forcejump = false;
         } else {
-            setY(getY() - delta * 360);
-            setRotation(getRotation() - delta * 30);
+            setY(getY() - delta * 450);
+            setRotation(getRotation() - delta * 20);
             if (getY() <= ground) {
                 setY(ground);
                 JumpIcon.doubleJumped = false;
                 setRotation(0);
+                this.setFps(12);
                 jump = false;
                 fall = false;
             }
@@ -72,12 +91,13 @@ public class Zsolti extends OneSpriteAnimatedActor {
     private void jump(float delta)
     {
         if (getY() < JumpIcon.jumpHeight) {
-            setY(getY() + delta * 280);
-            setRotation(getRotation() + delta * 30);
+            setY(getY() + delta * 500);
+            if(!nowSuper) this.setFps(0);
+            setRotation(getRotation() + delta * 20);
         }
         if (getY() >= JumpIcon.jumpHeight) {
             setY(getY() + delta * 90);
-            setRotation(getRotation() - delta * 25);
+            setRotation(getRotation() - delta * 15);
             if (getY() >= (JumpIcon.jumpHeight + 10)) fall = true;
         }
     }

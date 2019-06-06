@@ -33,7 +33,7 @@ public class BossStage extends MyStage {
     Background bg1;
     Background bg2;
     MarancsicsBoss marancsicsBoss;
-    Zsolti zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+    Zsolti zsolti = new Zsolti();
     Health health;
     AntiHealth antiHealth;
     JumpIcon jumpIcon = new JumpIcon();
@@ -43,7 +43,7 @@ public class BossStage extends MyStage {
     Sound glassbreak = Assets.manager.get(Assets.GLASSBREAK);
     public static Music bossMusic = Assets.manager.get(Assets.BOSSMUSIC);
 
-    public BossStage(Viewport viewport, Batch batch, final marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
+    public BossStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         Zsolti.jump = false;
         Zsolti.fall = false;
@@ -62,7 +62,6 @@ public class BossStage extends MyStage {
 
         setBackground(viewport);
         setPositions(viewport);
-        gameContinue(bossX, bossY, zsoltiR, zsoltiY, backFromPause);
         addActors();
     }
 
@@ -79,21 +78,10 @@ public class BossStage extends MyStage {
         }
     }
 
-    void gameContinue(float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
-        if (backFromPause) {
-            zsolti.setRotation(zsoltiR);
-            zsolti.setPosition(50, zsoltiY);
-            if (zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            else if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
-            marancsicsBoss.setPosition(bossX, bossY);
-        } else {
-            zsolti.setPosition(50, ground);
-        }
-    }
-
     void setPositions(Viewport viewport) {
         bg1.setPosition(0, 0);
         bg2.setPosition(bg1.getWidth(), 0);
+        zsolti.setPosition(50, ground);
         marancsicsElete.setPosition(health.getX() + health.getWidth() / 2 - marancsicsElete.getWidth() / 2, health.getY() + health.getHeight() / 2 - marancsicsElete.getHeight() / 2);
         jumpIcon.setPosition(viewport.getWorldWidth() - jumpIcon.getWidth() * 1.1f, 15);
         pauseButton.setPosition(jumpIcon.getX(), viewport.getWorldHeight() - pauseButton.getHeight() - 15);
@@ -118,7 +106,7 @@ public class BossStage extends MyStage {
                 bossMusic.pause();
             }
             PauseStage.fromBoss = true;
-            game.setScreen(new PauseScreen(game, marancsicsBoss.getX(), marancsicsBoss.getY(), zsolti.getRotation(), zsolti.getY()));
+            game.setScreen(new PauseScreen(game,game.getScreen()));
         }
     }
 

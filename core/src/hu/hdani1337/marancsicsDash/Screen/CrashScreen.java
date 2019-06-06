@@ -30,7 +30,7 @@ public class CrashScreen extends MyScreen {
     public void render(float delta) {
         super.render(delta);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) game.setScreen(new GameScreen(game,0,0,0,0,false));
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) game.setScreen(new GameScreen(game));
 
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {

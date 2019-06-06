@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
  */
 public class OneSpriteAnimatedActor extends OneSpriteActor {
 
-    protected final TextureAtlas textureAtlas;
+    protected TextureAtlas textureAtlas;
     protected float fps = 30;
     protected boolean running = true;
     protected boolean looping = true;

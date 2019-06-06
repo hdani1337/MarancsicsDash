@@ -25,10 +25,10 @@ import hu.hdani1337.marancsicsDash.Screen.CrashScreen;
 import hu.hdani1337.marancsicsDash.Screen.PauseScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
-import static hu.hdani1337.marancsicsDash.Actor.Mushroom.superZS;
 import static hu.hdani1337.marancsicsDash.Actor.Tank.pontszam;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.forcejump;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.multitasking;
+import static hu.hdani1337.marancsicsDash.Actor.Zsolti.nowSuper;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyActor.overlaps;
 import static hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton.paused;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
@@ -44,7 +44,7 @@ public class GameStage extends MyStage {
     Background bg2;
 
     //Actorok
-    static Zsolti zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+    static Zsolti zsolti = new Zsolti();
     static Marancsics marancsics = new Marancsics();
     Coin coin = new Coin(true);
     static Tank tank = new Tank();
@@ -68,14 +68,12 @@ public class GameStage extends MyStage {
 
     //Egyéb értékek
     int bossScore = (int) (Math.random() * 15 + 10);
-    public static float zsoltitempy;
-    public static float zsoltitempr;
     private boolean dontRepeat = false;
 
     //Talaj
     public static int ground = 30;
 
-    public GameStage(Viewport viewport, Batch batch, final marancsicsGame game, float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause) {
+    public GameStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         defaultValues();//Default értékek
         playMusic();//Háttérzene
@@ -83,7 +81,6 @@ public class GameStage extends MyStage {
         addListeners();//Listenerek
         setSizes();//Méretek állítása
         setPositions(viewport);//Pozicionálás
-        gameContinue(tankX,tankY,zsoltiR,zsoltiY,backFromPause);//Meg volt e állítva, ha igen, állítsa át a pozíciókat
         addActors();//Actorok hozzáadása
     }
 
@@ -104,50 +101,9 @@ public class GameStage extends MyStage {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 music.stop();
-                game.setScreen(new BossScreen(game,0,0,0,0,false));
+                game.setScreen(new BossScreen(game));
             }
         });
-    }
-
-    void superZsolti()
-    {
-        mushroom.superZS = true;
-        zsoltitempy = zsolti.getY();
-        zsoltitempr = zsolti.getRotation();
-        zsolti.remove();
-        zsolti = new Zsolti(Assets.manager.get(Assets.SUPERZSOLTI));
-        Zsolti.doThings = true;
-        zsolti.setPosition(250,zsoltitempy);
-        zsolti.setRotation(zsoltitempr);
-        addActor(zsolti);
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                backToNormal();//Default Zsolti
-            }
-        }, 8);
-    }
-
-    void backToNormal()
-    {/* itt ez tök jól működik alapjáraton
-      * de ha a metódus hívása előtt átváltunk pause screenre
-      * akkor a visszalépés után a következő bug lép fel:
-      * meghívódik a metódus, de Zsoltit eltávolítja, de
-      * a default Zsolti nem jelenik meg
-      * isActorShowing(zsolti) returns true
-      * zsolti.getY() és zsolti.getX() a megszokott értékeket adja
-      * ha mégegyszer átlépünk a pause screenre és vissza, akkor Zsolti megjelenik
-      * ha mégegy gombát felveszünk, Super Zsolti megjelenik, majd default Zsolti is megjelenik
-    */
-        superZS = false;
-        zsoltitempy = zsolti.getY();
-        zsoltitempr = zsolti.getRotation();
-        zsolti.remove();
-        zsolti = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
-        Zsolti.doThings = true;
-        zsolti.setPosition(250,zsoltitempy);
-        zsolti.setRotation(zsoltitempr);
-        addActor(zsolti);
     }
 
     void setBackground(Viewport viewport)
@@ -183,18 +139,6 @@ public class GameStage extends MyStage {
             music.setLooping(true);
             music.setVolume(0.5f);
             music.play();
-        }
-    }
-
-    void gameContinue(float tankX, float tankY, float zsoltiR, float zsoltiY, boolean backFromPause)//megállították e a játékot
-    {
-        if (backFromPause) {
-            zsolti.setRotation(zsoltiR);
-            zsolti.setPosition(250, zsoltiY);
-            tank.setPosition(tankX, tankY);
-            if (!muted) music.play();
-            if (zsoltiY > ground && zsoltiR > 0) Zsolti.jump = true; //ekkor ugrik felfelé
-            if (zsoltiY > ground && zsoltiR <= 0) Zsolti.fall = true; //ekkor ugrik lefelé
         }
     }
 
@@ -263,13 +207,13 @@ public class GameStage extends MyStage {
         if (tank.getRotation() <= 3)
             if (zsolti.getY() > ground + tank.getHeight() / 4)
                 if (zsolti.getY() <= tank.getY() + tank.getHeight())
-                    if (zsolti.getX()> tank.getX())
-                        if (zsolti.getX() < tank.getX() + tank.getWidth()) {
+                    if (zsolti.getX()> tank.getX() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth())
+                        if (zsolti.getX() < tank.getX() + tank.getWidth() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth()) {
                             forcejump = true;//Ekkor van a tank tetején, ugrás
                         }
 
         if (!forcejump) {
-            if (superZS) {
+            if (nowSuper) {
                 if (!muted) {
                     if(!dontRepeat) {
                         kick.play();
@@ -340,7 +284,8 @@ public class GameStage extends MyStage {
 
         if (overlaps(zsolti, mushroom))
         {
-            superZsolti();//Super Zsolti
+            Zsolti.nowSuper = true;
+            Zsolti.superTime = 8;
             if(!muted &&! dontRepeat) powerUp.play();
             dontRepeat = false;
         }
@@ -364,7 +309,7 @@ public class GameStage extends MyStage {
                 music.pause();
             }
             PauseStage.fromBoss = false;
-            game.setScreen(new PauseScreen(game, tank.getX(), tank.getY(),zsolti.getRotation(),zsolti.getY()));
+            game.setScreen(new PauseScreen(game, game.getScreen()));
         }
     }
 
@@ -373,7 +318,7 @@ public class GameStage extends MyStage {
         if(pontszam >= bossScore && gamemode != 2)
         {
             music.stop();
-            game.setScreen(new BossScreen(game,0,0,0,0,false));
+            game.setScreen(new BossScreen(game));
         }
     }
 

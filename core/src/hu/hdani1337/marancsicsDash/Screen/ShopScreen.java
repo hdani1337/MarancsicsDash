@@ -15,6 +15,11 @@ public class ShopScreen extends MyScreen {
     public ShopScreen(marancsicsGame game) {
         super(game);
         shopStage = new ShopStage(new FitViewport(keparany(),720),spriteBatch,game);
+    }
+
+    @Override
+    public void show() {
+        super.show();
         Gdx.input.setInputProcessor(shopStage);
     }
 

@@ -17,10 +17,9 @@ import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 public class BossScreen extends MyScreen {
     BossStage bossStage;
 
-    public BossScreen(marancsicsGame game, float bossX, float bossY, float zsoltiR, float zsoltiY, boolean backFromPause) {
+    public BossScreen(marancsicsGame game) {
         super(game);
-        bossStage = new BossStage(new FitViewport(keparany(),720),spriteBatch,game,bossX,bossY,zsoltiR,zsoltiY,backFromPause);
-        Gdx.input.setInputProcessor(bossStage);
+        bossStage = new BossStage(new FitViewport(keparany(),720),spriteBatch,game);
     }
 
     @Override
@@ -28,6 +27,11 @@ public class BossScreen extends MyScreen {
 
     }
 
+    @Override
+    public void show() {
+        super.show();
+        Gdx.input.setInputProcessor(bossStage);
+    }
 
     @Override
     public void render(float delta) {

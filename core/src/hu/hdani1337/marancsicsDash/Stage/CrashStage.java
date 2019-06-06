@@ -104,7 +104,7 @@ public class CrashStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new GameScreen(game,0,0,0,0,false));
+                game.setScreen(new GameScreen(game));
             }
         });
 

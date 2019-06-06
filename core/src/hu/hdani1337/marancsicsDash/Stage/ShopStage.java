@@ -43,8 +43,8 @@ public class ShopStage extends MyStage {
     InstantBoss instantBoss = new InstantBoss();
     Siberia siberia = new Siberia();
     Zala zala = new Zala();
-    Zsolti superZS = new Zsolti(Assets.manager.get(Assets.SUPERZSOLTI));
-    Zsolti doubleJump = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+    Zsolti superZS = new Zsolti();
+    Zsolti doubleJump = new Zsolti();
 
     Left left = new Left();
     Right right = new Right();
@@ -58,7 +58,8 @@ public class ShopStage extends MyStage {
     public static boolean boughtInstantBoss = preferences.getBoolean("boughtInstantBoss");
     public static boolean boughtSiberia = preferences.getBoolean("boughtSiberia");
     public static boolean boughtZala = preferences.getBoolean("boughtZala");
-    public static boolean boughtZsolti = preferences.getBoolean("boughtZsolti");
+    //public static boolean boughtZsolti = preferences.getBoolean("boughtZsolti");
+    public static boolean boughtZsolti =true;
     public static boolean boughtDouble = preferences.getBoolean("boughtDouble");
 
     public ShopStage(Viewport viewport, Batch batch, final marancsicsGame game) {
@@ -154,6 +155,7 @@ public class ShopStage extends MyStage {
             bgbg.remove();
             instantBoss.remove();
             doubleJump.remove();
+            Zsolti.doThings = false;
             addActor(superZS);
             if(boughtZsolti)
             {
@@ -174,7 +176,7 @@ public class ShopStage extends MyStage {
             bgbg.remove();
             instantBoss.remove();
             superZS.remove();
-            doubleJump = new Zsolti(Assets.manager.get(Assets.ZSOLTI));
+            doubleJump = new Zsolti();
             Zsolti.doThings = true;
             doubleJump.setPosition(getViewport().getWorldWidth()/2-superZS.getWidth()/2,getViewport().getWorldHeight()/2-superZS.getHeight()/2 + 25);
             addActor(doubleJump);
@@ -216,11 +218,13 @@ public class ShopStage extends MyStage {
 
         if(itemID == 3)
         {
+            doubleJump.setPosition(getViewport().getWorldWidth()/2-superZS.getWidth()/2,getViewport().getWorldHeight()/2-superZS.getHeight()/2 + 25);
             Zsolti.jump = false;
             Zsolti.fall = false;
             Zsolti.forcejump = false;
             Zsolti.intro = false;
             Zsolti.doThings = false;
+            Zsolti.superTime = 1337;
             if (boughtZsolti) myLabel.setText("Super Zsolti\nMár megvetted!");
             else myLabel.setText("Super Zsolti\nÁr: 250");
         }
@@ -233,6 +237,7 @@ public class ShopStage extends MyStage {
             Zsolti.forcejump = false;
             Zsolti.intro = false;
             Zsolti.doThings = true;
+            Zsolti.superTime = 0;
             if (boughtDouble) myLabel.setText("Double Jump\nMár megvetted!");
             else myLabel.setText("Double Jump\nÁr: 250");
         }
@@ -385,7 +390,7 @@ public class ShopStage extends MyStage {
                 preferences.putBoolean("boughtZsolti", boughtZsolti);
                 preferences.putBoolean("boughtDouble", boughtDouble);
                 preferences.flush();
-                game.setScreen(new HomeScreen(game));
+                game.setScreenBackByStackPop();
             }
         });
     }
