@@ -1,7 +1,7 @@
 package hu.hdani1337.marancsicsDash.Actor;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteStaticActor;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteStaticActor;
 
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.nowSuper;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;

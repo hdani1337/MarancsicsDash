@@ -7,7 +7,7 @@ import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
 import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.Global.Assets;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyStage;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 

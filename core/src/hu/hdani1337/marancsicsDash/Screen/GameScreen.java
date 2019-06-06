@@ -5,9 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.JumpIcon;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
+import hu.hdani1337.marancsicsDash.ParentClasses.UI.JumpIcon;
+import hu.hdani1337.marancsicsDash.ParentClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.Stage.GameStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 

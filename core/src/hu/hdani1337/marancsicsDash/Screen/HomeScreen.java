@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.HomeStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 

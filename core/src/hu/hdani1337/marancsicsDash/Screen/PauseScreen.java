@@ -6,12 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import hu.hdani1337.marancsicsDash.Actor.Tank;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.UI.PauseButton;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
+import hu.hdani1337.marancsicsDash.ParentClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.Stage.PauseStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
-import static hu.hdani1337.marancsicsDash.Stage.PauseStage.fromBoss;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class PauseScreen extends MyScreen {

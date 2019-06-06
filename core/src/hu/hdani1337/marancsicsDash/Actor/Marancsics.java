@@ -1,8 +1,8 @@
 package hu.hdani1337.marancsicsDash.Actor;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyRectangle;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteAnimatedActor;
 
 public class Marancsics extends OneSpriteAnimatedActor {
     public static boolean tankComing = false;

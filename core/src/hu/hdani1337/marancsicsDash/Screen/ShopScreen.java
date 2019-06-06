@@ -3,7 +3,7 @@ package hu.hdani1337.marancsicsDash.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.ShopStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 

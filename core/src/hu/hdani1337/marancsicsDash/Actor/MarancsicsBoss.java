@@ -3,9 +3,8 @@ package hu.hdani1337.marancsicsDash.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyRectangle;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
-import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyRectangle;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteAnimatedActor;
 
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;

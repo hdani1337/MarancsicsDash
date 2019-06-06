@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import hu.hdani1337.marancsicsDash.Global.Assets;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.MyScreen;
-import hu.hdani1337.marancsicsDash.MyBaseClasses.Scene2D.OneSpriteAnimatedActor;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 public class LoadingScreen extends MyScreen {
