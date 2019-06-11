@@ -74,7 +74,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
             jump = true;
             forcejump = false;
         } else {
-            setY(getY() - delta * 450);
+            setY(getY() - delta * 520);
             setRotation(getRotation() - delta * 20);
             if (getY() <= ground) {
                 setY(ground);
@@ -89,7 +89,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
     private void jump(float delta)
     {
         if (getY() < JumpIcon.jumpHeight) {
-            setY(getY() + delta * 500);
+            setY(getY() + delta * 580);
             if(!nowSuper) this.setFps(0);
             setRotation(getRotation() + delta * 20);
         }

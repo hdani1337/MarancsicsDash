@@ -88,6 +88,7 @@ public class GameStage extends MyStage {
     {
         Zsolti.jump = false; //Ne ugorjon magától az elején
         Zsolti.doThings = true;
+        zsolti.setFps(12);
         if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
             difficulty = 2;
         }
