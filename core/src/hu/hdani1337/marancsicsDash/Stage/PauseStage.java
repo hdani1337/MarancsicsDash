@@ -59,6 +59,16 @@ public class PauseStage extends MyStage {
         {
             bg = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
         }
+
+        else if(selectedBackground == 3)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+        }
+
+        else if(selectedBackground == 4)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+        }
     }
 
     void addListeners(final Screen screen)

@@ -42,6 +42,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> GAME_BG = new AssetDescriptor<Texture>("pic/bg.png",Texture.class);
     public static final AssetDescriptor<Texture> GAME_BG2 = new AssetDescriptor<Texture>("pic/bg2.png",Texture.class);
     public static final AssetDescriptor<Texture> GAME_BG3 = new AssetDescriptor<Texture>("pic/bg3.jpg",Texture.class);
+    public static final AssetDescriptor<Texture> GAME_BG4 = new AssetDescriptor<Texture>("pic/bg4.png",Texture.class);
+    public static final AssetDescriptor<Texture> GAME_BG5 = new AssetDescriptor<Texture>("pic/bg5.jpg",Texture.class);
     public static final AssetDescriptor<Texture> LOGO = new AssetDescriptor<Texture>("pic/logo.png",Texture.class);
     public static final AssetDescriptor<Texture> SHOP_LOGO = new AssetDescriptor<Texture>("pic/marancshop.png",Texture.class);
     public static final AssetDescriptor<Texture> TEXT_BG = new AssetDescriptor<Texture>("pic/textBG.png",Texture.class);
@@ -91,6 +93,8 @@ public class Assets {
         manager.load(GAME_BG);
         manager.load(GAME_BG2);
         manager.load(GAME_BG3);
+        manager.load(GAME_BG4);
+        manager.load(GAME_BG5);
         manager.load(LOGO);
         manager.load(GOMBA);
         manager.load(SHOP_LOGO);

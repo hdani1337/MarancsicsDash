@@ -17,6 +17,8 @@ import hu.hdani1337.marancsicsDash.ParentClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtDesert;
+import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtOcean;
 import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtSiberia;
 import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtZala;
 
@@ -57,7 +59,7 @@ public class OptionsStage extends MyStage {
             difficulty = 2;
         }
 
-        if(selectedBackground != 2 && selectedBackground != 1) selectedBackground = 0;
+        if(selectedBackground != 2 && selectedBackground != 1 && selectedBackground != 3 && selectedBackground != 4) selectedBackground = 0;
 
         if(gamemode != 1 && gamemode != 2) gamemode = 1;//ugyanez a játékmóddal is
 
@@ -126,21 +128,14 @@ public class OptionsStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                System.out.println(selectedBackground);
-                if(selectedBackground == 2 && (boughtSiberia || boughtZala)){
-                    selectedBackground = 0;
-                }
-                else if(selectedBackground == 1 && boughtSiberia && !boughtZala){
-                    selectedBackground = 0;
-                }
-                else{
-                    selectedBackground++;
-                    if(selectedBackground == 1)
-                    {
-                        if(boughtZala && !boughtSiberia) selectedBackground = 2;
-                    }
-                }
 
+                if(selectedBackground < 4) selectedBackground++;
+                else selectedBackground = 0;
+
+                if(selectedBackground == 1 && !boughtSiberia) selectedBackground = 2;
+                if(selectedBackground == 2 && !boughtZala) selectedBackground = 3;
+                if(selectedBackground == 3 && !boughtDesert) selectedBackground = 4;
+                if(selectedBackground == 4 && !boughtOcean) selectedBackground = 0;
             }
         });
     }
@@ -243,6 +238,12 @@ public class OptionsStage extends MyStage {
         }
         else if (selectedBackground == 2){
             backgroundType.setText("Zala");
+        }
+        else if (selectedBackground == 3){
+            backgroundType.setText("Szahara");
+        }
+        else if (selectedBackground == 4){
+            backgroundType.setText("Atlanti-óceán");
         }
     }
 }

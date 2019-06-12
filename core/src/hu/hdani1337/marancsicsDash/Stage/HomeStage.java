@@ -53,7 +53,7 @@ public class HomeStage extends MyStage {
     TextBackground textBackground5 = new TextBackground();
     TextBackground textBackground6 = new TextBackground();
 
-    MyLabel ver = new MyLabel("Verzió: 0.7 Gamma",game.getLabelStyle());//verziószám
+    MyLabel ver = new MyLabel("Verzió: 1.0 Delta",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);

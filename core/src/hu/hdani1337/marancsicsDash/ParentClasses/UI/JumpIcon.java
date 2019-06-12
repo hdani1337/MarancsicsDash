@@ -31,7 +31,7 @@ public class JumpIcon extends OneSpriteStaticActor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                jumpHeight = ground + 220 + (int)(Math.random() * 75 + 1);
+                jumpHeight = ground + 250 + (int)(Math.random() * 75 + 1);
                 if(fall) {
                     if (boughtDouble && !doubleJumped) {
                         Zsolti.forcejump = true;

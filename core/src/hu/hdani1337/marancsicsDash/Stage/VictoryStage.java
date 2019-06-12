@@ -50,6 +50,16 @@ public class VictoryStage extends MyStage {
         {
             bg = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
         }
+
+        else if(selectedBackground == 3)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+        }
+
+        else if(selectedBackground == 4)
+        {
+            bg = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+        }
     }
 
     void setPositionsAndSizes(Viewport viewport)
@@ -92,7 +102,7 @@ public class VictoryStage extends MyStage {
                 MarancsicsBoss.marancsicsHealth = 99.9f;
                 game.setScreen(new HomeScreen(game));
             }
-        }, 15);
+        }, 18);
     }
 
     @Override

@@ -29,6 +29,7 @@ import static hu.hdani1337.marancsicsDash.Actor.Tank.pontszam;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.forcejump;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.multitasking;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.nowSuper;
+import static hu.hdani1337.marancsicsDash.Actor.Zsolti.superTime;
 import static hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyActor.overlaps;
 import static hu.hdani1337.marancsicsDash.ParentClasses.UI.PauseButton.paused;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
@@ -88,6 +89,7 @@ public class GameStage extends MyStage {
     {
         Zsolti.jump = false; //Ne ugorjon magától az elején
         Zsolti.doThings = true;
+        superTime = 0;
         zsolti.setFps(12);
         if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
             difficulty = 2;
@@ -129,6 +131,20 @@ public class GameStage extends MyStage {
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
             ground = 90;
         }
+
+        else if(selectedBackground == 3)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+            ground = 130;
+        }
+
+        else if(selectedBackground == 4)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+            ground = 145;
+        }
     }
 
     void playMusic()
@@ -153,9 +169,6 @@ public class GameStage extends MyStage {
     void setPositions(Viewport viewport)//actorok elhelyezése
     {
         marancsics.setPosition(60, ground);
-
-        coin.setPosition(-100, -100);
-        mushroom.setPosition((int)(Math.random() * 8240 + 3840),(int)(Math.random() * 250 + 150));
 
         tank.setX(viewport.getWorldWidth() * (int)(Math.random() * 4 + 2));
         tank.setY(ground-70);
@@ -210,6 +223,7 @@ public class GameStage extends MyStage {
                 if (zsolti.getY() <= tank.getY() + tank.getHeight())
                     if (zsolti.getX()> tank.getX() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth())
                         if (zsolti.getX() < tank.getX() + tank.getWidth() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth()) {
+                            JumpIcon.jumpHeight += 35;
                             forcejump = true;//Ekkor van a tank tetején, ugrás
                         }
 
@@ -285,6 +299,7 @@ public class GameStage extends MyStage {
 
         if (overlaps(zsolti, mushroom))
         {
+            zsolti.setFps(12);
             Zsolti.nowSuper = true;
             Zsolti.superTime = 8;
             if(!muted &&! dontRepeat) powerUp.play();

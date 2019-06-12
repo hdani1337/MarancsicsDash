@@ -25,7 +25,7 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         setFps(18);
         setY(ground - 15);
         setSize(getWidth()*1.5f,getHeight()*1.5f);
-        speed = (int)(Math.random() * 3 + 2);
+        speed = (int)(Math.random() * 4 + 2);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
         setX(getX() - difficulty*3 - speed);
         if (getX() + getWidth() < 0)
         {
-            setX(tempView.getWorldWidth() + speed * 50);
-            speed = (int)(Math.random() * 3 + 2);
+            setX(tempView.getWorldWidth() + speed * 75);
+            speed = (int)(Math.random() * 4 + 2);
         }
     }
 }

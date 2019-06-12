@@ -76,6 +76,14 @@ public class BossStage extends MyStage {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
         }
+        else if (selectedBackground == 3) {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+        }
+        else if (selectedBackground == 4) {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+        }
     }
 
     void setPositions(Viewport viewport) {
@@ -91,11 +99,11 @@ public class BossStage extends MyStage {
     void addActors() {
         addActor(bg1);
         addActor(bg2);
-        addActor(marancsicsBoss);
-        addActor(zsolti);
         addActor(health);
         addActor(antiHealth);
         addActor(marancsicsElete);
+        addActor(marancsicsBoss);
+        addActor(zsolti);
         addActor(jumpIcon);
         addActor(pauseButton);
     }
@@ -125,11 +133,12 @@ public class BossStage extends MyStage {
 
         else if(overlaps(zsolti,marancsicsBoss)) {
             if (marancsicsBoss.getRotation() <= 3)
-                if (zsolti.getY() > 30 + marancsicsBoss.getHeight() / 2) {
+                if (zsolti.getY() > ground + marancsicsBoss.getHeight() / 2) {
                     if (zsolti.getY() <= marancsicsBoss.getY() + marancsicsBoss.getHeight())
                         if (zsolti.getX() + zsolti.getWidth() > marancsicsBoss.getX())
                             if (zsolti.getX() < marancsicsBoss.getX() + marancsicsBoss.getWidth()) {
                                 if(Zsolti.fall) {//Ekkor van az autón
+                                    JumpIcon.jumpHeight += 35;
                                     Zsolti.forcejump = true;
                                     marancsicsHealth -= (int) (Math.random() * 5 + 3);
                                     if(!muted)

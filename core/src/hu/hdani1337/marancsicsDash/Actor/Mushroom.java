@@ -4,6 +4,7 @@ import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteStaticActor;
 
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.nowSuper;
+import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 
 public class Mushroom extends OneSpriteStaticActor {
@@ -13,11 +14,12 @@ public class Mushroom extends OneSpriteStaticActor {
         setDebug(false);
         addBaseCollisionCircleShape();
         setSize(80,80);
+        newPosition();
     }
 
     void newPosition()
     {
-        setPosition((int)(Math.random() * 8240 + 3840),(int)(Math.random() * 250 + 150));
+        setPosition((int)(Math.random() * 8240 + 3840),(int)(Math.random() * 300 + ground+50));
     }
 
     @Override

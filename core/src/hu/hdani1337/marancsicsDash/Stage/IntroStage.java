@@ -58,6 +58,20 @@ public class IntroStage extends MyStage {
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
             ground = 90;
         }
+
+        else if(selectedBackground == 3)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
+            ground = 130;
+        }
+
+        else if(selectedBackground == 4)
+        {
+            bg1 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+            bg2 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
+            ground = 145;
+        }
     }
 
     void setPositions()

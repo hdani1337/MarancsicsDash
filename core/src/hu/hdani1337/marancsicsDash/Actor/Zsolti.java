@@ -49,7 +49,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
         }
 
         if (doThings) {
-            if (ground >= 270) reJumpThread();
+            if (ground >= 270) reJumpThread();//ez csak a boltnál van
 
             if (fall) fallThread(delta);
             else if (jump) jumpThread(delta);
