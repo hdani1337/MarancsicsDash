@@ -29,14 +29,14 @@ public class PauseStage extends MyStage {
     MyLabel text = new MyLabel("Megállítva",game.getLabelStyle());
     MyLabel score = new MyLabel("Jelenlegi pontszámod: "+ Tank.pontszam,game.getLabelStyle());
     MyButton back = new MyButton("Vissza a menübe",game.getButtonStyle());
-    TextBackground textBackground = new TextBackground();
-    TextBackground textBackground2 = new TextBackground();
+    TextBackground backBG = new TextBackground();
+    TextBackground textbackground = new TextBackground();
     private int speed = 2;
     public static boolean fromBoss;
 
     public PauseStage(Viewport viewport, Batch batch, final marancsicsGame game, final Screen screen) {
         super(viewport, batch, game);
-
+        setValues();
         setBackground(viewport);
         addListeners(screen);
         setSizesAndPositions(viewport);
@@ -70,29 +70,9 @@ public class PauseStage extends MyStage {
             bg = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
         }
     }
-
-    void addListeners(final Screen screen)
+    
+    void setValues()
     {
-        playButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                PauseButton.paused = false;
-                game.setScreen(screen);
-            }
-        });
-
-        back.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                PauseButton.paused = false;
-                Tank.pontszam = 0;
-                MarancsicsBoss.marancsicsHealth = 99.9f;
-                game.setScreen(new HomeScreen(game));
-            }
-        });
-
         logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
             @Override
             public void act(float delta) {
@@ -106,6 +86,33 @@ public class PauseStage extends MyStage {
                 setDebug(false);
             }
         };
+    }
+
+    void addListeners(final Screen screen)
+    {
+        playButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                PauseButton.paused = false;
+                game.setScreen(screen);
+            }
+        });
+        
+        ClickListener backListener = new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                PauseButton.paused = false;
+                Tank.pontszam = 0;
+                MarancsicsBoss.marancsicsHealth = 99.9f;
+                game.setScreen(new HomeScreen(game));
+            }
+        };
+
+        backBG.addListener(backListener);
+        back.addListener(backListener);
     }
 
     void setSizesAndPositions(Viewport viewport)
@@ -123,11 +130,11 @@ public class PauseStage extends MyStage {
         score.setPosition(viewport.getWorldWidth() / 2 - score.getWidth() / 1.45f, text.getY() - score.getHeight()*1.5f);
 
         back.setPosition(viewport.getWorldWidth()/2-back.getWidth()/2,score.getY() - 105);
-        textBackground.setSize(back.getWidth() + 36, back.getHeight() + 20);
-        textBackground.setPosition(back.getX() - 18,back.getY() - 10);
+        backBG.setSize(back.getWidth() + 36, back.getHeight() + 20);
+        backBG.setPosition(back.getX() - 18,back.getY() - 10);
 
-        textBackground2.setSize(600,150);
-        textBackground2.setPosition(viewport.getWorldWidth()/2-textBackground2.getWidth()/2,score.getY() - 25);
+        textbackground.setSize(600,150);
+        textbackground.setPosition(viewport.getWorldWidth()/2-textbackground.getWidth()/2,score.getY() - 25);
     }
 
     void addActors()
@@ -135,9 +142,9 @@ public class PauseStage extends MyStage {
         addActor(bg);
         addActor(logo);
         addActor(playButton);
-        addActor(textBackground2);
+        addActor(textbackground);
         addActor(text);
-        addActor(textBackground);
+        addActor(backBG);
         addActor(score);
         addActor(back);
     }

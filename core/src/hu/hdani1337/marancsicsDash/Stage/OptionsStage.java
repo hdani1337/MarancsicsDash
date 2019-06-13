@@ -43,11 +43,11 @@ public class OptionsStage extends MyStage {
     MyLabel backgroundText = new MyLabel("Háttér: ",game.getLabelStyle());//Háttér:
     MyButton backgroundType = new MyButton("",game.getButtonStyle());//Csernobil/Szibéria/Zala
 
-    TextBackground textbg = new TextBackground();//nehézség háttere
-    TextBackground textbg2 = new TextBackground();//némítás háttere
-    TextBackground textbg3 = new TextBackground();;//visszalépés háttere
-    TextBackground textbg4 = new TextBackground();;//játékmód háttere
-    TextBackground textbg5 = new TextBackground();;//háttér háttere
+    TextBackground difficultyBG = new TextBackground();//nehézség háttere
+    TextBackground muteBG = new TextBackground();//némítás háttere
+    TextBackground backBG = new TextBackground();;//visszalépés háttere
+    TextBackground gamemodeBG = new TextBackground();;//játékmód háttere
+    TextBackground backgroundBG = new TextBackground();;//háttér háttere
 
     Music music = Assets.manager.get(Assets.MENUMUSIC);;//zene, hogy lelehessen állítani
 
@@ -84,8 +84,9 @@ public class OptionsStage extends MyStage {
                 }
             }
         });
-
-        back.addListener(new ClickListener(){
+        
+        ClickListener backListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -96,7 +97,10 @@ public class OptionsStage extends MyStage {
                 preferences.flush();
                 game.setScreenBackByStackPop();
             }
-        });
+        };
+
+        backBG.addListener(backListener);
+        back.addListener(backListener);
 
         mutedButton.addListener(new ClickListener(){
             @Override
@@ -143,47 +147,47 @@ public class OptionsStage extends MyStage {
     void setPositionsAndSizes(Viewport viewport)
     {
         dif.setPosition(30,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
-        textbg.setPosition(dif.getX() - 20,dif.getY() - 8);
-        textbg.setSize(400,dif.getHeight()*1.5f);
+        difficultyBG.setPosition(dif.getX() - 20,dif.getY() - 8);
+        difficultyBG.setSize(400,dif.getHeight()*1.5f);
         difType.setPosition(dif.getX() + 260,dif.getY());
         back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),50);
-        textbg2.setPosition(textbg.getX(),textbg.getY() - 100);
-        textbg2.setWidth(textbg.getWidth());
-        textbg2.setHeight(textbg.getHeight());
-        textbg3.setWidth(290);
-        textbg3.setHeight(textbg.getHeight());
-        textbg3.setPosition(back.getX()-15,back.getY()-10);
-        muting.setPosition(textbg2.getX() + 18,textbg2.getY() + textbg2.getHeight()/6);
+        muteBG.setPosition(difficultyBG.getX(),difficultyBG.getY() - 100);
+        muteBG.setWidth(difficultyBG.getWidth());
+        muteBG.setHeight(difficultyBG.getHeight());
+        backBG.setWidth(290);
+        backBG.setHeight(difficultyBG.getHeight());
+        backBG.setPosition(back.getX()-15,back.getY()-10);
+        muting.setPosition(muteBG.getX() + 18,muteBG.getY() + muteBG.getHeight()/6);
         mutedButton.setPosition(muting.getX() + 250,muting.getY());
-        textbg4.setPosition(textbg2.getX(), textbg2.getY() - 100);
-        textbg4.setWidth(textbg.getWidth());
-        textbg4.setHeight(textbg.getHeight());
-        mode.setPosition(textbg4.getX() + 18,textbg4.getY() + textbg4.getHeight()/6);
+        gamemodeBG.setPosition(muteBG.getX(), muteBG.getY() - 100);
+        gamemodeBG.setWidth(difficultyBG.getWidth());
+        gamemodeBG.setHeight(difficultyBG.getHeight());
+        mode.setPosition(gamemodeBG.getX() + 18,gamemodeBG.getY() + gamemodeBG.getHeight()/6);
         modeType.setPosition(mode.getX() + mode.getWidth()*1.55f, mode.getY());
-        textbg5.setWidth(textbg.getWidth());
-        textbg5.setHeight(textbg.getHeight());
-        textbg5.setPosition(textbg4.getX(), textbg4.getY() - 100);
-        backgroundText.setPosition(textbg5.getX() + 18,textbg5.getY() + textbg5.getHeight()/6);
+        backgroundBG.setWidth(difficultyBG.getWidth());
+        backgroundBG.setHeight(difficultyBG.getHeight());
+        backgroundBG.setPosition(gamemodeBG.getX(), gamemodeBG.getY() - 100);
+        backgroundText.setPosition(backgroundBG.getX() + 18,backgroundBG.getY() + backgroundBG.getHeight()/6);
         backgroundType.setPosition(backgroundText.getX() + backgroundText.getWidth()*2f, backgroundText.getY());
     }
 
     void addActors()
     {
         addActor(background);
-        addActor(textbg);
+        addActor(difficultyBG);
         addActor(dif);
         addActor(difType);
-        addActor(textbg3);
+        addActor(backBG);
         addActor(back);
-        addActor(textbg2);
+        addActor(muteBG);
         addActor(muting);
         addActor(mutedButton);
-        addActor(textbg4);
+        addActor(gamemodeBG);
         addActor(mode);
         addActor(modeType);
         if(boughtSiberia || boughtZala)
         {
-            addActor(textbg5);
+            addActor(backgroundBG);
             addActor(backgroundText);
             addActor(backgroundType);
         }

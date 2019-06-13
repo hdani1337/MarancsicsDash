@@ -21,6 +21,8 @@ import hu.hdani1337.marancsicsDash.Screen.IntroScreen;
 import hu.hdani1337.marancsicsDash.Screen.OptionsScreen;
 import hu.hdani1337.marancsicsDash.Screen.ShopScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
+
+import static hu.hdani1337.marancsicsDash.Global.Assets.manager;
 import static hu.hdani1337.marancsicsDash.Stage.BossStage.bossMusic;
 
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
@@ -39,26 +41,26 @@ public class HomeStage extends MyStage {
     Background bg;//háttér
 
     //Hangok
-    public static Sound uraim = Assets.manager.get(Assets.URAIM);
-    public static Sound hee = Assets.manager.get(Assets.HEE);
-    public static Music music = Assets.manager.get(Assets.MENUMUSIC);
+    public static Sound uraim = manager.get(Assets.URAIM);
+    public static Sound hee = manager.get(Assets.HEE);
+    public static Music music = manager.get(Assets.MENUMUSIC);
 
     OneSpriteStaticActor logo;//logo
 
     //Gombok hátterei
-    TextBackground textBackground1 = new TextBackground();
-    TextBackground textBackground2 = new TextBackground();
-    TextBackground textBackground3 = new TextBackground();
-    TextBackground textBackground4 = new TextBackground();
-    TextBackground textBackground5 = new TextBackground();
-    TextBackground textBackground6 = new TextBackground();
+    TextBackground startBG = new TextBackground();
+    TextBackground infoBG = new TextBackground();
+    TextBackground optionsBG = new TextBackground();
+    TextBackground exitBG = new TextBackground();
+    TextBackground verBG = new TextBackground();
+    TextBackground shopBG = new TextBackground();
 
     MyLabel ver = new MyLabel("Verzió: 1.0 Delta",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         bossMusic.stop();
-        bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
+        bg = new Background(manager.get(Assets.MENU_BG),viewport);
         logo();
         playMusic();
         addListeners();
@@ -68,7 +70,7 @@ public class HomeStage extends MyStage {
 
     void logo()
     {
-        logo = new OneSpriteStaticActor(Assets.manager.get(Assets.LOGO)){
+        logo = new OneSpriteStaticActor(manager.get(Assets.LOGO)){
             @Override
             public void act(float delta) {
                 super.act(delta);
@@ -112,19 +114,19 @@ public class HomeStage extends MyStage {
         ver.setX(20);
         ver.setY(20);
 
-        textBackground1.setPosition(start.getX()-15,start.getY()-7);
-        textBackground2.setPosition(info.getX()-15,info.getY()-7);
-        textBackground3.setPosition(options.getX()-15,options.getY()-7);
-        textBackground4.setPosition(exit.getX()-15,exit.getY()-7);
-        textBackground5.setPosition(ver.getX()-15,ver.getY()-7);
-        textBackground6.setPosition(shop.getX() - 15, shop.getY() + -7);
+        startBG.setPosition(start.getX()-15,start.getY()-7);
+        infoBG.setPosition(info.getX()-15,info.getY()-7);
+        optionsBG.setPosition(options.getX()-15,options.getY()-7);
+        exitBG.setPosition(exit.getX()-15,exit.getY()-7);
+        verBG.setPosition(ver.getX()-15,ver.getY()-7);
+        shopBG.setPosition(shop.getX() - 15, shop.getY() + -7);
 
-        textBackground1.setSize(start.getWidth() + 30, start.getHeight() + 14);
-        textBackground2.setSize(info.getWidth() + 30, info.getHeight() + 14);
-        textBackground3.setSize(options.getWidth() + 30, options.getHeight() + 14);
-        textBackground4.setSize(exit.getWidth() + 30, exit.getHeight() + 14);
-        textBackground5.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
-        textBackground6.setSize(shop.getWidth() + 30, shop.getHeight() + 14);
+        startBG.setSize(start.getWidth() + 30, start.getHeight() + 14);
+        infoBG.setSize(info.getWidth() + 30, info.getHeight() + 14);
+        optionsBG.setSize(options.getWidth() + 30, options.getHeight() + 14);
+        exitBG.setSize(exit.getWidth() + 30, exit.getHeight() + 14);
+        verBG.setSize(ver.getWidth() + 30, ver.getHeight() + 14);
+        shopBG.setSize(shop.getWidth() + 30, shop.getHeight() + 14);
 
         logo.setWidthWhithAspectRatio(500);
         logo.setPosition(viewport.getWorldWidth()/2 - logo.getWidth()/2, viewport.getWorldHeight() - logo.getHeight()*1.4f);
@@ -132,7 +134,8 @@ public class HomeStage extends MyStage {
 
     void addListeners()
     {
-        start.addListener(new ClickListener(){
+        ClickListener startListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -150,25 +153,28 @@ public class HomeStage extends MyStage {
                     game.setScreen(new IntroScreen(game));
                 }
             }
-        });
-
-        info.addListener(new ClickListener(){
+        };
+        
+        ClickListener infoListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new InfoScreen(game));
             }
-        });
-
-        options.addListener(new ClickListener(){
+        };
+        
+        ClickListener optionsListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new OptionsScreen(game));
             }
-        });
+        };
 
-        exit.addListener(new ClickListener(){
+        ClickListener exitListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -183,30 +189,46 @@ public class HomeStage extends MyStage {
                     }, 0.65f);
                 }
                 else{
-                    getBatch().dispose();
+                    manager.dispose();
                     Gdx.app.exit();
                 }
             }
-        });
-
-        shop.addListener(new ClickListener(){
+        };
+        
+        ClickListener shopListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new ShopScreen(game));
             }
-        });
+        };
+
+        startBG.addListener(startListener);
+        start.addListener(startListener);
+
+        infoBG.addListener(infoListener);
+        info.addListener(infoListener);
+
+        optionsBG.addListener(optionsListener);
+        options.addListener(optionsListener);
+
+        exitBG.addListener(exitListener);
+        exit.addListener(exitListener);
+
+        shopBG.addListener(shopListener);
+        shop.addListener(shopListener);
     }
 
     void addActors()
     {
         addActor(bg);
-        addActor(textBackground1);
-        addActor(textBackground2);
-        addActor(textBackground3);
-        addActor(textBackground4);
-        addActor(textBackground5);
-        addActor(textBackground6);
+        addActor(startBG);
+        addActor(infoBG);
+        addActor(optionsBG);
+        addActor(exitBG);
+        addActor(verBG);
+        addActor(shopBG);
         addActor(start);
         addActor(info);
         addActor(options);

@@ -489,7 +489,8 @@ public class ShopStage extends MyStage {
             }
         });
 
-        myButton.addListener(new ClickListener(){
+        ClickListener backListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -504,7 +505,10 @@ public class ShopStage extends MyStage {
                 preferences.flush();
                 game.setScreenBackByStackPop();
             }
-        });
+        };
+
+        textBackground2.addListener(backListener);
+        myButton.addListener(backListener);
     }
 
     void setSizesAndPositions(Viewport viewport)

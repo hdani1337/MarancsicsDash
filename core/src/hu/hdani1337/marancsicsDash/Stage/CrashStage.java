@@ -28,10 +28,10 @@ public class CrashStage extends MyStage {
     MyLabel score = new MyLabel("Elért pontszám: "+Tank.pontszam+ "\nRekord: " + highscore,game.getLabelStyle());
     MyButton reset = new MyButton("Új játék",game.getButtonStyle());
     MyButton home = new MyButton("Fömenü",game.getButtonStyle());
-    TextBackground text1 = new TextBackground();
-    TextBackground text2 = new TextBackground();
-    TextBackground text3 = new TextBackground();
-    TextBackground text4 = new TextBackground();
+    TextBackground textBG = new TextBackground();
+    TextBackground resetBG = new TextBackground();
+    TextBackground homeBG = new TextBackground();
+    TextBackground scoreBG = new TextBackground();
 
     public CrashStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -88,52 +88,60 @@ public class CrashStage extends MyStage {
         score.setAlignment(0);
         text.setPosition(viewport.getWorldWidth()/2-text.getWidth(),viewport.getWorldHeight()/2+text.getHeight()+150);
         text.setFontScale(2);
-        text1.setPosition(text.getX()-25,text.getY()-25);
-        text1.setHeight(90);
-        text1.setWidth(420);
+        textBG.setPosition(text.getX()-25,text.getY()-25);
+        textBG.setHeight(90);
+        textBG.setWidth(420);
 
         reset.setPosition(viewport.getWorldWidth()/2-reset.getWidth()/2,text.getY()-reset.getHeight()*3-120);
-        text2.setPosition(reset.getX() - 18,reset.getY()-10);
-        text2.setHeight(60);
-        text2.setWidth(reset.getWidth() + 36);
+        resetBG.setPosition(reset.getX() - 18,reset.getY()-10);
+        resetBG.setHeight(60);
+        resetBG.setWidth(reset.getWidth() + 36);
 
         home.setPosition(viewport.getWorldWidth()/2-home.getWidth()/2,reset.getY()-home.getHeight()*2);
-        text3.setPosition(home.getX()-18,home.getY()-10);
-        text3.setHeight(60);
-        text3.setWidth(home.getWidth() + 36);
+        homeBG.setPosition(home.getX()-18,home.getY()-10);
+        homeBG.setHeight(60);
+        homeBG.setWidth(home.getWidth() + 36);
 
         score.setPosition(viewport.getWorldWidth()/2-score.getWidth()/2,text.getY()-score.getHeight()*1.9f);
-        text4.setHeight(120);
-        text4.setWidth(score.getWidth()+72);
-        text4.setPosition(score.getX()-36,score.getY()-20);
+        scoreBG.setHeight(120);
+        scoreBG.setWidth(score.getWidth()+72);
+        scoreBG.setPosition(score.getX()-36,score.getY()-20);
     }
 
     void addListeners()
     {
-        reset.addListener(new ClickListener(){
+        ClickListener resetListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new GameScreen(game));
             }
-        });
-
-        home.addListener(new ClickListener(){
+        };
+        
+        ClickListener homeListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreen(new HomeScreen(game));
             }
-        });
+        };
+
+        resetBG.addListener(resetListener);
+        reset.addListener(resetListener);
+
+        homeBG.addListener(homeListener);
+        home.addListener(homeListener);
     }
 
     void addActors()
     {
         addActor(bg);
-        addActor(text1);
-        addActor(text2);
-        addActor(text3);
-        addActor(text4);
+        addActor(textBG);
+        addActor(resetBG);
+        addActor(homeBG);
+        addActor(scoreBG);
         addActor(text);
         addActor(reset);
         addActor(home);

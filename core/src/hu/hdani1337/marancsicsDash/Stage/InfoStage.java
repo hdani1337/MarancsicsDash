@@ -25,13 +25,17 @@ public class InfoStage extends MyStage {
         super(viewport, batch, game);
         bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
 
-        back.addListener(new ClickListener(){
+        ClickListener backListener = new ClickListener()
+        {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 game.setScreenBackByStackPop();
             }
-        });
+        };
+
+        textBG2.addListener(backListener);
+        back.addListener(backListener);
 
         setPositionsAndSizes(viewport);
         addActors();

@@ -11,6 +11,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.Screen.GameScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.Actor.Zsolti.superTime;
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
 
@@ -30,6 +31,9 @@ public class IntroStage extends MyStage {
         Zsolti.fall = false;
         Zsolti.forcejump = false;
         Zsolti.doThings = true;
+
+        superTime = 0;
+        zsolti.setFps(12);
 
         setBackground(viewport);
         setPositions();
