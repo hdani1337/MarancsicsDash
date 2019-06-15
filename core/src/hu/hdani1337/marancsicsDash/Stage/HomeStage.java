@@ -189,7 +189,7 @@ public class HomeStage extends MyStage {
                     }, 0.65f);
                 }
                 else{
-                    manager.dispose();
+                    getBatch().dispose();
                     Gdx.app.exit();
                 }
             }
