@@ -35,15 +35,14 @@ public class CrashStage extends MyStage {
 
     public CrashStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
-
-        Tank.pontszam = 0;
-        MarancsicsBoss.marancsicsHealth = 99.9f;
-
         setBackground(viewport);
         record();
         setPositionsAndSizes(viewport);
         addListeners();
         addActors();
+
+        Tank.pontszam = 0;
+        MarancsicsBoss.marancsicsHealth = 99.9f;
     }
 
     void setBackground(Viewport viewport)
