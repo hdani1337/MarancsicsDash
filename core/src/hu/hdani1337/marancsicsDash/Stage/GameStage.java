@@ -65,7 +65,7 @@ public class GameStage extends MyStage {
     Sound crash = Assets.manager.get(Assets.CRASH);
     Sound coinSound = Assets.manager.get(Assets.COIN_SOUND);
     Sound powerUp = Assets.manager.get(Assets.POWERUP);
-    Music music = Assets.manager.get(Assets.GAMEMUSIC);
+    public static Music music = Assets.manager.get(Assets.GAMEMUSIC);
 
     //Egyéb értékek
     int bossScore = (int) (Math.random() * 15 + 10);
@@ -77,7 +77,6 @@ public class GameStage extends MyStage {
     public GameStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         defaultValues();//Default értékek
-        playMusic();//Háttérzene
         setBackground(viewport);//Háttérkép beállítása
         addListeners();//Listenerek
         setSizes();//Méretek állítása
@@ -147,7 +146,7 @@ public class GameStage extends MyStage {
         }
     }
 
-    void playMusic()
+    public static void playMusic()
     {
         if (muted) {
             music.stop();

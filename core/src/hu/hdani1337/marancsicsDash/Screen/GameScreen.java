@@ -12,6 +12,7 @@ import hu.hdani1337.marancsicsDash.Stage.GameStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.jump;
+import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class GameScreen extends MyScreen {
@@ -27,6 +28,7 @@ public class GameScreen extends MyScreen {
     public void show() {
         super.show();
         Gdx.input.setInputProcessor(gameStage);
+        GameStage.playMusic();
     }
 
     @Override
