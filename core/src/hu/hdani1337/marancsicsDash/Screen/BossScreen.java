@@ -12,6 +12,7 @@ import hu.hdani1337.marancsicsDash.Stage.BossStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.jump;
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class BossScreen extends MyScreen {
@@ -19,7 +20,8 @@ public class BossScreen extends MyScreen {
 
     public BossScreen(marancsicsGame game) {
         super(game);
-        bossStage = new BossStage(new FitViewport(keparany(),720),spriteBatch,game);
+        if(desktop) bossStage = new BossStage(new FitViewport(keparany(),900),spriteBatch,game);
+        else bossStage = new BossStage(new FitViewport(keparany(),720),spriteBatch,game);
     }
 
     @Override

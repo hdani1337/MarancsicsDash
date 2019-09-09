@@ -13,6 +13,7 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.jump;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class GameScreen extends MyScreen {
@@ -21,7 +22,8 @@ public class GameScreen extends MyScreen {
 
     public GameScreen(marancsicsGame game) {
         super(game);
-        gameStage = new GameStage(new FitViewport(keparany(),720),spriteBatch,game);
+        if(desktop) gameStage = new GameStage(new FitViewport(keparany(),900),spriteBatch,game);
+        else gameStage = new GameStage(new FitViewport(keparany(),720),spriteBatch,game);
     }
 
     @Override

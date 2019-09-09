@@ -55,7 +55,7 @@ public class HomeStage extends MyStage {
     TextBackground verBG = new TextBackground();
     TextBackground shopBG = new TextBackground();
 
-    MyLabel ver = new MyLabel("Verzió: 1.0 Delta",game.getLabelStyle());//verziószám
+    MyLabel ver = new MyLabel("Verzió: 1.1 Delta",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -111,8 +111,16 @@ public class HomeStage extends MyStage {
         options.setX((viewport.getWorldWidth()/2 - options.getWidth()/2));
         exit.setY(options.getY() - exit.getHeight()*2);
         exit.setX((viewport.getWorldWidth()/2 - exit.getWidth()/2));
-        ver.setX(20);
-        ver.setY(20);
+        if(marancsicsGame.notch)
+        {
+            ver.setX(40);
+            ver.setY(30);
+        }
+        else
+        {
+            ver.setX(30);
+            ver.setY(20);
+        }
 
         startBG.setPosition(start.getX()-15,start.getY()-7);
         infoBG.setPosition(info.getX()-15,info.getY()-7);
@@ -189,8 +197,9 @@ public class HomeStage extends MyStage {
                     }, 0.65f);
                 }
                 else{
-                    getBatch().dispose();
                     Gdx.app.exit();
+                    System.exit(0);
+                    System.exit(-1);
                 }
             }
         };

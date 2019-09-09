@@ -11,6 +11,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.UI.PauseButton;
 import hu.hdani1337.marancsicsDash.Stage.PauseStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class PauseScreen extends MyScreen {
@@ -23,7 +24,8 @@ public class PauseScreen extends MyScreen {
 
     public PauseScreen(marancsicsGame game, Screen screen) {
         super(game);
-        pauseStage = new PauseStage(new FitViewport(keparany(),720),spriteBatch,game,screen);
+        if(desktop) pauseStage = new PauseStage(new FitViewport(keparany(),900),spriteBatch,game,screen);
+        else pauseStage = new PauseStage(new FitViewport(keparany(),720),spriteBatch,game,screen);
         Gdx.input.setInputProcessor(pauseStage);
     }
 

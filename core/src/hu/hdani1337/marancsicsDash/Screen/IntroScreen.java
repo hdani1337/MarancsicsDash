@@ -7,6 +7,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.IntroStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class IntroScreen extends MyScreen {
@@ -14,7 +15,8 @@ public class IntroScreen extends MyScreen {
 
     public IntroScreen(marancsicsGame game) {
         super(game);
-        introStage = new IntroStage(new FitViewport(keparany(),720),spriteBatch,game);
+        if(desktop) introStage = new IntroStage(new FitViewport(keparany(),900),spriteBatch,game);
+        else introStage = new IntroStage(new FitViewport(keparany(),720),spriteBatch,game);
         Gdx.input.setInputProcessor(introStage);
     }
 

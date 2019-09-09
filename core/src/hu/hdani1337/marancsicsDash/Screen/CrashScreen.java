@@ -9,6 +9,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.CrashStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class CrashScreen extends MyScreen {
@@ -17,7 +18,8 @@ public class CrashScreen extends MyScreen {
     public CrashScreen(marancsicsGame game) {
         super(game);
         float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
-        crashStage = new CrashStage(new FitViewport(keparany(),720),spriteBatch,game);
+        if(desktop) crashStage = new CrashStage(new FitViewport(keparany(),900),spriteBatch,game);
+        else crashStage = new CrashStage(new FitViewport(keparany(),720),spriteBatch,game);
         Gdx.input.setInputProcessor(crashStage);
     }
 

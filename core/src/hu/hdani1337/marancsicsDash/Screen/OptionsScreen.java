@@ -7,6 +7,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class OptionsScreen extends MyScreen {
@@ -14,7 +15,8 @@ public class OptionsScreen extends MyScreen {
 
     public OptionsScreen(marancsicsGame game) {
         super(game);
-        optionsStage = new OptionsStage(new FitViewport(keparany(),720),spriteBatch,game);
+        if(desktop) optionsStage = new OptionsStage(new FitViewport(keparany(),900),spriteBatch,game);
+        else optionsStage = new OptionsStage(new FitViewport(keparany(),720),spriteBatch,game);
         Gdx.input.setInputProcessor(optionsStage);
     }
 

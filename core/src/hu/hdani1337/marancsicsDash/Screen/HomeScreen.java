@@ -11,6 +11,7 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.uraim;
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 import static hu.hdani1337.marancsicsDash.marancsicsGame.keparany;
 
 public class HomeScreen extends MyScreen {
@@ -19,7 +20,8 @@ public class HomeScreen extends MyScreen {
 
     public HomeScreen(marancsicsGame game) {
         super(game);
-        homeStage = new HomeStage(new FitViewport(keparany(),720),spriteBatch,game);
+        if(desktop) homeStage = new HomeStage(new FitViewport(keparany(),900),spriteBatch,game);
+        else homeStage = new HomeStage(new FitViewport(keparany(),720),spriteBatch,game);
     }
 
     @Override

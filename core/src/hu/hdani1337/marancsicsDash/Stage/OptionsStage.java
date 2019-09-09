@@ -21,6 +21,7 @@ import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtDesert;
 import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtOcean;
 import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtSiberia;
 import static hu.hdani1337.marancsicsDash.Stage.ShopStage.boughtZala;
+import static hu.hdani1337.marancsicsDash.marancsicsGame.notch;
 
 public class OptionsStage extends MyStage {
     public static final Preferences preferences = Gdx.app.getPreferences("marancsicsDashSave");
@@ -146,11 +147,13 @@ public class OptionsStage extends MyStage {
 
     void setPositionsAndSizes(Viewport viewport)
     {
-        dif.setPosition(30,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
+        if(marancsicsGame.notch) dif.setPosition(75,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
+        else dif.setPosition(30,viewport.getWorldHeight() - viewport.getWorldHeight() / 3);
         difficultyBG.setPosition(dif.getX() - 20,dif.getY() - 8);
         difficultyBG.setSize(400,dif.getHeight()*1.5f);
         difType.setPosition(dif.getX() + 260,dif.getY());
-        back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),50);
+        if (!notch) back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),50);
+        else back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 45),50);
         muteBG.setPosition(difficultyBG.getX(),difficultyBG.getY() - 100);
         muteBG.setWidth(difficultyBG.getWidth());
         muteBG.setHeight(difficultyBG.getHeight());

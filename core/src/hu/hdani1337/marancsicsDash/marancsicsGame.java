@@ -11,6 +11,9 @@ import hu.hdani1337.marancsicsDash.Screen.LoadingScreen;
 
 public class marancsicsGame extends MyGame {
 
+	public static boolean desktop = false;
+	public static boolean notch = false;
+
 	public Label.LabelStyle getLabelStyle() {
 		Label.LabelStyle style;
 		style = new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle();
@@ -34,7 +37,7 @@ public class marancsicsGame extends MyGame {
 		float keparany = Gdx.graphics.getWidth() / (Gdx.graphics.getHeight()/1.0f);
 		int egyArany = 80;//egy arányra eső szélesség 720-as magasságnál ((720/9)*x)
 		int x = 1;//szélességi arány
-
+		if(desktop) egyArany = 100;
 		while (keparany > (x/9.0f)) x++;
 
 		return x * egyArany;

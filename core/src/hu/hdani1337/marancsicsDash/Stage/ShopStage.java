@@ -27,6 +27,7 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
+import static hu.hdani1337.marancsicsDash.marancsicsGame.notch;
 
 public class ShopStage extends MyStage {
     Background background;
@@ -541,7 +542,8 @@ public class ShopStage extends MyStage {
         left.setPosition(textBackground.getX() - left.getWidth() - 30,textBackground.getY());
         right.setPosition(textBackground.getX() + textBackground.getWidth() + 30,textBackground.getY());
 
-        myButton.setPosition(viewport.getWorldWidth() - (myButton.getWidth() + 25),50);
+        if (!notch) myButton.setPosition(viewport.getWorldWidth() - (myButton.getWidth() + 25),50);
+        else myButton.setPosition(viewport.getWorldWidth() - (myButton.getWidth() + 45),50);
         textBackground2.setPosition(myButton.getX() - 15,myButton.getY() - 8);
 
         purchase.setPosition(viewport.getWorldWidth()/2-purchase.getWidth()/2,myLabel.getY() - 90);
