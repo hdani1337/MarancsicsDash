@@ -16,8 +16,8 @@ public class DesktopLauncher {
 		new LwjglApplication(new marancsicsGame(), config);
 		Gdx.graphics.setTitle("Marancsics Dash");
 		Gdx.graphics.setVSync(true);
-		config.width = 2560;
-		config.height = 1440;
+		config.width = Gdx.graphics.getWidth();
+		config.height = Gdx.graphics.getHeight();
 		config.fullscreen = true;
 		Zsolti.multitasking = true;
 		marancsicsGame.desktop = true;

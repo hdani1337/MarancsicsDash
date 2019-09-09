@@ -14,6 +14,7 @@ import hu.hdani1337.marancsicsDash.marancsicsGame;
 import static hu.hdani1337.marancsicsDash.Actor.Zsolti.superTime;
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.selectedBackground;
+import static hu.hdani1337.marancsicsDash.marancsicsGame.desktop;
 
 public class IntroStage extends MyStage {
     Background bg1;
@@ -46,35 +47,40 @@ public class IntroStage extends MyStage {
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG), viewport);
-            ground = 30;
+            if(!desktop) ground = 30;
+            else ground = 30+30;
         }
 
         else if(selectedBackground == 1)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG2), viewport);
-            ground = 30;
+            if(!desktop) ground = 30;
+            else ground = 30+20;
         }
 
         else if(selectedBackground == 2)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG3), viewport);
-            ground = 90;
+            if(!desktop) ground = 90;
+            else ground = 90+30;
         }
 
         else if(selectedBackground == 3)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG4), viewport);
-            ground = 130;
+            if(!desktop) ground = 130;
+            else ground = 130+30;
         }
 
         else if(selectedBackground == 4)
         {
             bg1 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
             bg2 = new Background(Assets.manager.get(Assets.GAME_BG5), viewport);
-            ground = 145;
+            if(!desktop) ground = 145;
+            else ground = 145+30;
         }
     }
 
