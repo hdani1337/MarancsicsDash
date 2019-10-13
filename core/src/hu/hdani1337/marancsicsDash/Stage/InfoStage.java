@@ -19,6 +19,7 @@ public class InfoStage extends MyStage {
     Background bg;
     TextBackground textBG = new TextBackground();
     TextBackground textBG2 = new TextBackground();
+    TextBackground textBG3 = new TextBackground();
     MyLabel text = new MyLabel("A játék valós eseményeken alapul.\nEgy szép napon a föhösünk, Zsolti beszólt szeretett\nosztályfönökünknek, Marancsicsnak.\nMarancsics nagyon megharagudott rá, s mindenáron elakarja kapni Zsoltit,\nhogy osztályfönökit adhasson neki. A Te feladatod az,\nhogy Zsolti minél tovább tudjon menekülni. Vigyázz, mert Marancsics\nneked tudja rúgni az akadályokat!",game.getLabelStyle());
     MyButton back = new MyButton("Vissza a menübe",game.getButtonStyle());
     MyLabel credits = new MyLabel("Készítette: Horváth Dániel\nFelkészítö tanár: Tüske Balázs",game.getLabelStyle());
@@ -52,10 +53,12 @@ public class InfoStage extends MyStage {
         text.setPosition(viewport.getWorldWidth()/2 - text.getWidth()/2,(viewport.getWorldHeight()/2 - text.getHeight()/2)+30);
         if (!notch) back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 25),50);
         else back.setPosition(viewport.getWorldWidth() - (back.getWidth() + 45),50);
-        credits.setPosition(15,100);
+        credits.setPosition(40,70);
         textBG2.setWidth(290);
         textBG2.setHeight(60);
         textBG2.setPosition(back.getX()-15,back.getY()-10);
+        textBG3.setSize(credits.getWidth() + 56,credits.getHeight()+36);
+        textBG3.setPosition(credits.getX()-28,credits.getY()-18);
     }
 
     void addActors()
@@ -64,6 +67,7 @@ public class InfoStage extends MyStage {
         addActor(textBG);
         addActor(text);
         addActor(textBG2);
+        addActor(textBG3);
         addActor(back);
         addActor(credits);
     }

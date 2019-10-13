@@ -14,11 +14,11 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new marancsicsGame(), config);
-		Gdx.graphics.setTitle("Marancsics Dash");
-		Gdx.graphics.setVSync(true);
+		config.fullscreen = true;
 		config.width = Gdx.graphics.getWidth();
 		config.height = Gdx.graphics.getHeight();
-		config.fullscreen = true;
+		Gdx.graphics.setTitle("Marancsics Dash");
+		Gdx.graphics.setVSync(true);
 		Zsolti.multitasking = true;
 		marancsicsGame.desktop = true;
 	}
