@@ -38,7 +38,6 @@ public class Coin extends OneSpriteAnimatedActor {
             if (felvette) {
                 coin += 1;
                 felvette = false;
-                newPosition();
             }
 
             //System.out.println(coin);

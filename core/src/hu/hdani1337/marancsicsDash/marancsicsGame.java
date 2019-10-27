@@ -40,7 +40,8 @@ public class marancsicsGame extends MyGame {
 		if(desktop) egyArany = 100;
 		while (keparany > (x/9.0f)) x++;
 
-		if((int)keparany*(x*egyArany) != Gdx.graphics.getWidth()) return (int)(720.0/Gdx.graphics.getHeight() * Gdx.graphics.getWidth());
+		if((int)keparany*(x*egyArany) != Gdx.graphics.getWidth() && egyArany != 100) return (int)(720.0/Gdx.graphics.getHeight() * Gdx.graphics.getWidth());
+		else if((int)keparany*(x*egyArany) != Gdx.graphics.getWidth() && egyArany == 100) return (int)(900.0/Gdx.graphics.getHeight() * Gdx.graphics.getWidth());
 		//Ha nem pontos a képarány számítása, akkor a világ szélessége legyen a telefon kijelzőjének szélessége 720 pixelhez viszonyítva
 
 		return x * egyArany;

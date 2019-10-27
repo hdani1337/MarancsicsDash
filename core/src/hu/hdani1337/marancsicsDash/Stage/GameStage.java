@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Coin;
 import hu.hdani1337.marancsicsDash.Actor.Mushroom;
@@ -48,7 +50,6 @@ public class GameStage extends MyStage {
     //Actorok
     static Zsolti zsolti = new Zsolti();
     static Marancsics marancsics = new Marancsics();
-    Coin coin = new Coin(true);
     static Tank tank = new Tank();
     Mushroom mushroom = new Mushroom();
 
@@ -72,6 +73,8 @@ public class GameStage extends MyStage {
     int bossScore = (int) (Math.random() * 15 + 10);
     private boolean dontRepeat = false;
 
+    ArrayList<Coin> coinArray = new ArrayList<Coin>();
+
     //Talaj
     public static int ground = 30;
 
@@ -94,6 +97,7 @@ public class GameStage extends MyStage {
         if(difficulty != 1 && difficulty != 2 && difficulty != 3){//ha a játékos nem lép be a beállításokba, akkor legyen normál a nehézség
             difficulty = 2;
         }
+        for (int i = 0; i < 10; i++) coinArray.add(new Coin(true));
     }
 
     void addListeners()
@@ -207,9 +211,12 @@ public class GameStage extends MyStage {
         addActor(scoreLabel);
         addActor(jumpIcon);
         addActor(pauseButton);
-        addActor(coin);
         addActor(coinLabel);
         addActor(coinLabelText);
+
+        for (Coin coin : coinArray) {
+            addActor(coin);
+        }
 
         if (boughtZsolti) addActor(mushroom);
         if (ShopStage.boughtInstantBoss && gamemode != 2) addActor(instantBoss);
@@ -311,15 +318,6 @@ public class GameStage extends MyStage {
             dontRepeat = false;
         }
 
-        if(overlaps(zsolti,coin)){//Felvette a pénzt
-            coin.felvette = true;
-            if(!muted) {
-                coinSound.play(1);
-            }
-        }
-
-        if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
-
         if(overlaps(zsolti,tank)) crashThread();//Zsolti ütközik a tankkal, feladat külön szálra
     }
 
@@ -349,9 +347,24 @@ public class GameStage extends MyStage {
         coinLabelText.setText("" + Coin.coin);//Pénzszám folyamatos ismétlése
     }
 
+    void coinCrash()
+    {
+        for (Coin coin : coinArray) {
+            if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
+            else if(overlaps(zsolti,coin)){//Felvette a pénzt
+                coin.newPosition();
+                coin.felvette = true;
+                if(!muted) {
+                    coinSound.play(1);
+                }
+            }
+        }
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
+        coinCrash();
         backgroundMoving();//Metódusban levan írva, hogy mi mit csinál
         utkozesek();//Metódusban levan írva, hogy mi mit csinál
         pause();//Ha megállítják a játékot, váltsunk paused képre
