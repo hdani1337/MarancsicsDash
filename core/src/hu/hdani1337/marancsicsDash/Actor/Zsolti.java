@@ -1,5 +1,6 @@
 package hu.hdani1337.marancsicsDash.Actor;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Timer;
 
@@ -56,6 +57,11 @@ public class Zsolti extends OneSpriteAnimatedActor {
 
             if (intro) introThread(delta);
         }
+    }
+
+    public void setTextureAtlas(TextureAtlas value)
+    {
+        textureAtlas = value;
     }
 
     private void fall(float delta)

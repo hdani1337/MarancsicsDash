@@ -36,7 +36,7 @@ public class Tank extends OneSpriteAnimatedActor {
             setX(getX() + delta * tankSpeed * 140);
             setRotation(getRotation() - delta * tankSpeed * 20);
             setY(getY() + delta * tankSpeed * 13);
-            if(getX() > keparany()){
+            if(getX() > keparany() || getX() < 0 - getWidth()){
                 if(!muted) {
                     crash.play();
                 }

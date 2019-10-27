@@ -101,7 +101,7 @@ public class GameStage extends MyStage {
             difficulty = 2;
         }
         for (int i = 0; i < 10; i++) coinArray.add(new Coin(true));
-        for (int i = 0; i < 150; i++) superCoinArray.add(new Coin(true));
+        for (int i = 0; i < 100; i++) superCoinArray.add(new Coin(false));
     }
 
     void addListeners()
@@ -252,7 +252,8 @@ public class GameStage extends MyStage {
                         dontRepeat = true;
                     }
                 }
-                marancsics.tankComing = true;//Super Zsolti belerúg a tankba
+                if(!marancsics.tankComing) marancsics.tankComing = true;//Super Zsolti belerúg a tankba
+                else marancsics.tankComing = false;
                 dontRepeat = false;
             } else {
                 if (!muted) {
@@ -361,6 +362,19 @@ public class GameStage extends MyStage {
         coinLabelText.setText("" + Coin.coin);//Pénzszám folyamatos ismétlése
     }
 
+    private void coinCrashThread()
+    {
+        if(!multitasking) {//Ha mobilon megy, akkor menjen külön szálra
+            new Thread(new Runnable() {
+                public void run() {
+                    coinCrash();
+                }
+            }).start();
+
+        }
+        else coinCrash();//Gépen laggolna
+    }
+
     void coinCrash()
     {
         for (Coin coin : coinArray) {
@@ -383,6 +397,13 @@ public class GameStage extends MyStage {
                 if(!muted) {
                     coinSound.play(1);
                 }
+                coin.remove();
+            }
+            if(coin.getX() < 0 - coin.getWidth())
+            {
+                coin.newPosition();
+                coin.setAct(false);
+                coin.remove();
             }
         }
     }
@@ -390,7 +411,7 @@ public class GameStage extends MyStage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        coinCrash();
+        coinCrashThread();//Felvette e a pénzeket
         backgroundMoving();//Metódusban levan írva, hogy mi mit csinál
         utkozesek();//Metódusban levan írva, hogy mi mit csinál
         pause();//Ha megállítják a játékot, váltsunk paused képre

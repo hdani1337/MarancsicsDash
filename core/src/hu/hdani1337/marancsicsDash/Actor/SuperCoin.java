@@ -12,14 +12,13 @@ public class SuperCoin extends OneSpriteAnimatedActor {
         setDebug(false);
         setFps(75);
         setSize(100,100);
-        setFps(60);
         newPosition();
         addBaseCollisionRectangleShape();
     }
 
     public void newPosition(){
         int newY = (int)(Math.random() * 300 + ground+50);
-        int newX = (int)(Math.random() * 30000 + 15000);
+        int newX = (int)(Math.random() * 60000 + 35000);
         setPosition(newX,newY);
     }
 

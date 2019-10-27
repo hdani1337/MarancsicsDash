@@ -48,6 +48,7 @@ public class BossStage extends MyStage {
         Zsolti.jump = false;
         Zsolti.fall = false;
         Zsolti.doThings = true;
+        zsolti.setTextureAtlas(Assets.manager.get(Assets.ZSOLTI));
 
         if (!muted) {
             bossMusic.play();
