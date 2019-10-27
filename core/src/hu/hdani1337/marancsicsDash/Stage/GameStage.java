@@ -378,10 +378,9 @@ public class GameStage extends MyStage {
     void coinCrash()
     {
         for (Coin coin : coinArray) {
-            if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
-            else if(overlaps(zsolti,coin)){//Felvette a pénzt
+            if(overlaps(zsolti,coin)){//Felvette a pénzt
                 coin.newPosition();
-                coin.felvette = true;
+                Coin.coin += 1;
                 if(!muted) {
                     coinSound.play(1);
                 }
@@ -389,11 +388,10 @@ public class GameStage extends MyStage {
         }
 
         for (Coin coin : superCoinArray) {
-            if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
-            else if(overlaps(zsolti,coin)){//Felvette a pénzt
+            if(overlaps(zsolti,coin)){//Felvette a pénzt
                 coin.newPosition();
                 coin.setAct(false);
-                coin.felvette = true;
+                Coin.coin += 1;
                 if(!muted) {
                     coinSound.play(1);
                 }

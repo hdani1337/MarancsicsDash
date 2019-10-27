@@ -8,7 +8,6 @@ import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.difficulty;
 import static hu.hdani1337.marancsicsDash.Stage.OptionsStage.preferences;
 
 public class Coin extends OneSpriteAnimatedActor {
-    public static boolean felvette = false;
     private boolean mozog;
     public static long coin = preferences.getLong("coin");
 
@@ -34,16 +33,7 @@ public class Coin extends OneSpriteAnimatedActor {
         super.act(delta);
         if(mozog) {
             if (getX() < 0 - getWidth()) newPosition();
-
-            if (felvette) {
-                coin += 1;
-                felvette = false;
-            }
-
-            //System.out.println(coin);
-
             setX(getX() - difficulty*6);
-
         }
     }
 
