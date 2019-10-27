@@ -46,4 +46,8 @@ public class Coin extends OneSpriteAnimatedActor {
 
         }
     }
+
+    public void setAct(boolean b) {
+        mozog = b;
+    }
 }

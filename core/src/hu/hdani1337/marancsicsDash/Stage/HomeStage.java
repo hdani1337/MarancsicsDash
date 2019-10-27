@@ -55,7 +55,7 @@ public class HomeStage extends MyStage {
     TextBackground verBG = new TextBackground();
     TextBackground shopBG = new TextBackground();
 
-    MyLabel ver = new MyLabel("Verzió: 1.1 Delta",game.getLabelStyle());//verziószám
+    MyLabel ver = new MyLabel("Verzió: 1.2 Delta",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -193,6 +193,8 @@ public class HomeStage extends MyStage {
                         public void run() {
                             music.stop();
                             Gdx.app.exit();
+                            System.exit(0);
+                            System.exit(-1);
                         }
                     }, 0.65f);
                 }

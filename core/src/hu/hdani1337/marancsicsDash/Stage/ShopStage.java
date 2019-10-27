@@ -11,6 +11,7 @@ import hu.hdani1337.marancsicsDash.Actor.Coin;
 import hu.hdani1337.marancsicsDash.Actor.Zsolti;
 import hu.hdani1337.marancsicsDash.Global.Assets;
 import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyStage;
+import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteAnimatedActor;
 import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.Desert;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.InstantBoss;
@@ -41,6 +42,7 @@ public class ShopStage extends MyStage {
     Coin coinLabel = new Coin(false);
     MyLabel coinLabelText;
     OneSpriteStaticActor logo;
+    OneSpriteAnimatedActor superCoin;
 
     InstantBoss instantBoss = new InstantBoss();
     Siberia siberia = new Siberia();
@@ -66,6 +68,7 @@ public class ShopStage extends MyStage {
     public static boolean boughtOcean = preferences.getBoolean("boughtOcean");
     public static boolean boughtZsolti = preferences.getBoolean("boughtZsolti");
     public static boolean boughtDouble = preferences.getBoolean("boughtDouble");
+    public static boolean boughtCoin = preferences.getBoolean("boughtCoin");
 
     public ShopStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -85,6 +88,10 @@ public class ShopStage extends MyStage {
             }
         };
 
+        superCoin = new OneSpriteAnimatedActor(Assets.manager.get(Assets.SUPERCOIN));
+        superCoin.setDebug(false);
+        superCoin.setFps(75);
+
         setTexts();
         addListeners();
         setSizesAndPositions(viewport);
@@ -101,6 +108,7 @@ public class ShopStage extends MyStage {
             doubleJump.remove();
             superZS.remove();
             desert.remove();
+            superCoin.remove();
             ocean.remove();
             addActor(instantBoss);
             if(boughtInstantBoss)
@@ -122,6 +130,7 @@ public class ShopStage extends MyStage {
             doubleJump.remove();
             desert.remove();
             ocean.remove();
+            superCoin.remove();
             addActor(bgbg);
             addActor(siberia);
             addActor(left);
@@ -145,6 +154,7 @@ public class ShopStage extends MyStage {
             doubleJump.remove();
             desert.remove();
             ocean.remove();
+            superCoin.remove();
             addActor(bgbg);
             addActor(zala);
             if(boughtZala)
@@ -167,6 +177,7 @@ public class ShopStage extends MyStage {
             doubleJump.remove();
             zala.remove();
             ocean.remove();
+            superCoin.remove();
             addActor(bgbg);
             addActor(desert);
             if(boughtDesert)
@@ -188,6 +199,7 @@ public class ShopStage extends MyStage {
             instantBoss.remove();
             doubleJump.remove();
             zala.remove();
+            superCoin.remove();
             desert.remove();
             addActor(bgbg);
             addActor(ocean);
@@ -204,7 +216,6 @@ public class ShopStage extends MyStage {
         }
 
         else if (itemID == 5){
-            addActor(right);
             siberia.remove();
             zala.remove();
             bgbg.remove();
@@ -212,6 +223,7 @@ public class ShopStage extends MyStage {
             doubleJump.remove();
             desert.remove();
             ocean.remove();
+            superCoin.remove();
             Zsolti.doThings = false;
             addActor(superZS);
             if(boughtZsolti)
@@ -227,6 +239,32 @@ public class ShopStage extends MyStage {
         }
 
         else if (itemID == 6){
+            addActor(right);
+            siberia.remove();
+            zala.remove();
+            bgbg.remove();
+            instantBoss.remove();
+            superZS.remove();
+            desert.remove();
+            ocean.remove();
+            superCoin.remove();
+            doubleJump = new Zsolti();
+            Zsolti.doThings = true;
+            doubleJump.setPosition(getViewport().getWorldWidth()/2-superZS.getWidth()/2,getViewport().getWorldHeight()/2-superZS.getHeight()/2 + 25);
+            addActor(doubleJump);
+            if(boughtDouble)
+            {
+                purchase.remove();
+                textBackground3.remove();
+            }
+            else
+            {
+                addActor(textBackground3);
+                addActor(purchase);
+            }
+        }
+
+        else if (itemID == 7){
             right.remove();
             siberia.remove();
             zala.remove();
@@ -235,11 +273,10 @@ public class ShopStage extends MyStage {
             superZS.remove();
             desert.remove();
             ocean.remove();
-            doubleJump = new Zsolti();
-            Zsolti.doThings = true;
-            doubleJump.setPosition(getViewport().getWorldWidth()/2-superZS.getWidth()/2,getViewport().getWorldHeight()/2-superZS.getHeight()/2 + 25);
-            addActor(doubleJump);
-            if(boughtDouble)
+            doubleJump.remove();
+            superCoin.setPosition(getViewport().getWorldWidth()/2-superCoin.getWidth()/2,getViewport().getWorldHeight()/2-superCoin.getHeight()/2 + 25);
+            addActor(superCoin);
+            if(boughtCoin)
             {
                 purchase.remove();
                 textBackground3.remove();
@@ -312,6 +349,18 @@ public class ShopStage extends MyStage {
             if (boughtDouble) myLabel.setText("Double Jump\nMár megvetted!");
             else myLabel.setText("Double Jump\nÁr: 250");
         }
+
+        if(itemID == 7)
+        {
+            Zsolti.jump = false;
+            Zsolti.fall = false;
+            Zsolti.forcejump = false;
+            Zsolti.intro = false;
+            Zsolti.doThings = false;
+            Zsolti.superTime = 1337;
+            if (boughtCoin) myLabel.setText("Coin Rain\nMár megvetted!");
+            else myLabel.setText("Coin Rain\nÁr: 2000");
+        }
     }
 
     void addListeners()
@@ -320,8 +369,8 @@ public class ShopStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (itemID == 6) {
-                    itemID = 6;
+                if (itemID == 7) {
+                    itemID = 7;
                 } else {
                     itemID++;
                 }
@@ -487,6 +536,26 @@ public class ShopStage extends MyStage {
                         else noMoney.play();
                     }
                 }
+
+                else if (itemID == 7)
+                {
+                    if(!boughtCoin) {
+                        if (Coin.coin >= 2000) {
+                            if (!muted) paySound.play();
+                            Coin.coin -= 2000;
+                            coinLabelText.setText(""+Coin.coin);
+                            myLabel.setText("Coin Rain\nMár megvetted!");
+                            boughtCoin = true;
+                            textBackground3.remove();
+                            purchase.remove();
+                            preferences.putLong("coin", Coin.coin);
+                            preferences.putBoolean("boughtCoin", boughtCoin);
+                            preferences.flush();
+                        }
+
+                        else noMoney.play();
+                    }
+                }
             }
         });
 
@@ -503,6 +572,7 @@ public class ShopStage extends MyStage {
                 preferences.putBoolean("boughtOcean", boughtOcean);
                 preferences.putBoolean("boughtZsolti", boughtZsolti);
                 preferences.putBoolean("boughtDouble", boughtDouble);
+                preferences.putBoolean("boughtCoin", boughtCoin);
                 preferences.flush();
                 game.setScreenBackByStackPop();
             }

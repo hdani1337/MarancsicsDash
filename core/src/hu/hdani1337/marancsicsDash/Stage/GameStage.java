@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import hu.hdani1337.marancsicsDash.Actor.Background;
 import hu.hdani1337.marancsicsDash.Actor.Coin;
 import hu.hdani1337.marancsicsDash.Actor.Mushroom;
+import hu.hdani1337.marancsicsDash.Actor.SuperCoin;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.InstantBoss;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.JumpIcon;
 import hu.hdani1337.marancsicsDash.Actor.Marancsics;
@@ -52,6 +53,7 @@ public class GameStage extends MyStage {
     static Marancsics marancsics = new Marancsics();
     static Tank tank = new Tank();
     Mushroom mushroom = new Mushroom();
+    SuperCoin superCoin = new SuperCoin();
 
     //UI
     Coin coinLabel = new Coin(false);
@@ -74,6 +76,7 @@ public class GameStage extends MyStage {
     private boolean dontRepeat = false;
 
     ArrayList<Coin> coinArray = new ArrayList<Coin>();
+    ArrayList<Coin> superCoinArray = new ArrayList<Coin>();
 
     //Talaj
     public static int ground = 30;
@@ -98,6 +101,7 @@ public class GameStage extends MyStage {
             difficulty = 2;
         }
         for (int i = 0; i < 10; i++) coinArray.add(new Coin(true));
+        for (int i = 0; i < 150; i++) superCoinArray.add(new Coin(true));
     }
 
     void addListeners()
@@ -213,6 +217,7 @@ public class GameStage extends MyStage {
         addActor(pauseButton);
         addActor(coinLabel);
         addActor(coinLabelText);
+        addActor(superCoin);
 
         for (Coin coin : coinArray) {
             addActor(coin);
@@ -309,6 +314,15 @@ public class GameStage extends MyStage {
             dontRepeat = false;
         }
 
+        if(overlaps(zsolti,superCoin))
+        {
+            superCoin.newPosition();
+            for (Coin coin : superCoinArray) {
+                coin.setAct(true);
+                addActor(coin);
+            }
+        }
+
         if (overlaps(zsolti, mushroom))
         {
             zsolti.setFps(12);
@@ -353,6 +367,18 @@ public class GameStage extends MyStage {
             if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
             else if(overlaps(zsolti,coin)){//Felvette a pénzt
                 coin.newPosition();
+                coin.felvette = true;
+                if(!muted) {
+                    coinSound.play(1);
+                }
+            }
+        }
+
+        for (Coin coin : superCoinArray) {
+            if(overlaps(marancsics,coin) || coin.getX() < 0-coin.getWidth()) coin.felvette = false;//Nem vette fel a pénzt
+            else if(overlaps(zsolti,coin)){//Felvette a pénzt
+                coin.newPosition();
+                coin.setAct(false);
                 coin.felvette = true;
                 if(!muted) {
                     coinSound.play(1);
