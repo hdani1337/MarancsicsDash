@@ -1,5 +1,6 @@
 package hu.hdani1337.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -17,7 +18,8 @@ public class DesktopLauncher {
 		config.fullscreen = true;
 		config.width = Gdx.graphics.getWidth();
 		config.height = Gdx.graphics.getHeight();
-		Gdx.graphics.setTitle("Marancsics Dash");
+		config.title = "Marancsics Dash";
+		config.addIcon("ic_launcher.png", Files.FileType.Local);
 		Gdx.graphics.setVSync(true);
 		Zsolti.multitasking = true;
 		marancsicsGame.desktop = true;
