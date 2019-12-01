@@ -18,7 +18,7 @@ public class Marancsics extends OneSpriteAnimatedActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         if(intro){
             setX(getX() + delta * 280);

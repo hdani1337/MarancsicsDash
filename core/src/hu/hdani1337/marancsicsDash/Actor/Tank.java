@@ -29,7 +29,7 @@ public class Tank extends OneSpriteAnimatedActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
 
         if(Marancsics.tankComing == true){

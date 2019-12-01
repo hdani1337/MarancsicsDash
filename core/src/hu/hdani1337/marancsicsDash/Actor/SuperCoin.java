@@ -23,7 +23,7 @@ public class SuperCoin extends OneSpriteAnimatedActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         if (getX() < 0 - getWidth()) newPosition();
         setX(getX() - difficulty*8);

@@ -233,58 +233,102 @@ public class GameStage extends MyStage {
 
     }
 
-    private void crash()
-    {
-        if (tank.getRotation() <= 3)
-            if (zsolti.getY() > ground + tank.getHeight() / 4)
-                if (zsolti.getY() <= tank.getY() + tank.getHeight())
-                    if (zsolti.getX()> tank.getX() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth())
-                        if (zsolti.getX() < tank.getX() + tank.getWidth() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth()) {
-                            JumpIcon.jumpHeight += 35;
-                            forcejump = true;//Ekkor van a tank tetején, ugrás
-                        }
-
-        if (!forcejump) {
-            if (nowSuper) {
-                if (!muted) {
-                    if(!dontRepeat) {
-                        kick.play();
-                        dontRepeat = true;
-                    }
-                }
-                if(!marancsics.tankComing) marancsics.tankComing = true;//Super Zsolti belerúg a tankba
-                else marancsics.tankComing = false;
-                dontRepeat = false;
-            } else {
-                if (!muted) {
-                    if(!dontRepeat) {
-                        crash.play();
-                        music.stop();
-                    }
-                }
-                preferences.putLong("coin", Coin.coin);
-                preferences.flush();//Coin elmentése
-                Marancsics.tankComing = false;
-                dontRepeat = false;
-                game.setScreen(new CrashScreen(game));//Ütközés, vesztés képernyő
-            }
-        }
-    }
-
     private void crashThread()
     {
-        if(!multitasking) {//Ha mobilon megy, akkor menjen külön szálra
-            new Thread(new Runnable() {
-                public void run() {
-                    crash();
-                }
-            }).start();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                crash();
+            }
+        };
 
-        }
+        if(!multitasking) new Thread(runnable).run();
         else crash();//Gépen laggolna
     }
 
-    private void backgroundMoving()
+    private void coinCrashThread()
+    {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                coinCrash();
+            }
+        };
+
+        if(!multitasking) new Thread(runnable).run();
+        else coinCrash();//Gépen laggolna
+    }
+
+        private synchronized void crash()
+        {
+            if (tank.getRotation() <= 3)
+                if (zsolti.getY() > ground + tank.getHeight() / 4)
+                    if (zsolti.getY() <= tank.getY() + tank.getHeight())
+                        if (zsolti.getX()> tank.getX() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth())
+                            if (zsolti.getX() < tank.getX() + tank.getWidth() || zsolti.getX()+zsolti.getWidth() < tank.getX()+tank.getWidth()) {
+                                JumpIcon.jumpHeight += 35;
+                                forcejump = true;//Ekkor van a tank tetején, ugrás
+                            }
+
+            if (!forcejump) {
+                if (nowSuper) {
+                    if (!muted) {
+                        if(!dontRepeat) {
+                            kick.play();
+                            dontRepeat = true;
+                        }
+                    }
+                    if(!marancsics.tankComing) marancsics.tankComing = true;//Super Zsolti belerúg a tankba
+                    else marancsics.tankComing = false;
+                    dontRepeat = false;
+                } else {
+                    if (!muted) {
+                        if(!dontRepeat) {
+                            crash.play();
+                            music.stop();
+                        }
+                    }
+                    preferences.putLong("coin", Coin.coin);
+                    preferences.flush();//Coin elmentése
+                    Marancsics.tankComing = false;
+                    dontRepeat = false;
+                    game.setScreen(new CrashScreen(game));//Ütközés, vesztés képernyő
+                }
+            }
+        }
+
+        private synchronized void coinCrash()
+        {
+            for (Coin coin : coinArray) {
+                if(overlaps(zsolti,coin)){//Felvette a pénzt
+                    coin.newPosition();
+                    Coin.coin += 1;
+                    if(!muted) {
+                        coinSound.play(1);
+                    }
+                }
+            }
+
+            for (Coin coin : superCoinArray) {
+                if(overlaps(zsolti,coin)){//Felvette a pénzt
+                    coin.newPosition();
+                    coin.setAct(false);
+                    Coin.coin += 1;
+                    if(!muted) {
+                        coinSound.play(1);
+                    }
+                    coin.remove();
+                }
+                if(coin.getX() < 0 - coin.getWidth())
+                {
+                    coin.newPosition();
+                    coin.setAct(false);
+                    coin.remove();
+                }
+            }
+        }
+
+    synchronized void backgroundMoving()
     {//Két háttér folyamatosan mozog egymás mellett
         if (difficulty >= 1) {
             bg2.setX(bg2.getX() - difficulty * 6);
@@ -299,7 +343,7 @@ public class GameStage extends MyStage {
         }
     }
 
-    void utkozesek()
+    synchronized void utkozesek()
     {
         if (overlaps(marancsics, tank)) {//Marancsics belerúg a tankba
             if (!muted && !dontRepeat) {
@@ -336,7 +380,7 @@ public class GameStage extends MyStage {
         if(overlaps(zsolti,tank)) crashThread();//Zsolti ütközik a tankkal, feladat külön szálra
     }
 
-    void pause()
+    synchronized void pause()
     {
         if(paused){
             if(!muted){
@@ -347,7 +391,7 @@ public class GameStage extends MyStage {
         }
     }
 
-    void switchBoss()
+    synchronized void switchBoss()
     {
         if(pontszam >= bossScore && gamemode != 2)
         {
@@ -356,58 +400,16 @@ public class GameStage extends MyStage {
         }
     }
 
-    void refreshLabels()
+    synchronized void refreshLabels()
     {
         scoreLabel.setText("" + pontszam);//Pontszám folyamatos frissítése
         coinLabelText.setText("" + Coin.coin);//Pénzszám folyamatos ismétlése
     }
 
-    private void coinCrashThread()
-    {
-        if(!multitasking) {//Ha mobilon megy, akkor menjen külön szálra
-            new Thread(new Runnable() {
-                public void run() {
-                    coinCrash();
-                }
-            }).start();
 
-        }
-        else coinCrash();//Gépen laggolna
-    }
-
-    void coinCrash()
-    {
-        for (Coin coin : coinArray) {
-            if(overlaps(zsolti,coin)){//Felvette a pénzt
-                coin.newPosition();
-                Coin.coin += 1;
-                if(!muted) {
-                    coinSound.play(1);
-                }
-            }
-        }
-
-        for (Coin coin : superCoinArray) {
-            if(overlaps(zsolti,coin)){//Felvette a pénzt
-                coin.newPosition();
-                coin.setAct(false);
-                Coin.coin += 1;
-                if(!muted) {
-                    coinSound.play(1);
-                }
-                coin.remove();
-            }
-            if(coin.getX() < 0 - coin.getWidth())
-            {
-                coin.newPosition();
-                coin.setAct(false);
-                coin.remove();
-            }
-        }
-    }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         coinCrashThread();//Felvette e a pénzeket
         backgroundMoving();//Metódusban levan írva, hogy mi mit csinál

@@ -29,7 +29,7 @@ public class MarancsicsBoss extends OneSpriteAnimatedActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         if (marancsicsHealth < 0) marancsicsHealth = 0;
         else if (marancsicsHealth > 99.9) marancsicsHealth = 99.9f;

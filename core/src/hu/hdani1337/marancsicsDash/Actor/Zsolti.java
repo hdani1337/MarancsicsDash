@@ -35,7 +35,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         if(superTime > 0)
         {
@@ -64,7 +64,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
         textureAtlas = value;
     }
 
-    private void fall(float delta)
+    private synchronized void fall(float delta)
     {
         if (ground >= 270) {
             if (getY() <= 340 && !jumped) {
@@ -92,7 +92,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
             }
         }
     }
-    private void jump(float delta)
+    private synchronized void jump(float delta)
     {
         if (getY() < JumpIcon.jumpHeight) {
             setY(getY() + delta * 580);
@@ -106,7 +106,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
         }
     }
 
-    private void reJump()
+    private synchronized void reJump()
     {
         JumpIcon.jumpHeight = 420;
 
@@ -121,7 +121,7 @@ public class Zsolti extends OneSpriteAnimatedActor {
         }
     }
 
-    private void intro(float delta)
+    private synchronized void intro(float delta)
     {
         setX(getX() + delta * 240);
         if (getX() >= 250) {
@@ -131,47 +131,50 @@ public class Zsolti extends OneSpriteAnimatedActor {
     }
 
     private void fallThread(final float delta) {
-        if(!multitasking) {
-            new Thread(new Runnable() {
-                public void run() {
-                   fall(delta);
-                }
-            }).start();
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                fall(delta);
+            }
+        };
 
+        if(!multitasking) new Thread(runnable).run();
         else fall(delta);
     }
 
     private void jumpThread(final float delta) {
-        if(!multitasking) {
-            new Thread(new Runnable() {
-                public void run() {
-                    jump(delta);
-                }
-            }).start();
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+               jump(delta);
+            }
+        };
+
+        if(!multitasking) new Thread(runnable).run();
         else jump(delta);
     }
 
     private void reJumpThread() {
-        if(!multitasking) {
-            new Thread(new Runnable() {
-                public void run() {
-                   reJump();
-                }
-            }).start();
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                reJump();
+            }
+        };
+
+        if(!multitasking) new Thread(runnable).run();
         else reJump();
     }
 
     private void introThread(final float delta) {
-        if(!multitasking) {
-            new Thread(new Runnable() {
-                public void run() {
-                   intro(delta);
-                }
-            }).start();
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                intro(delta);
+            }
+        };
+
+        if(!multitasking) new Thread(runnable).run();
         else intro(delta);
     }
 }

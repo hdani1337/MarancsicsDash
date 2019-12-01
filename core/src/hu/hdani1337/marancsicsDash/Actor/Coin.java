@@ -29,7 +29,7 @@ public class Coin extends OneSpriteAnimatedActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         if(mozog) {
             if (getX() < 0 - getWidth()) newPosition();

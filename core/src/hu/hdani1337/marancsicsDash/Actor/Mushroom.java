@@ -23,7 +23,7 @@ public class Mushroom extends OneSpriteStaticActor {
     }
 
     @Override
-    public void act(float delta) {
+    public synchronized void act(float delta) {
         super.act(delta);
         if(nowSuper || getX() + getWidth() < 0) newPosition();
         else setX(getX() - difficulty * 6);
