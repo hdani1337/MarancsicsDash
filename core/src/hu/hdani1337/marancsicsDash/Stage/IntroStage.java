@@ -21,6 +21,7 @@ public class IntroStage extends MyStage {
     Background bg2;
     Marancsics marancsics = new Marancsics();
     Zsolti zsolti = new Zsolti();
+    Background menuBackground;
 
     public IntroStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
@@ -35,6 +36,8 @@ public class IntroStage extends MyStage {
 
         superTime = 0;
         zsolti.setFps(12);
+
+        menuBackground = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
 
         setBackground(viewport);
         setPositions();
@@ -95,6 +98,7 @@ public class IntroStage extends MyStage {
 
     void addActors()
     {
+        addActor(menuBackground);
         addActor(bg1);
         addActor(bg2);
         addActor(marancsics);
@@ -106,9 +110,16 @@ public class IntroStage extends MyStage {
 
     }
 
+    float alpha = 0;
+
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(alpha < 1)
+        {
+            bg1.setColor(1,1,1,alpha);
+            alpha += 0.02;
+        }else alpha = 1;
         if(!Marancsics.intro) game.setScreen(new GameScreen(game));
     }
 }

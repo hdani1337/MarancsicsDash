@@ -17,7 +17,6 @@ import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
-import hu.hdani1337.marancsicsDash.Screen.IntroScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Global.Assets.manager;
@@ -53,7 +52,7 @@ public class HomeStage extends MyStage {
     TextBackground verBG = new TextBackground();
     TextBackground shopBG = new TextBackground();
 
-    MyLabel ver = new MyLabel("Verzió: 1.2 Delta",game.getLabelStyle());//verziószám
+    MyLabel ver = new MyLabel("Verzió: 1.3 Delta",game.getLabelStyle());//verziószám
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyScreen;
 import hu.hdani1337.marancsicsDash.Stage.HomeStage;
 import hu.hdani1337.marancsicsDash.Stage.InfoStage;
+import hu.hdani1337.marancsicsDash.Stage.IntroStage;
 import hu.hdani1337.marancsicsDash.Stage.OptionsStage;
 import hu.hdani1337.marancsicsDash.Stage.ShopStage;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
@@ -24,6 +25,7 @@ public class HomeScreen extends MyScreen {
     OptionsStage optionsStage;
     InfoStage infoStage;
     ShopStage shopStage;
+    IntroStage introStage;
 
     FitViewport fitViewport;
 
@@ -38,6 +40,7 @@ public class HomeScreen extends MyScreen {
         optionsStage = new OptionsStage(fitViewport,spriteBatch,game);
         infoStage = new InfoStage(fitViewport,spriteBatch,game);
         shopStage = new ShopStage(fitViewport,spriteBatch,game);
+        introStage = new IntroStage(fitViewport,spriteBatch,game);
     }
 
     @Override
@@ -68,11 +71,11 @@ public class HomeScreen extends MyScreen {
                         @Override
                         public void run() {
                             HomeStage.music.stop();
-                            game.setScreen(new IntroScreen(game));
+                            whatToDraw = "game";
                         }
                     }, 1);
                 } else {
-                    game.setScreen(new IntroScreen(game));
+                    whatToDraw = "game";
                 }
             } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
                 if (!muted) {
@@ -128,7 +131,11 @@ public class HomeScreen extends MyScreen {
         }
         else if (whatToDraw == "game")
         {
-            game.setScreen(new IntroScreen(game),false);
+            inputMultiplexer.clear();
+            introStage.act(delta);
+            if(delta >= 0){
+                introStage.draw();
+            }
         }
     }
 
