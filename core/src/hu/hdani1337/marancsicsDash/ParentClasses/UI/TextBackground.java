@@ -8,4 +8,10 @@ public class TextBackground extends OneSpriteStaticActor {
         super(Assets.manager.get(Assets.TEXT_BG));
         setDebug(false);
     }
+
+    @Override
+    public void setColor(float r, float g, float b, float a) {
+        super.setColor(r, g, b, a);
+        sprite.setAlpha(a);
+    }
 }

@@ -1,6 +1,7 @@
 package hu.hdani1337.marancsicsDash.Stage;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -11,6 +12,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.TextBackground;
+import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.marancsicsGame.notch;
@@ -24,6 +26,9 @@ public class InfoStage extends MyStage {
     MyButton back = new MyButton("Vissza a menübe",game.getButtonStyle());
     MyLabel credits = new MyLabel("Készítette: Horváth Dániel\nFelkészítö tanár: Tüske Balázs",game.getLabelStyle());
 
+    float alpha = 0;
+    boolean setBack = false;
+
     public InfoStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
         bg = new Background(Assets.manager.get(Assets.MENU_BG),viewport);
@@ -33,7 +38,7 @@ public class InfoStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreenBackByStackPop();
+                setBack = true;
             }
         };
 
@@ -70,6 +75,38 @@ public class InfoStage extends MyStage {
         addActor(textBG3);
         addActor(back);
         addActor(credits);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(!setBack) {
+            if (alpha < 0.99) {
+                text.setColor(1, 1, 1, alpha);
+                textBG.setColor(1, 1, 1, alpha);
+                back.setColor(1, 1, 1, alpha);
+                textBG2.setColor(1, 1, 1, alpha);
+                textBG3.setColor(1, 1, 1, alpha);
+                credits.setColor(1, 1, 1, alpha);
+                alpha += 0.02;
+            } else alpha = 1;
+        }
+        else
+        {
+            if (alpha > 0.01) {
+                text.setColor(1, 1, 1, alpha);
+                textBG.setColor(1, 1, 1, alpha);
+                back.setColor(1, 1, 1, alpha);
+                textBG2.setColor(1, 1, 1, alpha);
+                textBG3.setColor(1, 1, 1, alpha);
+                credits.setColor(1, 1, 1, alpha);
+                alpha -= 0.02;
+            } else {
+                alpha = 0;
+                HomeScreen.setWhatToDraw("home");
+                setBack = false;
+            }
+        }
     }
 
     @Override

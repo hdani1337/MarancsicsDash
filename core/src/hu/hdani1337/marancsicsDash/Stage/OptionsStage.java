@@ -14,6 +14,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.MyStage;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.TextBackground;
+import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.HomeStage.muted;
@@ -96,7 +97,7 @@ public class OptionsStage extends MyStage {
                 preferences.putInteger("selectedBackground",selectedBackground);
                 preferences.putBoolean("muted",muted);
                 preferences.flush();
-                game.setScreenBackByStackPop();
+                setBack = true;
             }
         };
 
@@ -201,9 +202,56 @@ public class OptionsStage extends MyStage {
 
     }
 
+    float alpha = 0;
+    boolean setBack = false;
+
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(!setBack) {
+            if (alpha < 0.99) {
+                difficultyBG.setColor(1, 1, 1, alpha);
+                dif.setColor(1, 1, 1, alpha);
+                difType.setColor(1, 1, 1, alpha);
+                backBG.setColor(1, 1, 1, alpha);
+                back.setColor(1, 1, 1, alpha);
+                muteBG.setColor(1, 1, 1, alpha);
+                muting.setColor(1, 1, 1, alpha);
+                mutedButton.setColor(1, 1, 1, alpha);
+                gamemodeBG.setColor(1, 1, 1, alpha);
+                mode.setColor(1, 1, 1, alpha);
+                modeType.setColor(1, 1, 1, alpha);
+                backgroundBG.setColor(1, 1, 1, alpha);
+                backgroundText.setColor(1, 1, 1, alpha);
+                backgroundType.setColor(1, 1, 1, alpha);
+                alpha += 0.02;
+            } else alpha = 1;
+        }
+        else
+        {
+            if (alpha > 0.01) {
+                difficultyBG.setColor(1, 1, 1, alpha);
+                dif.setColor(1, 1, 1, alpha);
+                difType.setColor(1, 1, 1, alpha);
+                backBG.setColor(1, 1, 1, alpha);
+                back.setColor(1, 1, 1, alpha);
+                muteBG.setColor(1, 1, 1, alpha);
+                muting.setColor(1, 1, 1, alpha);
+                mutedButton.setColor(1, 1, 1, alpha);
+                gamemodeBG.setColor(1, 1, 1, alpha);
+                mode.setColor(1, 1, 1, alpha);
+                modeType.setColor(1, 1, 1, alpha);
+                backgroundBG.setColor(1, 1, 1, alpha);
+                backgroundText.setColor(1, 1, 1, alpha);
+                backgroundType.setColor(1, 1, 1, alpha);
+                alpha -= 0.02;
+            } else {
+                alpha = 0;
+                HomeScreen.setWhatToDraw("home");
+                setBack = false;
+            }
+        }
+
         //Némítás
         if(muted){
             mutedButton.setText("Némítva");

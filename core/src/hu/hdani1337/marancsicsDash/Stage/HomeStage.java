@@ -16,10 +16,8 @@ import hu.hdani1337.marancsicsDash.ParentClasses.Scene2D.OneSpriteStaticActor;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyButton;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.MyLabel;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.TextBackground;
-import hu.hdani1337.marancsicsDash.Screen.InfoScreen;
+import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.Screen.IntroScreen;
-import hu.hdani1337.marancsicsDash.Screen.OptionsScreen;
-import hu.hdani1337.marancsicsDash.Screen.ShopScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Global.Assets.manager;
@@ -59,6 +57,7 @@ public class HomeStage extends MyStage {
 
     public HomeStage(Viewport viewport, Batch batch, final marancsicsGame game) {
         super(viewport, batch, game);
+        HomeScreen.setWhatToDraw("home");
         bossMusic.stop();
         bg = new Background(manager.get(Assets.MENU_BG),viewport);
         logo();
@@ -153,12 +152,14 @@ public class HomeStage extends MyStage {
                         @Override
                         public void run() {
                             music.stop();
-                            game.setScreen(new IntroScreen(game));
+                            setBack = true;
+                            whatToDraw = "game";
                         }
                     }, 1);
                 }
                 else{
-                    game.setScreen(new IntroScreen(game));
+                    setBack = true;
+                    whatToDraw = "game";
                 }
             }
         };
@@ -168,7 +169,8 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new InfoScreen(game));
+                setBack = true;
+                whatToDraw = "info";
             }
         };
         
@@ -177,7 +179,8 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new OptionsScreen(game));
+                setBack = true;
+                whatToDraw = "options";
             }
         };
 
@@ -211,7 +214,8 @@ public class HomeStage extends MyStage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new ShopScreen(game));
+                setBack = true;
+                whatToDraw = "shop";
             }
         };
 
@@ -252,5 +256,55 @@ public class HomeStage extends MyStage {
     @Override
     public void init() {
 
+    }
+
+    float alpha = 0;
+    boolean setBack = false;
+    String whatToDraw = "";
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(!setBack) {
+            if (alpha < 0.99) {
+                startBG.setColor(1, 1, 1, alpha);
+                infoBG.setColor(1, 1, 1, alpha);
+                optionsBG.setColor(1, 1, 1, alpha);
+                exitBG.setColor(1, 1, 1, alpha);
+                verBG.setColor(1, 1, 1, alpha);
+                shopBG.setColor(1, 1, 1, alpha);
+                start.setColor(1, 1, 1, alpha);
+                info.setColor(1, 1, 1, alpha);
+                options.setColor(1, 1, 1, alpha);
+                shop.setColor(1, 1, 1, alpha);
+                exit.setColor(1, 1, 1, alpha);
+                ver.setColor(1, 1, 1, alpha);
+                logo.setColor(1, 1, 1, alpha);
+                alpha += 0.02;
+            } else alpha = 1;
+        }
+        else
+        {
+            if (alpha > 0.01) {
+                startBG.setColor(1, 1, 1, alpha);
+                infoBG.setColor(1, 1, 1, alpha);
+                optionsBG.setColor(1, 1, 1, alpha);
+                exitBG.setColor(1, 1, 1, alpha);
+                verBG.setColor(1, 1, 1, alpha);
+                shopBG.setColor(1, 1, 1, alpha);
+                start.setColor(1, 1, 1, alpha);
+                info.setColor(1, 1, 1, alpha);
+                options.setColor(1, 1, 1, alpha);
+                shop.setColor(1, 1, 1, alpha);
+                exit.setColor(1, 1, 1, alpha);
+                ver.setColor(1, 1, 1, alpha);
+                logo.setColor(1, 1, 1, alpha);
+                alpha -= 0.02;
+            } else {
+                alpha = 0;
+                HomeScreen.setWhatToDraw(whatToDraw);
+                setBack = false;
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ import hu.hdani1337.marancsicsDash.ParentClasses.UI.Right;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.Siberia;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.TextBackground;
 import hu.hdani1337.marancsicsDash.ParentClasses.UI.Zala;
+import hu.hdani1337.marancsicsDash.Screen.HomeScreen;
 import hu.hdani1337.marancsicsDash.marancsicsGame;
 
 import static hu.hdani1337.marancsicsDash.Stage.GameStage.ground;
@@ -574,7 +575,7 @@ public class ShopStage extends MyStage {
                 preferences.putBoolean("boughtDouble", boughtDouble);
                 preferences.putBoolean("boughtCoin", boughtCoin);
                 preferences.flush();
-                game.setScreenBackByStackPop();
+                setBack = true;
             }
         };
 
@@ -641,5 +642,52 @@ public class ShopStage extends MyStage {
     @Override
     public void init() {
 
+    }
+
+    float alpha = 0;
+    boolean setBack = false;
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(!setBack) {
+            if (alpha < 0.99) {
+                textBackground.setColor(1, 1, 1, alpha);
+                textBackground2.setColor(1, 1, 1, alpha);
+                myLabel.setColor(1, 1, 1, alpha);
+                myButton.setColor(1, 1, 1, alpha);
+                coinLabel.setColor(1, 1, 1, alpha);
+                coinLabelText.setColor(1, 1, 1, alpha);
+                left.setColor(1, 1, 1, alpha);
+                right.setColor(1, 1, 1, alpha);
+                logo.setColor(1, 1, 1, alpha);
+                instantBoss.setColor(1, 1, 1, alpha);
+                purchase.setColor(1, 1, 1, alpha);
+                textBackground3.setColor(1, 1, 1, alpha);
+                alpha += 0.02;
+            } else alpha = 1;
+        }
+        else
+        {
+            if (alpha > 0.01) {
+                textBackground.setColor(1, 1, 1, alpha);
+                textBackground2.setColor(1, 1, 1, alpha);
+                myLabel.setColor(1, 1, 1, alpha);
+                myButton.setColor(1, 1, 1, alpha);
+                coinLabel.setColor(1, 1, 1, alpha);
+                coinLabelText.setColor(1, 1, 1, alpha);
+                left.setColor(1, 1, 1, alpha);
+                right.setColor(1, 1, 1, alpha);
+                logo.setColor(1, 1, 1, alpha);
+                instantBoss.setColor(1, 1, 1, alpha);
+                purchase.setColor(1, 1, 1, alpha);
+                textBackground3.setColor(1, 1, 1, alpha);
+                alpha -= 0.02;
+            } else {
+                alpha = 0;
+                HomeScreen.setWhatToDraw("home");
+                setBack = false;
+            }
+        }
     }
 }
